@@ -7,9 +7,7 @@ public class Utils {
         String finString = "";
         File myFile = new File(filePath);
         Scanner myScan = new Scanner(myFile);
-        while (myScan.hasNext()) {
-            finString += myScan.nextLine() + "\n";
-        }
+        while (myScan.hasNext()) finString += myScan.nextLine() + "\n";
         return finString;
     }
 
@@ -21,5 +19,4 @@ public class Utils {
             return false;
         }
     }
-
 }
