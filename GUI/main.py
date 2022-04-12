@@ -1,30 +1,24 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QLabel
-from buttons.shadow_button import ShadowButton
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
+from header_gui import HeaderWidget
+from body_gui import BodyWidget
 
 def main(args): 
-    run_app()
+    import utils
+    utils.run_app(FinanceTracker)
 
 class FinanceTracker(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        title_layout = QHBoxLayout()
-        self.title_label = QLabel("FinanceTracker")
-        self.open_button = ShadowButton("Open", "Open a file", "CTRL+O")
+        layout = QVBoxLayout()
+        self.header_widget = HeaderWidget()
+        self.body_widget = BodyWidget(parent=self)
 
-        title_layout.addWidget(self.title_label)
-        title_layout.addWidget(self.open_button)
+        layout.addWidget(self.header_widget)
+        layout.addWidget(self.body_widget)
 
-        self.setLayout(title_layout)
-
-def run_app():
-    app = QApplication(sys.argv)
-
-    myFinTracker = FinanceTracker()
-    myFinTracker.show()
-
-    sys.exit(app.exec())
+        self.setLayout(layout)
 
 if __name__ == "__main__":
     main(sys.argv)

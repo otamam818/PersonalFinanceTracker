@@ -2,8 +2,13 @@ import sys
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-        QApplication, QGraphicsDropShadowEffect, QPushButton
+    QApplication, QGraphicsDropShadowEffect, QPushButton
 )
+from typing import Final
+
+BLUR_RADIUS: Final[int] = 3
+OFF_X: Final[int] = 1
+OFF_Y: Final[int] = 1
 
 class ShadowButton(QPushButton):
     def __init__(self, label, tooltip, shortcut = None, parent = None,
@@ -15,7 +20,13 @@ class ShadowButton(QPushButton):
         self.setParent(parent)
         self.add_func_if_exists(click_func)
 
-    def add_shadow(self, blurRadius=3, offX=1, offY=1, color=None):
+    def add_shadow(
+        self,
+        blurRadius=BLUR_RADIUS,
+        offX=OFF_X,
+        offY=OFF_Y,
+        color=None
+    ):
         shadow_effect = QGraphicsDropShadowEffect(self)
         if color == None:
             shadow_effect.setColor(Qt.black)
