@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -21,8 +22,8 @@ public class Record {
         this.ShopsList = Shop.getShoppingList(element);
     }
 
-    public Record (String filePath) throws FileNotFoundException {
-        String data = Utils.readFile(filePath);
+    public Record (File file) throws FileNotFoundException {
+        String data = Utils.readFile(file.toString());
         Gson gson = new Gson();
         JsonObject mainData = gson.fromJson(data, JsonObject.class);
         JsonArray recordsArray = mainData.getAsJsonArray("Dates");
@@ -35,12 +36,14 @@ public class Record {
 
     }
 
+    public static int getNumRecords() {
+        return allRecords.size();
+    }
+
     @Override
     public String toString() {
-        return "Record{" +
-                "date=" + date +
-                ", currency='" + currency + '\'' +
-                ", ShopsList=" + ShopsList +
-                '}';
+        return "date: " + date + '\n'+
+               "currency: " + currency + '\'' + '\n'+
+               "shopsList: " + ShopsList;
     }
 }
