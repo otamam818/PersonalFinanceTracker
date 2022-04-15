@@ -25,10 +25,10 @@ public class Main {
         var myScan = new Scanner(System.in);
         String inputChoice = myScan.nextLine();
         while (Utils.isNumericInt(inputChoice)) {
-            int userChoice = Integer.parseInt(inputChoice);
-            System.out.println(Record.getRecord(userChoice));
-            inputChoice = myScan.nextLine();
+            String[] choices = inputChoice.split(" ");
+            InputParser.changeState(choices);
         }
+
         if (!Utils.isNumericInt(inputChoice)) {
             System.out.println("Bye World\n");
         }
