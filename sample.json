@@ -3,8 +3,8 @@
         "Date" : "30",
         "Currency" : "AUD",
         "Shops" : [{
-            "Name"     : "Coles",
-            "Items"    : [
+            "Name"  : "Coles",
+            "Items" : [
                 {
                     "Item"        : "Voss Water Bottle",
                     "Quantity"    : 1,
