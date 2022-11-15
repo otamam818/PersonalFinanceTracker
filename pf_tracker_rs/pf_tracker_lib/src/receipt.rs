@@ -1,40 +1,79 @@
+use serde_derive::Serialize;
+use std::collections::BTreeMap;
+
 // In the format DD/MM/YYYY
+#[derive(Debug, PartialEq, Serialize)]
 pub struct Date (pub u8, pub u8, pub u32);
 
 impl Date {
-    pub fn as_str(&self) -> String {
+    #[allow(dead_code)]
+    pub fn as_str(&self) -> Result<String, String> {
         let month = match self.1 {
+            01 => "January",
             02 => "February",
+            03 => "March",
+            04 => "April",
+            05 => "May",
             06 => "June",
-            _ => "Unknown"
+            07 => "July",
+            08 => "August",
+            09 => "September",
+            10 => "October",
+            11 => "November",
+            12 => "December",
+            _ => ""
         };
+        if month.len() == 0 {
+            return Err(String::from("Invalid Month"));
+        }
         let mut finstr = String::from("Hello ");
         finstr.push_str(self.0.to_string().as_ref());
         finstr.push_str(" ");
         finstr.push_str(month.as_ref());
         finstr.push_str(", ");
         finstr.push_str(self.2.to_string().as_ref());
-        finstr
+        Ok(finstr)
+    }
+
+    pub fn to_table(&self) -> String {
+        format!("[{}.{}.{}]", self.2, self.1, self.0)
     }
 }
 
-/* TODO: Complete this section
-enum Category {
-    Food
+#[derive(Debug, Serialize)]
+#[allow(dead_code)]
+pub enum Category {
+    Undecided,
+    Food,
+    Restaurant,
+    Sports,
+    BoardGames,
+    VideoGames,
+    Bets,
+    Investments,
+    ExternalEducation,
+    Travel
 }
 
-struct Item {
-    name: String,
-    quantity: u32,
-    total_price: Option<f32>,
-    individual_price: Option<f32>,
-    category: Option<Category>
+#[derive(Debug, Serialize)]
+pub struct Item {
+    pub name: String,
+    pub quantity: u32,
+    pub total_price: Option<f32>,
+    pub individual_price: Option<f32>,
+    pub category: Category
 }
 
-struct Receipt {
-    date: Date,
-    currency_unit: String,
-    items: Vec<Item>
+#[derive(Debug, Serialize)]
+pub struct Receipt {
+    /// Date : Items
+    pub currency_unit: String,
+    pub items: Vec<Item>,
 }
-*/
+
+#[allow(dead_code)]
+pub struct MonthFile {
+    pub date: Date,
+    pub receipt: Receipt
+}
 
