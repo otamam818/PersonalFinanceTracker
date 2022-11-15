@@ -59,7 +59,6 @@ pub enum Category {
 pub struct Item {
     pub name: String,
     pub quantity: u32,
-    pub total_price: Option<f32>,
     pub individual_price: Option<f32>,
     pub category: Category
 }
@@ -68,11 +67,12 @@ pub struct Item {
 pub struct Receipt {
     /// Date : Items
     pub currency_unit: String,
+    pub store: String,
     pub items: Vec<Item>,
 }
 
 #[allow(dead_code)]
-pub struct MonthFile {
+pub struct DatedReceipt {
     pub date: Date,
     pub receipt: Receipt
 }

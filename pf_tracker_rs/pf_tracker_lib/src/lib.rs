@@ -1,6 +1,8 @@
 mod receipt;
 
 // TODO: Add ability to write to toml file
+pub fn export_toml(data: Vec<receipt::DatedReceipt>) {
+}
 
 #[cfg(test)]
 mod tests {
@@ -16,19 +18,18 @@ mod tests {
     fn test_toml() {
         let fin_receipt = receipt::Receipt {
             currency_unit: "AUD".to_string(),
+            store: "Coles".to_string(),
             items: vec![
                 receipt::Item {
                     name: "Cheese".to_string(),
                     quantity: 1,
-                    total_price: Some(32.0),
-                    individual_price: None,
+                    individual_price: Some(32.0),
                     category: receipt::Category::Undecided
                 },
                 receipt::Item {
                     name: "Banana".to_string(),
                     quantity: 1,
-                    total_price: Some(3.0),
-                    individual_price: None,
+                    individual_price: Some(32.0),
                     category: receipt::Category::Food
                 }
             ]
