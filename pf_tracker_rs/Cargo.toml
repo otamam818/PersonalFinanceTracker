@@ -1,0 +1,7 @@
+[workspace]
+
+members = [
+  "pf_tracker_cli",
+  "pf_tracker_lib",
+]
+

@@ -1,5 +1,3 @@
-// TODO: Modularize code
-
 // In the format DD/MM/YYYY
 pub struct Date (pub u8, pub u8, pub u32);
 
