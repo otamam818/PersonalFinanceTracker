@@ -1,5 +1,4 @@
 mod receipt;
-use std::collections::BTreeMap;
 
 // TODO: Add ability to write to toml file
 
