@@ -1,5 +1,4 @@
 use serde_derive::Serialize;
-use std::collections::BTreeMap;
 
 // In the format DD/MM/YYYY
 #[derive(Debug, PartialEq, Serialize)]
@@ -40,7 +39,7 @@ impl Date {
     }
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 #[allow(dead_code)]
 pub enum Category {
     Undecided,
@@ -55,7 +54,7 @@ pub enum Category {
     Travel
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct Item {
     pub name: String,
     pub quantity: u32,
@@ -63,9 +62,8 @@ pub struct Item {
     pub category: Category
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct Receipt {
-    /// Date : Items
     pub currency_unit: String,
     pub store: String,
     pub items: Vec<Item>,

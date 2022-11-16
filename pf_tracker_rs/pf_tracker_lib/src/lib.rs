@@ -1,7 +1,13 @@
 mod receipt;
 
 // TODO: Add ability to write to toml file
-pub fn export_toml(data: Vec<receipt::DatedReceipt>) {
+pub fn export_toml(data: Vec<receipt::DatedReceipt>) -> String {
+    data
+        .iter()
+        .map(|atom: &receipt::DatedReceipt| -> String {
+            format!("{}\n{}", atom.date.to_table(), toml::to_string(&atom.receipt).unwrap())
+        })
+        .collect::<String>()
 }
 
 #[cfg(test)]
@@ -34,6 +40,13 @@ mod tests {
                 }
             ]
         };
+
+        let all_data = vec![receipt::DatedReceipt {
+            date: receipt::Date(31, 2, 2022),
+            receipt: fin_receipt.clone()
+        }];
+
+        println!("{}\n---------", export_toml(all_data));
 
         let toml = toml::to_string(&fin_receipt);
         println!("{}", receipt::Date(16, 11, 2022).to_table());
