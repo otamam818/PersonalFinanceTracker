@@ -7,3 +7,8 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.0.24", features = ["derive"] }
+pf_tracker_lib = {path = "../pf_tracker_lib" }
+toml = "0.4.2"
+serde = "1.0.147"
+serde_derive = "1.0.147"
+
