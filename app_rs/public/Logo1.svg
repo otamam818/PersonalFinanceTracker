@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created using Krita: https://krita.org -->
+<svg xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:krita="http://krita.org/namespaces/svg/krita"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    width="72pt"
+    height="72pt"
+    viewBox="0 0 72 72">
+<defs/>
+<path id="shape0" transform="matrix(1.0839041387464 0.00461737436615434 -0.00440672102638378 1.13571772654808 34.9679743631997 2.53265524238429)" fill="#1ba85f" fill-rule="evenodd" stroke="#28a81b" stroke-width="0.4056" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2" d="M3.53655 23.8812C38.7019 25.0824 9.02907 67.2962 3.32949 52.0155L3.61011 1.03482C2.73314 -0.202772 0.467642 -0.475502 0 1.02221L0.0047961 55.065C4.782 64.5114 26.7298 51.0706 24.559 34.7141C22.5249 25.4004 15.5174 21.7895 3.53655 23.8812Z" sodipodi:nodetypes="ccccccc"/><path id="shape1" transform="matrix(1.08381180563564 0.0170969466024073 -0.0134566279227914 1.13562097966163 25.6427157330658 1.262147399381)" fill="#4fa81b" fill-rule="evenodd" stroke="none" stroke-width="0.4056" stroke-linecap="square" stroke-linejoin="miter" stroke-miterlimit="2" d="M4.84078 55.8935L4.84078 2.34803C1.61359 0.769931 0 -0.0126938 0 0.000155669C0 0.0194298 0.111667 -0.096215 1.83693 2.29021L1.83693 56.5384L0.491336 58.6706Z" sodipodi:nodetypes="cczcccc"/><path id="shape2" transform="matrix(1.08391309669261 0 0 1.13572711270867 11.8206318689024 4.36691106489948)" fill="#0d8900" fill-rule="evenodd" stroke="none" stroke-width="0.4056" stroke-linecap="square" stroke-linejoin="bevel" d="M24.6848 22.3106C7.25696 23.8311 -0.942648 20.1005 0.0859945 11.1188C3.0634 3.5319 9.2514 -0.172329 18.65 0.0061534C28.0486 0.184635 35.2312 4.11765 40.1978 11.8052C26.8442 -0.779679 7.35932 1.06991 4.3131 11.2264C4.53657 12.9543 1.583 18.2346 24.6848 22.3106Z" sodipodi:nodetypes="cczccc"/>
+</svg>
