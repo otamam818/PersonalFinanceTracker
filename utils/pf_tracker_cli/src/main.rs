@@ -1,5 +1,4 @@
-use pf_tracker_lib::date::Date;
-use pf_tracker_lib::receipt::{Receipt, Time};
+use pf_tracker_lib::{ Date, Receipt, Time };
 use toml;
 
 fn main() {
