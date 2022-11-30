@@ -1,9 +1,9 @@
-use serde_derive::Serialize;
+use serde_derive::{Deserialize, Serialize};
 use std::{fmt::Display, collections::HashSet};
 use chrono::{self, Datelike};
 
 // In the format DD/MM/YYYY
-#[derive(Debug, PartialEq, Serialize, Clone)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Date (u8, u8, u32);
 
 impl Date {

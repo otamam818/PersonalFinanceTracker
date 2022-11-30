@@ -1,8 +1,8 @@
 use crate::date::Date;
 use crate::time::Time;
-use serde_derive::Serialize;
+use serde_derive::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Category {
     id: u16,
     name: String,
@@ -11,7 +11,7 @@ pub struct Category {
     sub_category: Vec<u16>
 }
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Item {
     pub id: u16,
     pub name: String,
@@ -23,34 +23,25 @@ pub struct Item {
     pub category_ids: Vec<u16>
 }
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Receipt {
     pub date: Date,
     pub time: Time,
     pub store_id: u16,
 }
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Store {
     pub id: u8,
     pub location: String,
     pub name: String
 }
 
-#[derive(Debug, Serialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct BoughtItems {
     pub item_id: u16,
     pub quantity: u16,
     pub store_id: u8,
     pub receipt_id: String
-}
-
-#[derive(Debug, Serialize, Clone)]
-pub struct DataFile {
-    pub receipts: Vec<Receipt>,
-    pub items: Vec<Item>,
-    pub stores: Vec<Store>,
-    pub category: Vec<Category>,
-    pub bought_items: Vec<BoughtItems>
 }
 
