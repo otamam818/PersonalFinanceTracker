@@ -1,4 +1,5 @@
 import { open } from '@tauri-apps/api/dialog';
+import { invoke } from '@tauri-apps/api/tauri';
 
 function WelcomePage(configs) {
   let nameExists = configs.currConfig.name.length > 0;
@@ -54,9 +55,11 @@ async function handleLoad (configs) {
       extensions: ['toml']
     }]
   });
+  configs.currConfig.userData = await invoke("load_file", { path: configs.currConfig.loadPath });
   configs.currConfig.setComponent("loadFile");
   configs.currConfig.setConfig(configs.currConfig);
 }
+
 
 export default WelcomePage;
 

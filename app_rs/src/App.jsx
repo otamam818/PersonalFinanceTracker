@@ -7,6 +7,7 @@ function App() {
   let [currConfig, setConfig] = useState({
     loadPath : "cargo.toml",
     name : "Oisho",
+    userData : null,
   });
 
   // TODO: Change this back to "welcome" when you are done with the component

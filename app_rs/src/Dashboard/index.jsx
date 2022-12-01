@@ -1,4 +1,5 @@
 import {useState} from "react";
+import AddingArea from "./AddingArea";
 import "./style.scss";
 
 function Dashboard ( /* configs */ ) {
@@ -38,12 +39,6 @@ function EmptyContent() {
       <span className="comment">Add an item from the options below</span>
     </div>
   );
-}
-
-function AddingArea() {
-  return (
-    <div>Hello Adding Area</div>
-  )
 }
 
 export default Dashboard;
