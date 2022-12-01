@@ -22,7 +22,7 @@ function WelcomePage(configs) {
   return (
     <>
     <div className='big-logo'>
-      <img src="/Logo1.svg" alt="First attempt at a logo" />
+      <img src="/Logo.svg" alt="First attempt at a logo" />
       <h1> Finance Tracker </h1>
     </div>
     <div className="welcome-message">

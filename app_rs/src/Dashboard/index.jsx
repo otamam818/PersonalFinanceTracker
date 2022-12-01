@@ -18,7 +18,7 @@ function Dashboard ( /* configs */ ) {
   return (
     <div className="dashboard">
       <nav>
-        <img src="/Logo1.svg" alt="First attempt at a logo" />
+        <img src="/Logo.svg" alt="First attempt at a logo" />
         <span>Tracker App</span>
       </nav>
       <main>
