@@ -1,9 +1,15 @@
 import {useState} from "react";
 import "./App.scss";
+import Dashboard from "./Dashboard/index";
 import WelcomePage from "./WelcomePage/index";
 
 function App() {
-  let [currConfig, setConfig] = useState({ loadPath : "", name : "Oisho" });
+  let [currConfig, setConfig] = useState({
+    loadPath : "cargo.toml",
+    name : "Oisho",
+  });
+
+  // TODO: Change this back to "welcome" when you are done with the component
   let [componentChoice, setComponent] = useState("welcome");
   currConfig = {...currConfig, setConfig, setComponent};
 
@@ -17,7 +23,7 @@ function App() {
 function chooseCurrComponent(componentChoice, currConfig) {
   switch (componentChoice) {
     case "welcome" : return <WelcomePage currConfig={currConfig} />;
-    case "loadFile" : return <div>Hello loadFile</div>;
+    case "loadFile" : return <Dashboard currConfig={currConfig} />;
     default: return (<div>404, not found</div>)
   }
 }

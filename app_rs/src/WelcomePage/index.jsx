@@ -20,6 +20,11 @@ function WelcomePage(configs) {
   }
 
   return (
+    <>
+    <div className='big-logo'>
+      <img src="/Logo1.svg" alt="First attempt at a logo" />
+      <h1> Finance Tracker </h1>
+    </div>
     <div className="welcome-message">
       <h1>{name}</h1>
       <p>{greeting} What would you like to do?</p>
@@ -37,6 +42,7 @@ function WelcomePage(configs) {
       <p><strong>Note</strong> A finance-tracker file is the file that will keep track of all your finances</p>
       {feedback}
     </div>
+    </>
   );
 }
 
