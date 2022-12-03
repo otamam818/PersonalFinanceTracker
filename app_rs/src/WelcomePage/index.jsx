@@ -55,7 +55,12 @@ async function handleLoad (configs) {
       extensions: ['toml']
     }]
   });
-  configs.currConfig.userData = await invoke("load_file", { path: configs.currConfig.loadPath });
+
+  configs.currConfig.userData = await invoke(
+    "load_file",
+    { path: configs.currConfig.loadPath }
+  );
+
   configs.currConfig.setComponent("loadFile");
   configs.currConfig.setConfig(configs.currConfig);
 }

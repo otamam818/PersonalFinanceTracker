@@ -68,6 +68,10 @@
           letter-spacing: 0.06em;
         }
       }
+
+      .loading {
+        height: 75%;
+      }
     }
   }
 }
@@ -103,6 +107,24 @@
       border-radius: 8px;
       box-shadow: 0 11px 9px #00000069;
     }
+  }
+}
+
+.loading {
+  animation: opacity-loader 2s infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+@keyframes opacity-loader {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
   }
 }
 
