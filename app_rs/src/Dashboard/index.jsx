@@ -1,6 +1,7 @@
 import {useState} from "react";
 import AddingArea from "./AddingArea";
 import "./style.scss";
+import { allEmpty } from "./dataHandler";
 
 function Dashboard ( configs ) {
   // let currConfig = configs.currConfig;
@@ -8,11 +9,7 @@ function Dashboard ( configs ) {
 
   if (configs.currConfig.userData) {
     let userData = configs.currConfig.userData;
-    if (userData.bought_items.length === 0 &&
-        userData.category.length     === 0 &&
-        userData.items.length        === 0 &&
-        userData.receipts.length     === 0 &&
-        userData.stores.length       === 0 ) {
+    if (allEmpty(userData)) {
       currData = "empty";
     }
   }
