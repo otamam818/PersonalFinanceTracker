@@ -5,13 +5,13 @@ import WelcomePage from "./WelcomePage/index";
 
 function App() {
   let [currConfig, setConfig] = useState({
-    loadPath : "cargo.toml",
+    loadPath : "",
     name : "Oisho",
     userData : null,
   });
 
   // TODO: Change this back to "welcome" when you are done with the component
-  let [componentChoice, setComponent] = useState("loadFile");
+  let [componentChoice, setComponent] = useState("welcome");
   currConfig = {...currConfig, setConfig, setComponent};
 
   return (

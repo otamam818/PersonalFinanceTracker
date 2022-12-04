@@ -1,5 +1,14 @@
+import {useRef} from 'react';
+// import { invoke } from '@tauri-apps/api/tauri';
+
 function CategoryForm ( { setFormShown } ) {
-  console.log(setFormShown);
+  const nameRef = useRef(null);
+  const descriptionRef = useRef(null);
+
+  function handleSubmit () {
+    console.log(nameRef.current.value, descriptionRef.current.value)
+  }
+
   return (
     <form
       className="form-general form-category"
@@ -9,11 +18,11 @@ function CategoryForm ( { setFormShown } ) {
       <h1> Category </h1>
       <label>
         <span>Name</span>
-        <input type="text" />
+        <input type="text" ref={nameRef}/>
       </label>
       <label>
         <span> Description </span>
-        <textarea rows={5}></textarea>
+        <textarea rows={5} ref={descriptionRef}></textarea>
       </label>
       <label> 
         <span> Subcategories </span>
@@ -22,7 +31,7 @@ function CategoryForm ( { setFormShown } ) {
       </label>
 
       <div className="button-area">
-        <button> Submit </button>
+        <button onClick={() => handleSubmit()}> Submit </button>
         <button onClick={() => setFormShown(false)}> Cancel </button>
       </div>
     </form>

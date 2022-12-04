@@ -10,8 +10,10 @@ function Dashboard ( configs ) {
   let [chosenForm, setChosenForm] = useState(null);
   let [formShown, setFormShown] = useState(false);
 
-  if (configs.currConfig.userData) {
-    let userData = configs.currConfig.userData;
+  let currConfig = configs.currConfig
+
+  if (currConfig.userData) {
+    let userData = currConfig.userData;
     if (allEmpty(userData)) {
       currData = "empty";
     }
@@ -28,18 +30,19 @@ function Dashboard ( configs ) {
   renderedContent.push(<AddingArea
     setChosenForm={setChosenForm}
     setFormShown={setFormShown}
+    currConfig={currConfig}
   />);
-
-  console.log(currData);
 
   useEffect(() => {
     async function newData () {
-      return await invoke("get_mappable", { dataFile: configs.currConfig.userData})
+      return await invoke("get_mappable", { dataFile: currConfig.userData})
     }
 
     newData()
       .then((data) => {
         console.log(setCurrData, data);
+        currConfig.userData = data;
+        currConfig.setConfig(currConfig);
         setCurrData(data);
       })
       .catch((err) => {

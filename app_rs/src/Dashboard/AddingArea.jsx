@@ -2,7 +2,7 @@ import {Separator} from "./static";
 import chooseForm from "./forms/chooseForm";
 import "./forms/style.scss";
 
-function AddingArea( { setChosenForm, setFormShown } ) {
+function AddingArea( { setChosenForm, setFormShown, currConfig } ) {
   let buttonFields = ["Receipt", "Item", "Category"];
   let buttons = buttonFields.map((value, _) => {
     return (
@@ -10,7 +10,7 @@ function AddingArea( { setChosenForm, setFormShown } ) {
         content={value}
         callback={() => {
           setFormShown(true);
-          let newFormValue = chooseForm(value, setFormShown);
+          let newFormValue = chooseForm(value, setFormShown, currConfig);
           setChosenForm(newFormValue);
         }}
       />
