@@ -10,8 +10,7 @@ function AddingArea( { setChosenForm, setFormShown } ) {
         content={value}
         callback={() => {
           setFormShown(true);
-          let newFormValue = chooseForm(value);
-          console.log(newFormValue);
+          let newFormValue = chooseForm(value, setFormShown);
           setChosenForm(newFormValue);
         }}
       />
