@@ -1,7 +1,7 @@
 use std::{fs, fmt::Debug};
 use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
-use crate::receipt::{Receipt, Item, Store, Category, BoughtItems};
+use crate::receipt::{Receipt, Item, Store, Category, BoughtItems, Key};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct DataFile {
@@ -52,35 +52,28 @@ impl DataMap {
     #[allow(non_snake_case)]
     pub fn from_DataFile(data: DataFile) -> DataMap {
         DataMap {
-            receipts: data.receipts
-                .iter()
-                .map(|atom| (format!(
-                    "{}|{}|{}",
-                    atom.date,
-                    atom.time,
-                    atom.store_id), atom.to_owned())
-                ).collect::<HashMap<String, Receipt>>(),
-            items: data.items
-                .iter()
-                .map(|atom| (atom.id, atom.to_owned())
-                ).collect::<HashMap<u16, Item>>(),
-            stores: data.stores
-                .iter()
-                .map(|atom| (atom.id, atom.to_owned())
-                ).collect::<HashMap<u8, Store>>(),
-            category: data.category                .iter()
-                .map(|atom| (atom.id, atom.to_owned())
-                ).collect::<HashMap<u16, Category>>(),
-            bought_items: data.bought_items
-                .iter()
-                .map(|atom| (format!(
-                    "{}|{}|{}",
-                    atom.item_id,
-                    atom.store_id,
-                    atom.receipt_id), atom.to_owned())
-                ).collect::<HashMap<String, BoughtItems>>(),
+            receipts: get_hashmap(data.receipts),
+            items: get_hashmap(data.items),
+            stores: get_hashmap(data.stores),
+            category: get_hashmap(data.category),
+            bought_items: get_hashmap(data.bought_items),
         }
     }
+}
+
+fn get_hashmap<T, U>(list: Vec<U>) -> HashMap<T, U>
+where
+    T: std::hash::Hash + std::cmp::Eq,
+    U: Key<T> + Clone
+{
+    list
+        .iter()
+        .map(|atom| {
+            let key = atom.get_key();
+            let value = atom.clone();
+            (key, value)
+        })
+        .collect::<HashMap<T, U>>()
 }
 
 #[cfg(test)]

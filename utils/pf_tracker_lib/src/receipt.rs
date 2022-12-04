@@ -45,3 +45,43 @@ pub struct BoughtItems {
     pub receipt_id: String
 }
 
+// Key Implementations
+pub trait Key<T> {
+    fn get_key(&self) -> T;
+}
+
+impl Key<u16> for Category {
+    fn get_key(&self) -> u16 {
+        self.id
+    }
+}
+
+impl Key<u16> for Item {
+    fn get_key(&self) -> u16 {
+        self.id
+    }
+}
+
+impl Key<String> for Receipt {
+    fn get_key(&self) -> String {
+        format!("{}|{}|{}", self.date, self.time, self.store_id)
+    }
+}
+
+impl Key<u8> for Store {
+    fn get_key(&self) -> u8 {
+        self.id
+    }
+}
+
+impl Key<String> for BoughtItems {
+    fn get_key(&self) -> String {
+        format!(
+            "{}|{}|{}",
+            self.item_id,
+            self.store_id,
+            self.receipt_id
+        )
+    }
+}
+
