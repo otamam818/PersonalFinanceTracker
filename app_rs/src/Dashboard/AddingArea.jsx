@@ -1,23 +1,29 @@
+import {Separator} from "./static";
+import chooseForm from "./forms/chooseForm";
+import "./forms/style.scss";
 
-function AddingArea() {
+function AddingArea( { setChosenForm, setFormShown } ) {
+  let buttonFields = ["Receipt", "Item", "Category"];
+  let buttons = buttonFields.map((value, _) => {
+    return (
+      <AdderCard
+        content={value}
+        callback={() => {
+          setFormShown(true);
+          let newFormValue = chooseForm(value);
+          console.log(newFormValue);
+          setChosenForm(newFormValue);
+        }}
+      />
+    )
+  });
+
   return (
     <div className="adding-area">
       <Separator />
       <div className="card-section">
-        <AdderCard content={"Receipt"} />
-        <AdderCard content={"Item"} />
-        <AdderCard content={"Category"} />
+        {buttons}
       </div>
-    </div>
-  )
-}
-
-function Separator() {
-  return (
-    <div className="separator">
-      <div className="line"></div>
-      <div className="down-arrow">➤</div>
-      <div className="line"></div>
     </div>
   )
 }

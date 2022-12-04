@@ -1,11 +1,14 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddingArea from "./AddingArea";
 import "./style.scss";
 import { allEmpty } from "./dataHandler";
+import { invoke } from '@tauri-apps/api/tauri';
 
 function Dashboard ( configs ) {
   // let currConfig = configs.currConfig;
-  let [currData, _] = useState("loading");
+  let [currData, setCurrData] = useState("loading");
+  let [chosenForm, setChosenForm] = useState(null);
+  let [formShown, setFormShown] = useState(false);
 
   if (configs.currConfig.userData) {
     let userData = configs.currConfig.userData;
@@ -13,8 +16,6 @@ function Dashboard ( configs ) {
       currData = "empty";
     }
   }
-
-  console.log(configs.currConfig.userData);
 
   let renderedContent = [];
   if (currData === "loading") {
@@ -24,9 +25,30 @@ function Dashboard ( configs ) {
   } else {
     // TODO: Handle case where data is rendered
   }
-  renderedContent.push(<AddingArea />);
+  renderedContent.push(<AddingArea
+    setChosenForm={setChosenForm}
+    setFormShown={setFormShown}
+  />);
+
+  console.log(currData);
+
+  useEffect(() => {
+    async function newData () {
+      return await invoke("get_mappable", { dataFile: configs.currConfig.userData})
+    }
+
+    newData()
+      .then((data) => {
+        console.log(setCurrData, data);
+        setCurrData(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [configs, setCurrData]);
 
   return (
+    <>
     <div className="dashboard">
       <nav>
         <img src="/Logo.svg" alt="First attempt at a logo" />
@@ -39,6 +61,16 @@ function Dashboard ( configs ) {
         </div>
       </main>
     </div>
+    <div
+      className={"pop-up " + (formShown ? "shown" : "hidden")}
+      onClick={() => {
+        setFormShown(false);
+        setChosenForm(null);
+      }}
+    >
+      {chosenForm}
+    </div>
+    </>
   );
 }
 

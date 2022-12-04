@@ -11,7 +11,7 @@ function App() {
   });
 
   // TODO: Change this back to "welcome" when you are done with the component
-  let [componentChoice, setComponent] = useState("welcome");
+  let [componentChoice, setComponent] = useState("loadFile");
   currConfig = {...currConfig, setConfig, setComponent};
 
   return (
