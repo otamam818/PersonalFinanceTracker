@@ -1,12 +1,36 @@
 import {useRef} from 'react';
-// import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/tauri';
 
-function CategoryForm ( { setFormShown } ) {
+function CategoryForm ( { setFormShown, currConfig } ) {
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
 
   function handleSubmit () {
-    console.log(nameRef.current.value, descriptionRef.current.value)
+    let name = nameRef.current.value;
+    let description = descriptionRef.current.value;
+    console.log(currConfig);
+    async function updateConfig() {
+      return await invoke(
+        "append_category",
+        {
+          dataMap: currConfig.userData,
+          name,
+          description
+        }
+      );
+    }
+
+    updateConfig()
+      .then((data) => {
+        currConfig.setConfig({ ...currConfig, userData: data });
+        // Close the CategoryForm
+        nameRef.current.value = "";
+        descriptionRef.current.value = "";
+        setFormShown(false);
+        // TODO: Give a message that the value has been added
+        // TODO: Close the CategoryForm
+        // TODO: Close the CategoryForm
+      })
   }
 
   return (

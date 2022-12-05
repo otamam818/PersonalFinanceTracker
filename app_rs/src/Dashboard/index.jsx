@@ -3,6 +3,7 @@ import AddingArea from "./AddingArea";
 import "./style.scss";
 import { allEmpty } from "./dataHandler";
 import { invoke } from '@tauri-apps/api/tauri';
+import { Save } from 'react-feather';
 
 function Dashboard ( configs ) {
   // let currConfig = configs.currConfig;
@@ -12,22 +13,24 @@ function Dashboard ( configs ) {
 
   let currConfig = configs.currConfig
 
-  if (currConfig.userData) {
+  if (currConfig.userData && currData !== "loading") {
     let userData = currConfig.userData;
     if (allEmpty(userData)) {
       currData = "empty";
     }
   }
 
+  // Handle what rendered content to put at the center of the Dashboard
   let renderedContent = [];
   if (currData === "loading") {
-    renderedContent.push(<LoadingAnimation />);
+    renderedContent.push(<LoadingAnimation key={"LA"} />);
   } else if (currData === "empty") {
-    renderedContent.push(<EmptyContent />);
+    renderedContent.push(<EmptyContent key={"EC"} />);
   } else {
     // TODO: Handle case where data is rendered
   }
   renderedContent.push(<AddingArea
+    key={"AA"}
     setChosenForm={setChosenForm}
     setFormShown={setFormShown}
     currConfig={currConfig}
@@ -38,24 +41,33 @@ function Dashboard ( configs ) {
       return await invoke("get_mappable", { dataFile: currConfig.userData})
     }
 
-    newData()
-      .then((data) => {
-        console.log(setCurrData, data);
-        currConfig.userData = data;
-        currConfig.setConfig(currConfig);
-        setCurrData(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [configs, setCurrData]);
+    if (currData === "loading") {
+      console.log("Reached here");
+      newData()
+        .then((data) => {
+          currConfig.userData = data;
+          currConfig.setConfig(currConfig);
+          setCurrData(data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [configs, currData, setCurrData]);
 
   return (
     <>
     <div className="dashboard">
       <nav>
-        <img src="/Logo.svg" alt="First attempt at a logo" />
-        <span>Tracker App</span>
+        <div className="left">
+          <img src="/Logo.svg" alt="First attempt at a logo" />
+          <span>Tracker App</span>
+        </div>
+        <div className="right">
+          <button>
+            <Save color="white" />
+          </button>
+        </div>
       </nav>
       <main>
         <div className="left-bar"></div>

@@ -59,6 +59,30 @@ impl DataMap {
             bought_items: get_hashmap(data.bought_items),
         }
     }
+
+    #[allow(non_snake_case)]
+    pub fn to_DataFile(data: DataMap) -> DataFile {
+        DataFile { 
+            receipts: get_arr(data.receipts),
+            items: get_arr(data.items),
+            stores: get_arr(data.stores),
+            category: get_arr(data.category),
+            bought_items: get_arr(data.bought_items),
+        }
+    }
+
+    pub fn append_category(mut self, name: String, description: String) -> DataMap {
+        let id = self.category.len() as u16;
+        self.category.insert(
+            id,
+            Category {
+                id,
+                name,
+                description,
+                sub_category: vec![]
+            });
+        self
+    }
 }
 
 fn get_hashmap<T, U>(list: Vec<U>) -> HashMap<T, U>
@@ -70,10 +94,17 @@ where
         .iter()
         .map(|atom| {
             let key = atom.get_key();
-            let value = atom.clone();
+            let value = atom.to_owned();
             (key, value)
         })
         .collect::<HashMap<T, U>>()
+}
+
+fn get_arr<T, U: Clone>(hashmap: HashMap<T, U>) -> Vec<U> {
+    hashmap
+        .iter()
+        .map(|atom| atom.1.to_owned())
+        .collect()
 }
 
 #[cfg(test)]

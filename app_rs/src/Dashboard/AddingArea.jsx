@@ -4,9 +4,10 @@ import "./forms/style.scss";
 
 function AddingArea( { setChosenForm, setFormShown, currConfig } ) {
   let buttonFields = ["Receipt", "Item", "Category"];
-  let buttons = buttonFields.map((value, _) => {
+  let buttons = buttonFields.map((value, index) => {
     return (
       <AdderCard
+        key={index}
         content={value}
         callback={() => {
           setFormShown(true);

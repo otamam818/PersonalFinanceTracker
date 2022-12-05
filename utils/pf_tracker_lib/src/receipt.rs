@@ -6,6 +6,7 @@ use serde_derive::{Deserialize, Serialize};
 pub struct Category {
     pub id: u16,
     pub name: String,
+    pub description: String,
 
     // the u16 would be the corresponding sub-category id
     pub sub_category: Vec<u16>

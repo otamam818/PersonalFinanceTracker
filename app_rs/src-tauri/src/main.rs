@@ -13,7 +13,12 @@ fn greet(name: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, load_file, get_mappable])
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            load_file,
+            get_mappable,
+            append_category
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -27,4 +32,15 @@ fn load_file(path: &str) -> pf_tracker_lib::DataFile {
 fn get_mappable(data_file: pf_tracker_lib::DataFile) -> pf_tracker_lib::DataMap {
     pf_tracker_lib::DataMap::from_DataFile(data_file)
 }
+
+#[tauri::command]
+fn append_category(
+    data_map: pf_tracker_lib::DataMap,
+    name: String,
+    description: String
+    ) -> pf_tracker_lib::DataMap
+{
+    data_map.append_category(name, description)
+}
+
 
