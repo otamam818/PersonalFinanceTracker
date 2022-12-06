@@ -9,7 +9,9 @@ function chooseForm(dataInput, setFormShown, currConfig) {
       setFormShown={setFormShown}
       currConfig={currConfig}/>
     case "Item":
-      return <ItemForm setFormShown={setFormShown} />
+      return <ItemForm
+      setFormShown={setFormShown}
+      currConfig={currConfig}/>
     case "Category":
       return <CategoryForm
       setFormShown={setFormShown}

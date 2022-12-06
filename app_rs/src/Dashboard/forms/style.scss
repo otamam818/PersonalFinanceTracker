@@ -56,18 +56,36 @@
     }
 
     input, textarea, .form--box {
+      width: 100%;
+    }
+
+    input, textarea, .form--box, .price-label select {
       border: none;
       border-radius: 3px;
+      outline: 1px solid var(--hunter-green);
       background-color: var(--form-inner-green);
+      appearance: none;
       padding: 9px 6px;
       color: white;
       box-sizing: border-box;
-      box-shadow: 0 3px 4px hsl(150, 42.9%, 16.5%);
-      outline: 1px solid var(--hunter-green);
+      box-shadow: 0 3px 8px hsl(150deg, 42.9%, 13.5%);
     }
 
     .form--box {
       height: 100px;
+    }
+
+    .price-label {
+      display: flex;
+
+      select {
+        cursor: pointer;
+        margin-left: 10px;
+
+        &:hover {
+          outline: none;
+        }
+      }
     }
   }
   

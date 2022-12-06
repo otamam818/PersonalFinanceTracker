@@ -8,7 +8,6 @@ function CategoryForm ( { setFormShown, currConfig } ) {
   function handleSubmit () {
     let name = nameRef.current.value;
     let description = descriptionRef.current.value;
-    console.log(currConfig);
     async function updateConfig() {
       return await invoke(
         "append_category",
@@ -23,13 +22,14 @@ function CategoryForm ( { setFormShown, currConfig } ) {
     updateConfig()
       .then((data) => {
         currConfig.setConfig({ ...currConfig, userData: data });
-        // Close the CategoryForm
+
+        // Clear the CategoryForm
         nameRef.current.value = "";
         descriptionRef.current.value = "";
+
+        // Close the CategoryForm
         setFormShown(false);
         // TODO: Give a message that the value has been added
-        // TODO: Close the CategoryForm
-        // TODO: Close the CategoryForm
       })
   }
 

@@ -17,7 +17,8 @@ fn main() {
             greet,
             load_file,
             get_mappable,
-            append_category
+            append_category,
+            append_item
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -43,4 +44,15 @@ fn append_category(
     data_map.append_category(name, description)
 }
 
+#[tauri::command]
+fn append_item(
+    data_map: pf_tracker_lib::DataMap,
+    name: String,
+    price: String,
+    currency: String
+    ) -> pf_tracker_lib::DataMap
+{
+    let price: f32 = price.parse().unwrap();
+    data_map.append_item(name, price, currency)
+}
 
