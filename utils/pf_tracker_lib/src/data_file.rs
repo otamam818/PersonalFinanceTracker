@@ -83,6 +83,26 @@ impl DataMap {
             });
         self
     }
+
+    pub fn append_item(
+        mut self,
+        name: String,
+        price: f32,
+        currency: String
+        ) -> DataMap
+    {
+        let id = self.items.len() as u16;
+        self.items.insert(
+            id,
+            Item {
+                id,
+                name,
+                prices: vec![price],
+                currency,
+                category_ids: vec![],
+            });
+        self
+    }
 }
 
 fn get_hashmap<T, U>(list: Vec<U>) -> HashMap<T, U>
@@ -110,7 +130,6 @@ fn get_arr<T, U: Clone>(hashmap: HashMap<T, U>) -> Vec<U> {
 #[cfg(test)]
 mod tests {
     use crate::data_file::DataFile;
-
     use super::DataMap;
 
     #[test]
