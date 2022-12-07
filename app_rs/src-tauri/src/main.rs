@@ -3,7 +3,7 @@
     windows_subsystem = "windows"
 )]
 
-use pf_tracker_lib;
+use pf_tracker_lib::{self, receipt::Store};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -18,7 +18,8 @@ fn main() {
             load_file,
             get_mappable,
             append_category,
-            append_item
+            append_item,
+            get_arr_stores,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -54,5 +55,13 @@ fn append_item(
 {
     let price: f32 = price.parse().unwrap();
     data_map.append_item(name, price, currency)
+}
+
+#[tauri::command]
+fn get_arr_stores(
+    data_map: pf_tracker_lib::DataMap,
+    ) -> Vec<Store>
+{
+    pf_tracker_lib::DataMap::get_arr_stores(data_map)
 }
 

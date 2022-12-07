@@ -60,7 +60,8 @@
         "height": 600,
         "resizable": true,
         "title": "app_rs",
-        "width": 800
+        "width": 800,
+        "theme" : "Dark"
       }
     ]
   }
