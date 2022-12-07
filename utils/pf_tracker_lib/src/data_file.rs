@@ -103,6 +103,10 @@ impl DataMap {
             });
         self
     }
+
+    pub fn get_arr_stores(data: DataMap) -> Vec<Store> {
+        get_arr(data.stores)
+    }
 }
 
 fn get_hashmap<T, U>(list: Vec<U>) -> HashMap<T, U>
