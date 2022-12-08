@@ -8,7 +8,6 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
   const [chosenStore, setChosenStore] = useState(null);
   const [dropDownVisible, setDropdownVisible] = useState(false);
 
-  console.log(currConfig);
   return (
     <form
       className="form-general form-category"
@@ -30,11 +29,11 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
           currConfig={currConfig}
           data={{storeValue, setStoreValue}}
           setChosenStore={setChosenStore}
+          dateRef={dateRef}
           visibility={{
             isVisible: dropDownVisible,
             setVisibility: setDropdownVisible
-          }}
-          dateRef={dateRef} />
+          }} />
       </label>
       <label>
         <span>Date</span>

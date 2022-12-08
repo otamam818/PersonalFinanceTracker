@@ -11,15 +11,14 @@ function StoreDropDown ( { currConfig, data, visibility, dateRef } ) {
 
   let finButtons;
   if (renderedButtons) {
-    console.log(data.storeValue.length === 0);
     finButtons = renderedButtons
-      .filter((atom) => data.storeValue.length === 0 ||
+      .filter((atom) =>  data.storeValue.length === 0 ||
                         atom.startsWith(data.storeValue))
       .map( (value, index) => {
         return (
-          <button key={index} onClick={() => {
+          <button key={index} onClick={(e) => {
+            e.preventDefault();
             data.setStoreValue(value);
-            visibility.setVisibility(false);
             dateRef.current.focus();
           }}>
             {value}
