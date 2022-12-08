@@ -2,7 +2,7 @@ import {invoke} from "@tauri-apps/api";
 import {useState} from "react";
 import "./style.scss";
 
-function StoreDropDown ( { currConfig, nameRef, data } ) {
+function StoreDropDown ( { currConfig, data, visibility, dateRef } ) {
   async function updateButtons() {
     return await invoke("get_arr_stores", { dataMap: currConfig.userData});
   }
@@ -17,9 +17,10 @@ function StoreDropDown ( { currConfig, nameRef, data } ) {
                         atom.startsWith(data.storeValue))
       .map( (value, index) => {
         return (
-          <button onClick={() => {
-            data.setStoreValue(index);
-            nameRef.current.value = value;
+          <button key={index} onClick={() => {
+            data.setStoreValue(value);
+            visibility.setVisibility(false);
+            dateRef.current.focus();
           }}>
             {value}
           </button>
@@ -31,7 +32,11 @@ function StoreDropDown ( { currConfig, nameRef, data } ) {
       })
   }
   return (
-    <div className="store-dropdown">
+    <div
+      className={"store-dropdown" + ((visibility.isVisible)
+        ? " shown"
+        : " hidden"
+    )}>
       {finButtons}
     </div>
   )

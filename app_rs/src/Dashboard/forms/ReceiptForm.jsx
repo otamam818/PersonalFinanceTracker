@@ -4,39 +4,11 @@ import StoreDropDown from './ReceiptComponents/StoreDropdown';
 
 function ReceiptForm ( { setFormShown, currConfig } ) {
   const [storeValue, setStoreValue] = useState("");
-  const descriptionRef = useRef(null);
-  const [chosenStore, setChosenStore] = useState(null)
+  const dateRef = useRef(null);
+  const [chosenStore, setChosenStore] = useState(null);
+  const [dropDownVisible, setDropdownVisible] = useState(false);
 
   console.log(currConfig);
-
-  function handleSubmit () {
-    /*
-    async function updateConfig() {
-      return await invoke(
-        "append_category",
-        {
-          dataMap: currConfig.userData,
-          name,
-          description
-        }
-      );
-    }
-
-    updateConfig()
-      .then((data) => {
-        currConfig.setConfig({ ...currConfig, userData: data });
-
-        // Clear the ReceiptForm
-        nameRef.current.value = "";
-        descriptionRef.current.value = "";
-
-        // Close the ReceiptForm
-        setFormShown(false);
-        // TODO: Give a message that the value has been added
-      })
-    */
-  }
-
   return (
     <form
       className="form-general form-category"
@@ -44,7 +16,10 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
       onSubmit={(e) => e.preventDefault()}
     >
       <h1> Receipt </h1>
-      <label>
+      <label
+        onFocus={() => setDropdownVisible(true)}
+        onBlur={() => setDropdownVisible(false)}
+      >
         <span>Store</span>
         <input
           type="text"
@@ -54,11 +29,25 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
         <StoreDropDown
           currConfig={currConfig}
           data={{storeValue, setStoreValue}}
-          setChosenStore={setChosenStore} />
+          setChosenStore={setChosenStore}
+          visibility={{
+            isVisible: dropDownVisible,
+            setVisibility: setDropdownVisible
+          }}
+          dateRef={dateRef} />
       </label>
       <label>
-        <span> Date and Time </span>
-        <textarea rows={5} ref={descriptionRef}></textarea>
+        <span>Date</span>
+        <div className='price-label'>
+          <input type="text" placeholder='DD' ref={dateRef}/>
+          <input type="text" placeholder='MM' />
+          <input type="text" placeholder='YY' />
+        </div>
+        <span>Time</span>
+        <div className='price-label'>
+          <input type="text" placeholder='HH' />
+          <input type="text" placeholder='MM' />
+        </div>
       </label>
       <label> 
         <span> Subcategories </span>
