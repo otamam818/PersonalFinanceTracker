@@ -33,8 +33,7 @@ pub struct Receipt {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Store {
-    pub id: u8,
-    pub location: String,
+    pub location: Option<String>,
     pub name: String
 }
 
@@ -69,9 +68,12 @@ impl Key<String> for Receipt {
     }
 }
 
-impl Key<u8> for Store {
-    fn get_key(&self) -> u8 {
-        self.id
+impl Key<String> for Store {
+    fn get_key(&self) -> String {
+        match &self.location {
+            Some(place) => format!("{} | {}", self.name, place),
+            None => format!("{} | {}", self.name, "$Unknown"),
+        }
     }
 }
 
