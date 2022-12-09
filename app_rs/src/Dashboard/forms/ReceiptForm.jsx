@@ -4,9 +4,11 @@ import StoreDropDown from './ReceiptComponents/StoreDropdown';
 
 function ReceiptForm ( { setFormShown, currConfig } ) {
   const [storeValue, setStoreValue] = useState("");
-  const dateRef = useRef(null);
   const [chosenStore, setChosenStore] = useState(null);
   const [dropDownVisible, setDropdownVisible] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState(null);
+
+  const dateRef = useRef(null);
 
   return (
     <form
@@ -25,20 +27,23 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
           onChange={(e) => setStoreValue(e.target.value)}
           list="stores"
           value={storeValue} />
+        {feedbackMessage}
         <StoreDropDown
           currConfig={currConfig}
-          data={{storeValue, setStoreValue}}
-          setChosenStore={setChosenStore}
-          dateRef={dateRef}
-          visibility={{
+          data={{
+            storeValue,
+            setStoreValue,
+            setFeedbackMessage,
             isVisible: dropDownVisible,
             setVisibility: setDropdownVisible
-          }} />
+          }}
+          setChosenStore={setChosenStore}
+          dateRef={dateRef} />
       </label>
-      <label>
+      <label className='widespread'>
         <span>Date</span>
         <div className='price-label'>
-          <input type="text" placeholder='DD' ref={dateRef}/>
+          <input type="text" placeholder='DD' ref={dateRef} onChange={(e) => console.log(e.target.value)}/>
           <input type="text" placeholder='MM' />
           <input type="text" placeholder='YY' />
         </div>
@@ -60,6 +65,16 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
       </div>
     </form>
   )
+}
+
+function setAppropriately(event, min, max, length) {
+  event.preventDefault();
+  let elem = event.target;
+  let value = elem.value;
+  let valueNum = parseInt(value);
+  if (valueNum <= max && valueNum >= min && value.length <= length) {
+    elem.value = value;
+  }
 }
 
 export default ReceiptForm;

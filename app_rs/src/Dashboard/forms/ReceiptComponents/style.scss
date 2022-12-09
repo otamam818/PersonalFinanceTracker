@@ -11,5 +11,23 @@
   box-sizing: border-box;
   position: absolute;
   width: 43.6vw;
-}
+  flex-direction: column;
 
+  button {
+    background-color: hsl(120deg, 17.6%, 25%);
+    color: white;
+    border: 1px solid transparent;
+    padding: 8px 0px;
+    margin: 7px 0;
+    border-radius: 5px;
+    box-shadow: 0 4px 4px #0000004a;
+    font-weight: 600;
+
+    &:hover {
+      border: 1px solid var(--fern-green);
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+  }
+}

@@ -22,7 +22,7 @@
 
 .form-general {
   padding: 20px 0;
-  background: hsla(131.3, 21.6%, 29%, 0.93);
+  background: hsla(131.3, 21.6%, 29%);
   width: 50vw;
   display: flex;
   flex-direction: column;
@@ -88,6 +88,32 @@
       }
     }
   }
+
+  .widespread {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      margin-right: 4px;
+      border-left: 5px solid #578660;
+      border-radius: 5px;
+      box-shadow: -5px 0 5px -5px #0006;
+    }
+
+    .price-label {
+      margin-right: 10px;
+      text-align: center;
+
+      input {
+        margin: 0 5px;
+        text-align: center;
+      }
+    }
+
+  }
+
   
   .button-area {
     display: flex;
@@ -114,4 +140,5 @@
     }
   }
 }
+
 

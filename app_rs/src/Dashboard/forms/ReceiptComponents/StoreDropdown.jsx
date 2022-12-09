@@ -2,15 +2,15 @@ import {invoke} from "@tauri-apps/api";
 import {useState} from "react";
 import "./style.scss";
 
-function StoreDropDown ( { currConfig, data, visibility, dateRef } ) {
+function StoreDropDown ( { currConfig, data, dateRef } ) {
   async function updateButtons() {
     return await invoke("get_arr_stores", { dataMap: currConfig.userData});
   }
 
-  const [renderedButtons, setRenderedButtons] = useState(null);
+  let [renderedButtons, setRenderedButtons] = useState([]);
 
   let finButtons;
-  if (renderedButtons) {
+  if (renderedButtons.length !== 0) {
     finButtons = renderedButtons
       .filter((atom) =>  data.storeValue.length === 0 ||
                         atom.startsWith(data.storeValue))
@@ -24,6 +24,13 @@ function StoreDropDown ( { currConfig, data, visibility, dateRef } ) {
             {value}
           </button>
         )})
+    if (finButtons.length === 0 && data.storeValue.length !== 0) {
+      return (
+        <p>Adding new value <strong>{data.storeValue}</strong></p>
+      )
+    } else {
+      data.setFeedbackMessage(null);
+    }
   } else {
     updateButtons()
       .then((/* list */) => {
@@ -32,7 +39,7 @@ function StoreDropDown ( { currConfig, data, visibility, dateRef } ) {
   }
   return (
     <div
-      className={"store-dropdown" + ((visibility.isVisible)
+      className={"store-dropdown" + ((data.isVisible)
         ? " shown"
         : " hidden"
     )}>
