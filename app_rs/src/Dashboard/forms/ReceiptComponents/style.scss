@@ -12,6 +12,18 @@
   position: absolute;
   width: 43.6vw;
   flex-direction: column;
+  z-index: 2;
+
+  h3 {
+    margin: 0;
+    margin-bottom: 3px;
+    color: var(--timberwolf);
+  }
+
+  hr {
+    width: 90%;
+    border-color: hsla(82, 20%, 62%, 0.3);
+  }
 
   button {
     background-color: hsl(120deg, 17.6%, 25%);
@@ -28,6 +40,29 @@
       cursor: pointer;
       font-weight: 700;
       letter-spacing: 0.04em;
+    }
+  }
+
+  .add-store {
+    display: flex;
+    align-items: center;
+
+    & > button {
+      height: 31px;
+      margin-top: 10px;
+      padding: 6px 9px;
+    }
+
+    & > div {
+      margin-right: 10px;
+
+      input {
+        margin-left: 3px;
+        padding: 6px 5px;
+        border-radius: 8px;
+        outline: none;
+        border: 1px solid var(--hunter-green);
+      }
     }
   }
 }

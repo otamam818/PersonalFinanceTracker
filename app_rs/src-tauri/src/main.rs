@@ -3,7 +3,7 @@
     windows_subsystem = "windows"
 )]
 
-use pf_tracker_lib::{self, receipt::Store};
+use pf_tracker_lib::{self, receipt::Store, DataMap, DataFile};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -20,38 +20,39 @@ fn main() {
             append_category,
             append_item,
             get_arr_stores,
+            append_store
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
 #[tauri::command]
-fn load_file(path: &str) -> pf_tracker_lib::DataFile {
-    pf_tracker_lib::DataFile::read_file(path).unwrap()
+fn load_file(path: &str) -> DataFile {
+    DataFile::read_file(path).unwrap()
 }
 
 #[tauri::command]
-fn get_mappable(data_file: pf_tracker_lib::DataFile) -> pf_tracker_lib::DataMap {
-    pf_tracker_lib::DataMap::from_DataFile(data_file)
+fn get_mappable(data_file: DataFile) -> DataMap {
+    DataMap::from_DataFile(data_file)
 }
 
 #[tauri::command]
 fn append_category(
-    data_map: pf_tracker_lib::DataMap,
+    data_map: DataMap,
     name: String,
     description: String
-    ) -> pf_tracker_lib::DataMap
+    ) -> DataMap
 {
     data_map.append_category(name, description)
 }
 
 #[tauri::command]
 fn append_item(
-    data_map: pf_tracker_lib::DataMap,
+    data_map: DataMap,
     name: String,
     price: String,
     currency: String
-    ) -> pf_tracker_lib::DataMap
+    ) -> DataMap
 {
     let price: f32 = price.parse().unwrap();
     data_map.append_item(name, price, currency)
@@ -59,9 +60,20 @@ fn append_item(
 
 #[tauri::command]
 fn get_arr_stores(
-    data_map: pf_tracker_lib::DataMap,
+    data_map: DataMap,
     ) -> Vec<Store>
 {
-    pf_tracker_lib::DataMap::get_arr_stores(data_map)
+    DataMap::get_arr_stores(data_map)
+}
+
+
+#[tauri::command]
+fn append_store (
+    data_map: DataMap,
+    name: String,
+    location: String
+    ) -> DataMap
+{
+    data_map.append_store(name, location)
 }
 
