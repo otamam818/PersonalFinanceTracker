@@ -68,6 +68,15 @@ impl DataMap {
         self
     }
 
+    pub fn append_store(mut self, name: String, location: String) -> DataMap {
+        let location = if location.eq("") {None} else {Some(location)};
+        let store = Store { location, name };
+        let id = store.get_key();
+
+        self.stores.insert(id, store);
+        self
+    }
+
     pub fn get_arr_stores(data: DataMap) -> Vec<Store> {
         get_arr(data.stores)
     }
