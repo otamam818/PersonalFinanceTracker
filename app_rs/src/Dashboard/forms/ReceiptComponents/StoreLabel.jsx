@@ -1,10 +1,17 @@
+/**
+ * @fileoverview Asks the user about the place the receipt was generated
+ *               whether it is a store, restaurant or something else is for
+ *               the user to decide
+ */
 import {useState} from 'react';
 import StoreDropDown from './StoreDropdown';
 
-function StoreLabel( { setChosenStore, dateRef, currConfig } ) {
+function StoreLabel( { dateRef, currConfig } ) {
   const [storeValue, setStoreValue] = useState("");
+
+  // The user has the ability to choose from a dropdown of choices.
+  // This state manages when it is visible
   const [dropDownVisible, setDropdownVisible] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState(null);
 
   return (
     <label
@@ -17,17 +24,14 @@ function StoreLabel( { setChosenStore, dateRef, currConfig } ) {
         onChange={(e) => setStoreValue(e.target.value)}
         list="stores"
         value={storeValue} />
-      {feedbackMessage}
       <StoreDropDown
         currConfig={currConfig}
         data={{
           storeValue,
           setStoreValue,
-          setFeedbackMessage,
           isVisible: dropDownVisible,
           setVisibility: setDropdownVisible
         }}
-        setChosenStore={setChosenStore}
         dateRef={dateRef} />
     </label>
   )

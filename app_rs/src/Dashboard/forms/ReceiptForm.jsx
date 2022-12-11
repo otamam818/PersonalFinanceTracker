@@ -1,12 +1,13 @@
+/**
+ * @fileoverview Manages the whole Receipt form and its sub-components
+ * @author Tahmin Ahmed (www.github.com/otamam818)
+ */
 import {useRef, useState} from 'react';
-// import { invoke } from '@tauri-apps/api/tauri';
 import StoreLabel from './ReceiptComponents/StoreLabel';
 import DateTimeLabel from './ReceiptComponents/DateTimeLabel';
 
 function ReceiptForm ( { setFormShown, currConfig } ) {
-  const [_, setChosenStore] = useState(null);
   const dateRef = useRef(null);
-
   return (
     <form
       className="form-general form-category"
@@ -15,7 +16,6 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
     >
       <h1> Receipt </h1>
       <StoreLabel
-        setChosenStore={setChosenStore}
         dateRef={dateRef}
         currConfig={currConfig} />
       <DateTimeLabel dateRef={dateRef} />

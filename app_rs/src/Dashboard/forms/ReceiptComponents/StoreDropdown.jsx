@@ -1,15 +1,28 @@
+/**
+ * @fileoverview The dropdown component that lets the user control 2 things:
+ *               - Adding a new store
+ *               - Choosing from an existing store
+ */
 import {invoke} from "@tauri-apps/api";
 import {useState} from "react";
 import AddStore from "./AddStore";
 import "./style.scss";
 
+/* Used to render an array of an integer. The array was required to be
+ * non-empty, as the backend-function can instead return an empty array,
+ * thus never updating the component
+ */
 const INITIAL = -1;
 
 function StoreDropDown ( { currConfig, data, dateRef } ) {
+  // An array that gets modified differently based on what kind of data
+  // it contains
   let [renderedButtons, setRenderedButtons] = useState([INITIAL]);
 
   let finButtons;
-  if (!renderedButtons.includes(-1)) {
+  // Check if it is in the initial state
+  if (!renderedButtons.includes(INITIAL)) { 
+    // Set up the adding functionality within the dropdown
     finButtons = [
       <h3 key="heading-1">Add your own</h3>,
       <AddStore
@@ -18,9 +31,15 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
         dateRef={dateRef}
         setters={{setRenderedButtons, setStoreValue: data.setStoreValue}}
       />,
-      <hr key="line-break"/>,
-      <h3 key="heading-2">Or choose from pre-existing ones</h3>
     ]
+    if (renderedButtons.length !== 0) {
+      finButtons = finButtons.concat([
+        <hr key="line-break"/>,
+        <h3 key="heading-2">Or choose from pre-existing ones</h3>
+      ])
+    }
+
+    // This part wont render anything if renderedButtons is simply empty
     finButtons = finButtons.concat(
       renderedButtons
       .filter((atom) =>  data.storeValue.length === 0 ||
@@ -28,7 +47,7 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
       .map( (value, index) => {
         let location = value.location === null
           ? (<span className="text-unknown">Unknown Location</span>) 
-          : (<span> {value.location} </span>);
+          : (<span className="location"> {value.location} </span>);
         return (
           <button key={index} onClick={(e) => {
             e.preventDefault();
@@ -44,8 +63,6 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
       return (
         <p>Adding new value <strong>{data.storeValue}</strong></p>
       )
-    } else {
-      data.setFeedbackMessage(null);
     }
   } else {
     updateButtons(currConfig.userData)
@@ -66,9 +83,10 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
   )
 }
 
+// Exported as it is also used whenever a new category is added
+// (the AddStore component)
 export async function updateButtons(dataMap) {
   return await invoke("get_arr_stores", { dataMap});
 }
 
 export default StoreDropDown;
-

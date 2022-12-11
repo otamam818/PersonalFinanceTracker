@@ -10,6 +10,8 @@
   box-shadow: 0 8px 9px -8px black;
   box-sizing: border-box;
   position: absolute;
+  height: 35vh;
+  overflow-y: scroll;
   width: 43.6vw;
   flex-direction: column;
   z-index: 2;
@@ -41,20 +43,31 @@
       font-weight: 700;
       letter-spacing: 0.04em;
     }
+
+    .location {
+      color: hsla(119deg, 19%, 69%, 1);
+      text-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.5);
+    }
   }
 
   .add-store {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     & > button {
       height: 31px;
       margin-top: 10px;
       padding: 6px 9px;
+
+      &:hover {
+        letter-spacing: 0;
+      }
     }
 
     & > div {
       margin-right: 10px;
+      width: 44%;
 
       input {
         margin-left: 3px;

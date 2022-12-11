@@ -1,3 +1,6 @@
+/**
+ * @fileoverview The component that lets the user add a new store to the file
+ */
 import {invoke} from "@tauri-apps/api";
 import {useRef} from "react";
 import {updateButtons} from "./StoreDropdown";
@@ -31,6 +34,10 @@ function AddStore( { currConfig, setters, dateRef } ) {
 }
 
 async function handleSubmit(currConfig, name, location, setters) {
+  if (name.length === 0) {
+    return;
+  }
+
   currConfig.userData
     = await invoke(
       "append_store",
