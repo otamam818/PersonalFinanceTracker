@@ -7,14 +7,17 @@ use pf_tracker_lib::{self, receipt::Store, DataMap, DataFile};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn make_file (location: String) {
+    match DataFile::init_file(&location) {
+        Ok(_) => {},
+        Err(msg) => println!("Invalid read: {:?}", msg)
+    }
 }
 
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            greet,
+            make_file,
             load_file,
             get_mappable,
             append_category,

@@ -1,4 +1,4 @@
-import { open } from '@tauri-apps/api/dialog';
+import { open, save } from '@tauri-apps/api/dialog';
 import { invoke } from '@tauri-apps/api/tauri';
 
 function WelcomePage(configs) {
@@ -31,7 +31,7 @@ function WelcomePage(configs) {
       <p>{greeting} What would you like to do?</p>
 
       <div className="options">
-        <button className="create">
+        <button className="create" onClick={() => handleSave(configs)}>
           Create a new finance-tracker file
         </button>
 
@@ -65,6 +65,30 @@ async function handleLoad (configs) {
   configs.currConfig.setConfig(configs.currConfig);
 }
 
+async function handleSave(configs){
+  console.log(configs);
+  let chosenName = await save({
+    title: "Choose path and filename",
+    filters: [{
+      name: "TOML file",
+      extensions: ['toml']
+    }]
+  });
+
+  if (!chosenName.endsWith(".toml")) {
+    chosenName += ".toml";
+  }
+
+  configs.currConfig.loadPath = chosenName;
+  await invoke("make_file", {location: chosenName});
+  configs.currConfig.userData = await invoke(
+    "load_file",
+    { path: configs.currConfig.loadPath }
+  );
+  configs.currConfig.setComponent("loadFile");
+  configs.currConfig.setConfig(configs.currConfig);
+  console.log(configs.currConfig);
+}
 
 export default WelcomePage;
 
