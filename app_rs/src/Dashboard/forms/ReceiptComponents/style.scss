@@ -1,5 +1,9 @@
+:root {
+  --hover-green: hsl(130, 17.6%, 20%);
+}
+
 .store-dropdown {
-  background: hsl(130, 17.6%, 20%);
+  background: var(--hover-green);
   padding: 8px;
   font-size: 14px;
   font-weight: 600;
@@ -77,5 +81,24 @@
         border: 1px solid var(--hunter-green);
       }
     }
+  }
+}
+
+.form-general label .item-box {
+  display: flex;
+
+  input, .price-label select {
+    outline: none;
+    background-color: hsl(151.2, 28.1%, 21.5%);
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+    &:hover, &:focus {
+      border: 1px solid var(--fern-green);
+    }
+  }
+
+  .price-label {
+    flex-direction: column;
   }
 }

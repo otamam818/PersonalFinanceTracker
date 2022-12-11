@@ -2,9 +2,10 @@
  * @fileoverview Manages the whole Receipt form and its sub-components
  * @author Tahmin Ahmed (www.github.com/otamam818)
  */
-import {useRef, useState} from 'react';
+import {useRef} from 'react';
 import StoreLabel from './ReceiptComponents/StoreLabel';
 import DateTimeLabel from './ReceiptComponents/DateTimeLabel';
+import ItemLabel from './ReceiptComponents/ItemLabel';
 
 function ReceiptForm ( { setFormShown, currConfig } ) {
   const dateRef = useRef(null);
@@ -19,6 +20,8 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
         dateRef={dateRef}
         currConfig={currConfig} />
       <DateTimeLabel dateRef={dateRef} />
+
+      <ItemLabel currConfig={currConfig} />
 
       <div className="button-area">
         <button onClick={() => handleSubmit()}> Submit </button>

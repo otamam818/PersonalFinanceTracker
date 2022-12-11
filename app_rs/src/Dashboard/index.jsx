@@ -42,7 +42,6 @@ function Dashboard ( configs ) {
     }
 
     if (currData === "loading") {
-      console.log("Reached here");
       newData()
         .then((data) => {
           currConfig.userData = data;

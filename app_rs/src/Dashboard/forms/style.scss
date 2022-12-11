@@ -81,6 +81,7 @@
       select {
         cursor: pointer;
         margin-left: 10px;
+        height: max-content;
 
         &:hover {
           outline: none;
