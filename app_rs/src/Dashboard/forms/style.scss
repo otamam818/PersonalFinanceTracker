@@ -60,15 +60,16 @@
     }
 
     input, textarea, .form--box, .price-label select {
+      // border: 1px solid var(--hunter-green);
       border: none;
-      border-radius: 3px;
-      outline: 1px solid var(--hunter-green);
+      border-radius: 15px;
+      outline: 1px solid transparent;
       background-color: var(--form-inner-green);
       appearance: none;
       padding: 9px 6px;
       color: white;
       box-sizing: border-box;
-      box-shadow: 0 3px 8px hsl(150deg, 42.9%, 13.5%);
+      box-shadow: 0 3px 8px hsl(150deg, 42.9%, 13.5%), 0 1px 0 1pt var(--hunter-green);
     }
 
     .form--box {

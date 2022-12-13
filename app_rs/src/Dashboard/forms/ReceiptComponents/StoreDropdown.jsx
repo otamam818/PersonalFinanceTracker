@@ -49,7 +49,7 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
           ? (<span className="text-unknown">Unknown Location</span>) 
           : (<span className="location"> {value.location} </span>);
         return (
-          <button key={index} onClick={(e) => {
+          <button className="form-button" key={index} onClick={(e) => {
             e.preventDefault();
             data.setStoreValue(value.name);
             dateRef.current.focus();

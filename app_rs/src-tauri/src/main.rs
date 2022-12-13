@@ -3,16 +3,7 @@
     windows_subsystem = "windows"
 )]
 
-use pf_tracker_lib::{self, receipt::Store, DataMap, DataFile};
-
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn make_file (location: String) {
-    match DataFile::init_file(&location) {
-        Ok(_) => {},
-        Err(msg) => println!("Invalid read: {:?}", msg)
-    }
-}
+use pf_tracker_lib::{self, receipt::{Store, Item}, DataMap, DataFile};
 
 fn main() {
     tauri::Builder::default()
@@ -23,10 +14,21 @@ fn main() {
             append_category,
             append_item,
             get_arr_stores,
-            append_store
+            get_arr_items,
+            append_store,
+            get_item_height,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+#[tauri::command]
+fn make_file (location: String) {
+    match DataFile::init_file(&location) {
+        Ok(_) => {},
+        Err(msg) => println!("Invalid read: {:?}", msg)
+    }
 }
 
 #[tauri::command]
@@ -57,7 +59,6 @@ fn append_item(
     currency: String
     ) -> DataMap
 {
-    let price: f32 = price.parse().unwrap();
     data_map.append_item(name, price, currency)
 }
 
@@ -69,6 +70,13 @@ fn get_arr_stores(
     DataMap::get_arr_stores(data_map)
 }
 
+#[tauri::command]
+fn get_arr_items(
+    data_map: DataMap,
+    ) -> Vec<Item>
+{
+    DataMap::get_arr_items(data_map)
+}
 
 #[tauri::command]
 fn append_store (
@@ -78,5 +86,17 @@ fn append_store (
     ) -> DataMap
 {
     data_map.append_store(name, location)
+}
+
+#[tauri::command]
+fn get_item_height (
+    data_map: DataMap,
+    ) -> i32
+{
+    if data_map.items.is_empty() {
+        120
+    } else {
+        180
+    }
 }
 

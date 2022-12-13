@@ -1,5 +1,15 @@
 :root {
+  --item-button: hsl(151.2, 28.1%, 21.5%);
   --hover-green: hsl(130, 17.6%, 20%);
+}
+
+.form-button {
+  color: white;
+  border: 1px solid transparent;
+  margin: 7px 0;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px #0000004a;
+  font-weight: 600;
 }
 
 .store-dropdown {
@@ -28,18 +38,11 @@
 
   hr {
     width: 90%;
-    border-color: hsla(82, 20%, 62%, 0.3);
-  }
+    border-color: hsla(82, 20%, 62%, 0.3); }
 
   button {
     background-color: hsl(120deg, 17.6%, 25%);
-    color: white;
-    border: 1px solid transparent;
     padding: 8px 0px;
-    margin: 7px 0;
-    border-radius: 5px;
-    box-shadow: 0 4px 4px #0000004a;
-    font-weight: 600;
 
     &:hover {
       border: 1px solid var(--fern-green);
@@ -84,21 +87,53 @@
   }
 }
 
-.form-general label .item-box {
+.form-general .items .form--box {
   display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 
-  input, .price-label select {
+  input, .price-label select, button {
     outline: none;
-    background-color: hsl(151.2, 28.1%, 21.5%);
+    background-color: var(--item-button);
     border: 1px solid transparent;
     border-radius: 5px;
+  }
 
-    &:hover, &:focus {
-      border: 1px solid var(--fern-green);
+  button {
+    padding: 8px 0;
+
+    &:hover {
+      background-color: hsl(151.2, 28.1%, 23.5%);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
     }
   }
 
-  .price-label {
-    flex-direction: column;
+  input::placeholder {
+    color: #ffffff67;
   }
+
+  .item-box {
+    display: flex;
+
+    .price-label {
+      flex-direction: column;
+    }
+
+    .name {
+      width: 80%;
+      margin-right: 15px;
+    }
+
+    .price {
+      width: 40%;
+    }
+  }
+}
+
+.check-box {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
 }

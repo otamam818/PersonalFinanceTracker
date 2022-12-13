@@ -9,6 +9,7 @@ import ItemLabel from './ReceiptComponents/ItemLabel';
 
 function ReceiptForm ( { setFormShown, currConfig } ) {
   const dateRef = useRef(null);
+  console.log(currConfig);
   return (
     <form
       className="form-general form-category"

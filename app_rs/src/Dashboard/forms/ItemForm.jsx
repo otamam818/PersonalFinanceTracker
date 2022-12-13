@@ -10,21 +10,8 @@ function ItemForm ( { setFormShown, currConfig } ) {
     let name = nameRef.current.value;
     let price = priceState;
     let currency = currencyRef.current.value;
-    console.log(currConfig);
 
-    async function updateConfig() {
-      return await invoke(
-        "append_item",
-        {
-          dataMap: currConfig.userData,
-          name,
-          price,
-          currency
-        }
-      );
-    }
-
-    updateConfig()
+    appendItem(currConfig, name, price, currency)
       .then((data) => {
         currConfig.setConfig({ ...currConfig, userData: data });
         console.log({ ...currConfig, userData: data });
@@ -79,6 +66,18 @@ function handlePriceRef(setter, newValue) {
   }
 
   setter(newValue);
+}
+
+export async function appendItem(currConfig, name, price, currency) {
+  return await invoke(
+    "append_item",
+    {
+      dataMap: currConfig.userData,
+      name,
+      price,
+      currency
+    }
+  );
 }
 
 export default ItemForm;

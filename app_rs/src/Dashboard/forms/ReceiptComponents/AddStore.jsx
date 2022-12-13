@@ -18,16 +18,18 @@ function AddStore( { currConfig, setters, dateRef } ) {
         <span>Location:</span>
         <input type="text" ref={locationRef} placeholder="optional" />
       </div>
-      <button onClick={() =>{
-        handleSubmit(
-          currConfig,
-          nameRef.current.value,
-          locationRef.current.value,
-          setters
-        );
-        dateRef.current.focus();
-        nameRef.current.value = "";
-        locationRef.current.value = "";
+      <button
+        className="form-button"
+        onClick={() =>{
+          handleSubmit(
+            currConfig,
+            nameRef.current.value,
+            locationRef.current.value,
+            setters
+          );
+          dateRef.current.focus();
+          nameRef.current.value = "";
+          locationRef.current.value = "";
       }}> Add </button>
     </div>
   )
