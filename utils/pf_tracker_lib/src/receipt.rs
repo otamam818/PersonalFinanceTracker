@@ -19,7 +19,7 @@ pub struct Item {
 
     /// prices.last() would be the latest price, whereas prices.first
     /// would be the first-noted price
-    pub prices: Vec<f32>,
+    pub prices: Vec<String>,
     pub currency: String,
     pub category_ids: Vec<u16>
 }

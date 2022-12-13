@@ -51,7 +51,7 @@ impl DataMap {
     pub fn append_item(
         mut self,
         name: String,
-        price: f32,
+        price: String,
         currency: String
         ) -> DataMap
     {
@@ -79,6 +79,10 @@ impl DataMap {
 
     pub fn get_arr_stores(data: DataMap) -> Vec<Store> {
         get_arr(data.stores)
+    }
+
+    pub fn get_arr_items(data: DataMap) -> Vec<Item> {
+        get_arr(data.items)
     }
 }
 
