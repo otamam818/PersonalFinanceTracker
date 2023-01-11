@@ -18,7 +18,6 @@ function ItemForm ( { setFormShown, currConfig } ) {
 
         // Clear the ItemForm
         nameRef.current.value = "";
-        descriptionRef.current.value = "";
 
         // Close the ItemForm
         setFormShown(false);

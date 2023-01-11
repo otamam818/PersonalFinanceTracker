@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import AddingArea from "./AddingArea";
 import "./style.scss";
+// TODO: Migrate this into a function called in the back-end
 import { allEmpty } from "./dataHandler";
 import { invoke } from '@tauri-apps/api/tauri';
 import { Save } from 'react-feather';
@@ -63,7 +64,7 @@ function Dashboard ( configs ) {
           <span>Tracker App</span>
         </div>
         <div className="right">
-          <button>
+          <button onClick={() => handleSave(currConfig)}>
             <Save color="white" />
           </button>
         </div>
@@ -101,6 +102,14 @@ function LoadingAnimation() {
   return (
     <div className="loading">Loading data...</div>
   )
+}
+
+async function handleSave(currConfig) {
+  console.log(currConfig);
+  await invoke("save_file", {
+    dataMap: currConfig.userData,
+    filePath: currConfig.loadPath
+  });
 }
 
 export default Dashboard;

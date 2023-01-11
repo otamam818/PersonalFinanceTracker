@@ -30,6 +30,7 @@ function ItemInputs () {
 }
 
 function setValidFloat(setter, value) {
+  // Base case for when the user cleared the entry
   if (value === "") {
     setter(value);
     return;
