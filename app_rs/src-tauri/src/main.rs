@@ -10,6 +10,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             make_file,
             load_file,
+            save_file,
             get_mappable,
             append_category,
             append_item,
@@ -34,6 +35,15 @@ fn make_file (location: String) {
 #[tauri::command]
 fn load_file(path: &str) -> DataFile {
     DataFile::read_file(path).unwrap()
+}
+
+#[tauri::command]
+fn save_file(data_map: DataMap, file_path: &str) -> bool {
+    println!("{}", file_path);
+    match DataMap::to_DataFile(data_map).update_file(file_path) {
+        Ok(_) => true,
+        Err(_) => false
+    }
 }
 
 #[tauri::command]
@@ -93,10 +103,9 @@ fn get_item_height (
     data_map: DataMap,
     ) -> i32
 {
-    if data_map.items.is_empty() {
-        120
-    } else {
-        180
+    match data_map.items {
+        Some(_) => 180,
+        None => 120
     }
 }
 
