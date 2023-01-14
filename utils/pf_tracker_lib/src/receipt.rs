@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::date::Date;
 use crate::time::Time;
 use serde_derive::{Deserialize, Serialize};
@@ -12,9 +14,10 @@ pub struct Category {
     pub sub_category: Vec<u16>
 }
 
+type ItemKey = u16;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Item {
-    pub id: u16,
+    pub id: ItemKey,
     pub name: String,
 
     /// prices.last() would be the latest price, whereas prices.first
@@ -37,14 +40,15 @@ pub struct Store {
     pub name: String
 }
 
+type Quantity = u16;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct BoughtItems {
-    pub item_id: u16,
-    pub quantity: u16,
+    pub items: HashMap<ItemKey, Quantity>,
     pub store_id: u8,
     pub receipt_id: String
 }
 
+// TODO: Separate `Key` into its own file
 // Key Implementations
 pub trait Key<T> {
     fn get_key(&self) -> T;
@@ -80,10 +84,9 @@ impl Key<String> for Store {
 impl Key<String> for BoughtItems {
     fn get_key(&self) -> String {
         format!(
-            "{}|{}|{}",
-            self.item_id,
+            "{}@{}",
+            self.receipt_id,
             self.store_id,
-            self.receipt_id
         )
     }
 }

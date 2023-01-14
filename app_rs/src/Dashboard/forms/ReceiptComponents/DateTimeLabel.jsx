@@ -11,9 +11,25 @@ function DateTimeLabel( { dateRef } ) {
       <label className='widespread'>
         <span>Date</span>
         <div className='price-label'>
-          <input type="text" value={dayVal} placeholder='DD' ref={dateRef} onChange={(e) => setValid(setDayVal, e.target.value, 1, 31, 2)}/>
-          <input type="text" value={monthVal} placeholder='MM' onChange={(e) => setValid(setMonthVal, e.target.value, 1, 12, 2)} />
-          <input type="text" value={yearVal} placeholder='YY' onChange={(e) => setValid(setYearVal, e.target.value, 0, 99, 2)} />
+          <input
+            type="text"
+            id="date-day"
+            value={dayVal}
+            placeholder='DD'
+            ref={dateRef}
+            onChange={(e) => setValid(setDayVal, e.target.value, 1, 31, 2)}/>
+          <input
+            type="text"
+            id="date-month"
+            value={monthVal}
+            placeholder='MM'
+            onChange={(e) => setValid(setMonthVal, e.target.value, 1, 12, 2)} />
+          <input
+            type="text"
+            id="date-year"
+            value={yearVal}
+            placeholder='YY'
+            onChange={(e) => setValid(setYearVal, e.target.value, 0, 99, 2)} />
         </div>
         <span>Time</span>
         <div className='price-label'>

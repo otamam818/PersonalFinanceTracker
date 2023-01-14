@@ -25,11 +25,25 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
       <ItemLabel currConfig={currConfig} />
 
       <div className="button-area">
-        <button onClick={() => handleSubmit()}> Submit </button>
+        <button onClick={() => handleSubmit(currConfig)}> Submit </button>
         <button onClick={() => setFormShown(false)}> Cancel </button>
       </div>
     </form>
   )
+}
+
+async function handleSubmit(currConfig) {
+  let store = document.querySelector("input[for='store-name']").value;
+  let date = ['date-day', 'date-month', 'date-year'].map(value => {
+    return parseInt(document.querySelector(`input[id='${value}']`).value)
+  });
+
+  let checkedItems = Array.from(
+    document.querySelectorAll(".check-box span[hidden][data-chosen=true]")
+  ).map(element => {
+    return parseInt(element.innerHTML);
+  });
+  console.log({store, date, checkedItems});
 }
 
 export default ReceiptForm;

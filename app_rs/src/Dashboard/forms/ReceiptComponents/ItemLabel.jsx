@@ -14,10 +14,7 @@ function ItemLabel( { currConfig } ) {
   const [itemSet, setItemSet] = useState(new Set());
 
   useEffect(() => {
-    getArrItems(setOptions, currConfig.userData)
-      .then((arrValue) => {
-        console.log(arrValue);
-      });
+    getArrItems(setOptions, currConfig.userData);
   }, [setOptions, currConfig]);
 
   const [height, setHeight]
@@ -97,6 +94,7 @@ function TickBox( { value, itemSet, setItemSet } ) {
     }}>
       {chosenIcon}
       <span>{value.name}({newestPrice}){value.currency}</span>
+      <span className="item-id" data-chosen={itemSet.has(value.id)} hidden >{value.id}</span>
     </div>
   )
 }
