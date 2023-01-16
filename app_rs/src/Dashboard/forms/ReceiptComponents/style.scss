@@ -135,5 +135,29 @@
 .check-box {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 5px 0;
+
+  .quantity-modifier {
+    display: flex;
+    width: max-content;
+    justify-content: space-between;
+
+    .append, .prepend {
+      background-color: hsl(131deg, 22%, 12%);
+      padding: 0 15px;
+    }
+
+    .append {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      margin-left: 3px;
+    }
+
+    .prepend {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      margin-right: 3px;
+    }
+  }
 }

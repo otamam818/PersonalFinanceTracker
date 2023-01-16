@@ -74,27 +74,32 @@ function Options ( { optionData, itemSet, setItemSet }) {
   return finRendered;
 }
 
-function TickBox( { value, itemSet, setItemSet } ) {
+function TickBox( { value, itemSet } ) {
   let newestPrice = value.prices[value.prices.length - 1];
-  let [chosenIcon, setChosenIcon] = useState(
-    itemSet.has(value.id) ? <CheckSquare /> : <Square />
-  );
+  let [priceVal, setPriceVal] = useState(0);
+  let hasNoQuantity = priceVal === 0;
+
+  let chosenIcon = !hasNoQuantity ? <CheckSquare /> : <Square />
+
   return (
-    <div className="check-box" data-selected={itemSet.has(value.id)} onClick={(e) => {
-      e.preventDefault();
-      if (itemSet.has(value.id)) {
-        itemSet.delete(value.id);
-        setChosenIcon(<Square />);
-      } else {
-        itemSet.add(value.id);
-        setChosenIcon(<CheckSquare />);
-      }
-      console.log(itemSet)
-      setItemSet(itemSet);
-    }}>
+    <div
+      className="check-box"
+      data-selected={!hasNoQuantity}
+    >
       {chosenIcon}
       <span>{value.name}({newestPrice}){value.currency}</span>
-      <span className="item-id" data-chosen={itemSet.has(value.id)} hidden >{value.id}</span>
+      <span className="item-id" data-chosen={!hasNoQuantity} hidden >{value.id}</span>
+      <div className="quantity-modifier">
+        <div className="prepend" onClick={() => {
+          if (priceVal > 0) {
+            setPriceVal(priceVal-1)
+          }
+        }}> - </div>
+        <div className="number-showcase"> {priceVal} </div>
+        <div className="append" onClick={() => {
+          setPriceVal(priceVal+1);
+        }}> + </div>
+      </div>
     </div>
   )
 }
