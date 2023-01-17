@@ -33,8 +33,20 @@ function DateTimeLabel( { dateRef } ) {
         </div>
         <span>Time</span>
         <div className='price-label'>
-          <input type="text" value={hourVal} placeholder='HH' onChange={(e) => setValid(setHourVal, e.target.value, 0, 23, 2)} />
-          <input type="text" value={minuteVal} placeholder='MM' onChange={(e) => setValid(setMinuteVal, e.target.value, 0, 59, 2)} />
+          <input
+            type="text"
+            id="time-hour"
+            value={hourVal}
+            placeholder='HH'
+            onChange={(e) => setValid(setHourVal, e.target.value, 0, 23, 2)}
+          />
+          <input
+            type="text"
+            id="time-minute"
+            value={minuteVal}
+            placeholder='MM'
+            onChange={(e) => setValid(setMinuteVal, e.target.value, 0, 59, 2)}
+          />
         </div>
       </label>
   )

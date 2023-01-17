@@ -34,16 +34,37 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
 
 async function handleSubmit(currConfig) {
   let store = document.querySelector("input[for='store-name']").value;
-  let date = ['date-day', 'date-month', 'date-year'].map(value => {
+  let date = getFromInputIDs(['date-day', 'date-month', 'date-year']);
+  let time = getFromInputIDs(['time-hour', 'time-minute']);
+
+  let checkedItems = getCheckedItems();
+  console.log({store, date, time, checkedItems});
+}
+
+function getFromInputIDs(array) {
+  return array.map(value => {
     return parseInt(document.querySelector(`input[id='${value}']`).value)
   });
+}
 
-  let checkedItems = Array.from(
-    document.querySelectorAll(".check-box span[hidden][data-chosen=true]")
+function getCheckedItems() {
+  let itemIDs = getNumberfromHTML(".check-box span[hidden][data-chosen=true]");
+  let itemQuantities = getNumberfromHTML("#check-box--quantity[data-chosen=true]");
+
+  let finArray = [];
+  for (let i = 0; i < itemIDs.length; i++) {
+    finArray.push([itemIDs[i], itemQuantities[i]])
+  }
+
+  return finArray;
+}
+
+function getNumberfromHTML (selector) {
+  return Array.from(
+    document.querySelectorAll(selector)
   ).map(element => {
     return parseInt(element.innerHTML);
   });
-  console.log({store, date, checkedItems});
 }
 
 export default ReceiptForm;

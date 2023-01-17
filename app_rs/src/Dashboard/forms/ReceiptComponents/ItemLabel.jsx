@@ -11,7 +11,6 @@ import ItemInputs from "./ItemInputs";
 function ItemLabel( { currConfig } ) {
   const [optionData, setOptions] = useState([]);
   const [feedbackMessage, setFeedbackMessage] = useState(null);
-  const [itemSet, setItemSet] = useState(new Set());
 
   useEffect(() => {
     getArrItems(setOptions, currConfig.userData);
@@ -55,30 +54,22 @@ function ItemLabel( { currConfig } ) {
               });
           }}
         > Add </button>
-        <Options optionData={optionData} itemSet={itemSet} setItemSet={setItemSet} />
+        <Options optionData={optionData} />
       </div>
       {feedbackMessage}
     </label>
   )
 }
 
-function Options ( { optionData, itemSet, setItemSet }) {
-  console.log(optionData);
-  let finRendered = optionData.map((value) => {
-    return <TickBox 
-      value={value}
-      itemSet={itemSet}
-      setItemSet={setItemSet}
-    />
-  });
-  return finRendered;
+function Options ( { optionData }) {
+  return optionData.map((value) => <TickBox value={value} />);;
 }
 
-function TickBox( { value, itemSet } ) {
-  let newestPrice = value.prices[value.prices.length - 1];
-  let [priceVal, setPriceVal] = useState(0);
-  let hasNoQuantity = priceVal === 0;
+function TickBox( { value } ) {
+  let [quantity, setQuantity] = useState(0);
 
+  let newestPrice = value.prices[value.prices.length - 1];
+  let hasNoQuantity = quantity === 0;
   let chosenIcon = !hasNoQuantity ? <CheckSquare /> : <Square />
 
   return (
@@ -91,13 +82,21 @@ function TickBox( { value, itemSet } ) {
       <span className="item-id" data-chosen={!hasNoQuantity} hidden >{value.id}</span>
       <div className="quantity-modifier">
         <div className="prepend" onClick={() => {
-          if (priceVal > 0) {
-            setPriceVal(priceVal-1)
+          if (quantity > 0) {
+            setQuantity(quantity-1)
           }
         }}> - </div>
-        <div className="number-showcase"> {priceVal} </div>
+
+        <div
+          id="check-box--quantity"
+          className="number-showcase"
+          data-chosen={!hasNoQuantity}
+        >
+          {quantity}
+        </div>
+
         <div className="append" onClick={() => {
-          setPriceVal(priceVal+1);
+          setQuantity(quantity+1);
         }}> + </div>
       </div>
     </div>
@@ -111,6 +110,5 @@ async function getArrItems(setter, dataMap) {
 async function getItemHeight(currConfig) {
   return await invoke("get_item_height", { dataMap: currConfig.userData });
 }
-
 
 export default ItemLabel;
