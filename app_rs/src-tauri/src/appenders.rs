@@ -31,3 +31,15 @@ pub fn append_store (
     data_map.append_store(name, location)
 }
 
+#[tauri::command]
+pub fn append_receipt (
+    data_map: DataMap,
+    store_id: String,
+    date: Vec<u8>,
+    time: Vec<u8>,
+    items: Vec<Vec<u16>>
+    ) -> DataMap
+{
+    data_map.append_receipt(store_id, date, time, items)
+}
+

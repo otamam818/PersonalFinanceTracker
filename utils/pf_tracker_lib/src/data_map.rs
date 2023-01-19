@@ -1,6 +1,6 @@
 use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
-use crate::receipt::{Receipt, Item, Store, Category, BoughtItems, Key};
+use crate::{receipt::{Receipt, Item, Store, Category, BoughtItems}, key::Key, Date, Time};
 use crate::data_file::DataFile;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -107,7 +107,6 @@ impl DataMap {
     pub fn append_store(mut self, name: String, location: String) -> DataMap {
         let location = if location.eq("") {None} else {Some(location)};
         let store = Store { location, name };
-        // TODO: Convert this to a `get_key`-based function
         let id = store.get_key();
 
         match self.stores {
@@ -118,6 +117,66 @@ impl DataMap {
                 self.stores = Some(hash_map);
             }
         };
+        self
+    }
+
+    pub fn append_receipt(
+        mut self,
+        store_id: String,
+        date: Vec<u8>,
+        time: Vec<u8>,
+        items: Vec<Vec<u16>>
+    ) -> DataMap {
+        const VALIDATED_FRONT_END: &'static str
+            = "Date has been validated from the front-end";
+
+        // Prepares the data for the receipt
+        assert!(date.len() == 3);
+        let date = Date::new(date[0], date[1], date[2] as u32)
+            .expect(VALIDATED_FRONT_END);
+        assert!(time.len() == 2);
+        let time = Time::new(time[0], time[1])
+            .expect(VALIDATED_FRONT_END);
+
+        // Appends a single receipt to the datamap
+        let receipt = Receipt {
+            date,
+            time,
+            store_id: store_id.clone()
+        };
+        // TODO: Make code DRY
+        let key = receipt.get_key();
+
+        match self.receipts {
+            Some(ref mut hash_map) => { hash_map.insert(key.clone(), receipt) ;},
+            None => {
+                let mut hash_map = HashMap::new();
+                hash_map.insert(key.clone(), receipt);
+                self.receipts = Some(hash_map);
+            }
+        };
+
+        let products: HashMap<u16, u16> = items
+            .iter()
+            .map(|arr| (arr[0], arr[1]))
+            .collect();
+
+        let bought_items = BoughtItems {
+            items: products,
+            store_id,
+            receipt_id: key,
+        };
+
+        let key = bought_items.get_key();
+
+        match self.bought_items {
+            Some(ref mut hash_map) => { hash_map.insert(key, bought_items) ;},
+            None => {
+                let mut hash_map = HashMap::new();
+                hash_map.insert(key, bought_items);
+                self.bought_items = Some(hash_map);
+            }
+        }
         self
     }
 

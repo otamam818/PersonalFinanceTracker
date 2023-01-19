@@ -31,7 +31,7 @@ pub struct Item {
 pub struct Receipt {
     pub date: Date,
     pub time: Time,
-    pub store_id: u16,
+    pub store_id: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -44,50 +44,7 @@ type Quantity = u16;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct BoughtItems {
     pub items: HashMap<ItemKey, Quantity>,
-    pub store_id: u8,
+    pub store_id: String,
     pub receipt_id: String
-}
-
-// TODO: Separate `Key` into its own file
-// Key Implementations
-pub trait Key<T> {
-    fn get_key(&self) -> T;
-}
-
-impl Key<u16> for Category {
-    fn get_key(&self) -> u16 {
-        self.id
-    }
-}
-
-impl Key<u16> for Item {
-    fn get_key(&self) -> u16 {
-        self.id
-    }
-}
-
-impl Key<String> for Receipt {
-    fn get_key(&self) -> String {
-        format!("{}|{}|{}", self.date, self.time, self.store_id)
-    }
-}
-
-impl Key<String> for Store {
-    fn get_key(&self) -> String {
-        match &self.location {
-            Some(place) => format!("{} | {}", self.name, place),
-            None => format!("{} | {}", self.name, "$Unknown"),
-        }
-    }
-}
-
-impl Key<String> for BoughtItems {
-    fn get_key(&self) -> String {
-        format!(
-            "{}@{}",
-            self.receipt_id,
-            self.store_id,
-        )
-    }
 }
 

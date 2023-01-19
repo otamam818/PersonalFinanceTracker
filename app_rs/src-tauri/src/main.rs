@@ -8,7 +8,7 @@ mod appenders;
 mod getters;
 
 use file_handler::{make_file, load_file, save_file};
-use appenders::{append_item, append_category, append_store};
+use appenders::{append_item, append_category, append_store, append_receipt};
 use getters::{get_mappable, get_arr_items, get_arr_stores, get_item_height};
 
 fn main() {
@@ -17,12 +17,13 @@ fn main() {
             make_file,
             load_file,
             save_file,
-            get_mappable,
             append_category,
             append_item,
+            append_store,
+            append_receipt,
+            get_mappable,
             get_arr_stores,
             get_arr_items,
-            append_store,
             get_item_height,
         ])
         .run(tauri::generate_context!())
