@@ -6,10 +6,16 @@ import {useRef} from 'react';
 import StoreLabel from './ReceiptComponents/StoreLabel';
 import DateTimeLabel from './ReceiptComponents/DateTimeLabel';
 import ItemLabel from './ReceiptComponents/ItemLabel';
+import {invoke} from '@tauri-apps/api';
+import { makeState } from '../../utils';
+
+const receiptStates = {
+  initial : "INITIAL"
+}
 
 function ReceiptForm ( { setFormShown, currConfig } ) {
   const dateRef = useRef(null);
-  console.log(currConfig);
+  const receiptState = makeState(receiptStates.initial);
   return (
     <form
       className="form-general form-category"
@@ -33,12 +39,24 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
 }
 
 async function handleSubmit(currConfig) {
-  let store = document.querySelector("input[for='store-name']").value;
+  let storeId = document.querySelector("input[for='store-name']").value;
   let date = getFromInputIDs(['date-day', 'date-month', 'date-year']);
   let time = getFromInputIDs(['time-hour', 'time-minute']);
 
-  let checkedItems = getCheckedItems();
-  console.log({store, date, time, checkedItems});
+  let items = getCheckedItems();
+  let newUserData = await invoke("append_receipt", {
+    dataMap: currConfig.userData,
+    storeId,
+    date,
+    time,
+    items
+  });
+  console.log({newUserData});
+
+  document.querySelectorAll("#check-box--quantity[data-chosen=true]")
+  .forEach((element) => element.innerHTML = 0);
+
+  currConfig.setComponent("loadFile");
 }
 
 function getFromInputIDs(array) {
