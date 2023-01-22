@@ -62,7 +62,11 @@ function ItemLabel( { currConfig } ) {
 }
 
 function Options ( { optionData }) {
-  return optionData.map((value) => <TickBox value={value} />);;
+  return optionData.map((value, index) =>
+    <TickBox
+      key={index}
+      value={value}
+    />);
 }
 
 function TickBox( { value } ) {

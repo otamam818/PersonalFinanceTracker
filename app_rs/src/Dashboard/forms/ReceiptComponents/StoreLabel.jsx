@@ -22,7 +22,7 @@ function StoreLabel( { dateRef, currConfig } ) {
       <input
         type="text"
         onChange={(e) => setStoreValue(e.target.value)}
-        for="store-name"
+        htmlFor="store-name"
         value={storeValue} />
       <StoreDropDown
         currConfig={currConfig}
