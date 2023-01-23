@@ -38,7 +38,6 @@ function ItemLabel( { currConfig } ) {
             let currencyVal = document
               .querySelector(".item-box .price-label select")
               .value;
-            console.log(nameVal, priceVal, currencyVal);
             if (nameVal.length === 0 || priceVal.length === 0) {
               setFeedbackMessage(<span>Please enter a valid item</span>);
               return;
@@ -47,7 +46,6 @@ function ItemLabel( { currConfig } ) {
 
             appendItem(currConfig, nameVal, priceVal, currencyVal)
               .then((value) => {
-                console.log(value);
                 currConfig.userData = value;
                 getArrItems(setOptions, value);
                 currConfig.setConfig(currConfig);

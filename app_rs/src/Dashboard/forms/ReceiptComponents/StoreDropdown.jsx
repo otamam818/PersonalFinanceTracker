@@ -14,7 +14,7 @@ import "./style.scss";
  */
 const INITIAL = -1;
 
-function StoreDropDown ( { currConfig, data, dateRef } ) {
+function StoreDropDown ( { currConfig, data } ) {
   // An array that gets modified differently based on what kind of data
   // it contains
   let [renderedButtons, setRenderedButtons] = useState([INITIAL]);
@@ -28,7 +28,6 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
       <AddStore
         key="Adder"
         currConfig={currConfig}
-        dateRef={dateRef}
         setters={{setRenderedButtons, setStoreValue: data.setStoreValue}}
       />,
     ]
@@ -52,7 +51,7 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
           <button className="form-button" key={index} onClick={(e) => {
             e.preventDefault();
             data.setStoreValue(value.name);
-            dateRef.current.focus();
+            document.querySelector(".datetime-label #date-day").focus();
           }}>
             {value.name}
             {location}
@@ -67,7 +66,6 @@ function StoreDropDown ( { currConfig, data, dateRef } ) {
   } else {
     updateButtons(currConfig.userData)
       .then((list) => {
-        console.log(list);
         setRenderedButtons(list);
       })
   }

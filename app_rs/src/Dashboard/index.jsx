@@ -4,15 +4,16 @@ import "./style.scss";
 // TODO: Migrate this into a function called in the back-end
 import { allEmpty } from "./dataHandler";
 import { invoke } from '@tauri-apps/api/tauri';
+import { makeState } from "../utils";
 import { Save } from 'react-feather';
 
 function Dashboard ( configs ) {
   // let currConfig = configs.currConfig;
   let [currData, setCurrData] = useState("loading");
   let [chosenForm, setChosenForm] = useState(null);
-  let [formShown, setFormShown] = useState(false);
+  let formIsShown = makeState(false);
 
-  let currConfig = configs.currConfig
+  let currConfig = configs.currConfig;
 
   if (currConfig.userData && currData !== "loading") {
     let userData = currConfig.userData;
@@ -30,10 +31,11 @@ function Dashboard ( configs ) {
   } else {
     // TODO: Handle case where data is rendered
   }
+
   renderedContent.push(<AddingArea
     key={"AA"}
     setChosenForm={setChosenForm}
-    setFormShown={setFormShown}
+    formIsShown={formIsShown}
     currConfig={currConfig}
   />);
 
@@ -77,9 +79,9 @@ function Dashboard ( configs ) {
       </main>
     </div>
     <div
-      className={"pop-up " + (formShown ? "shown" : "hidden")}
+      className={"pop-up " + (formIsShown.get ? "shown" : "hidden")}
       onClick={() => {
-        setFormShown(false);
+        formIsShown.set(false);
         setChosenForm(null);
       }}
     >
@@ -105,7 +107,6 @@ function LoadingAnimation() {
 }
 
 async function handleSave(currConfig) {
-  console.log(currConfig);
   await invoke("save_file", {
     dataMap: currConfig.userData,
     filePath: currConfig.loadPath

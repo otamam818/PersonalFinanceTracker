@@ -104,13 +104,17 @@
       box-shadow: -5px 0 5px -5px #0006;
     }
 
-    .price-label {
+    .datetime-label {
+      display: flex;
       margin-right: 10px;
       text-align: center;
+      width: max-content;
 
       input {
         margin: 0 5px;
         text-align: center;
+        padding: 9px 0px;
+        border-radius: 9px;
       }
     }
 

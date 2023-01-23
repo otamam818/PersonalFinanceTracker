@@ -6,7 +6,7 @@
 import {useState} from 'react';
 import StoreDropDown from './StoreDropdown';
 
-function StoreLabel( { dateRef, currConfig } ) {
+function StoreLabel( { currConfig } ) {
   const [storeValue, setStoreValue] = useState("");
 
   // The user has the ability to choose from a dropdown of choices.
@@ -31,8 +31,7 @@ function StoreLabel( { dateRef, currConfig } ) {
           setStoreValue,
           isVisible: dropDownVisible,
           setVisibility: setDropdownVisible
-        }}
-        dateRef={dateRef} />
+      }} />
     </label>
   )
 }

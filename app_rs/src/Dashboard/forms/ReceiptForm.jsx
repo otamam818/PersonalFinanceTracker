@@ -2,20 +2,12 @@
  * @fileoverview Manages the whole Receipt form and its sub-components
  * @author Tahmin Ahmed (www.github.com/otamam818)
  */
-import {useRef} from 'react';
 import StoreLabel from './ReceiptComponents/StoreLabel';
 import DateTimeLabel from './ReceiptComponents/DateTimeLabel';
 import ItemLabel from './ReceiptComponents/ItemLabel';
 import {invoke} from '@tauri-apps/api';
-import { makeState } from '../../utils';
 
-const receiptStates = {
-  initial : "INITIAL"
-}
-
-function ReceiptForm ( { setFormShown, currConfig } ) {
-  const dateRef = useRef(null);
-  const receiptState = makeState(receiptStates.initial);
+function ReceiptForm ( { formIsShown, currConfig } ) {
   return (
     <form
       className="form-general form-category"
@@ -24,21 +16,20 @@ function ReceiptForm ( { setFormShown, currConfig } ) {
     >
       <h1> Receipt </h1>
       <StoreLabel
-        dateRef={dateRef}
         currConfig={currConfig} />
-      <DateTimeLabel dateRef={dateRef} />
+      <DateTimeLabel />
 
       <ItemLabel currConfig={currConfig} />
 
       <div className="button-area">
-        <button onClick={() => handleSubmit(currConfig)}> Submit </button>
-        <button onClick={() => setFormShown(false)}> Cancel </button>
+        <button onClick={() => handleSubmit(currConfig, formIsShown)}> Submit </button>
+        <button onClick={() => formIsShown.set(false)}> Cancel </button>
       </div>
     </form>
   )
 }
 
-async function handleSubmit(currConfig) {
+async function handleSubmit(currConfig, formIsShown) {
   let storeId = document.querySelector("input[for='store-name']").value;
   let date = getFromInputIDs(['date-day', 'date-month', 'date-year']);
   let time = getFromInputIDs(['time-hour', 'time-minute']);
@@ -55,6 +46,8 @@ async function handleSubmit(currConfig) {
 
   document.querySelectorAll("#check-box--quantity[data-chosen=true]")
   .forEach((element) => element.innerHTML = 0);
+
+  formIsShown.set(false);
 
   currConfig.setComponent("loadFile");
 }

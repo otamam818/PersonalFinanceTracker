@@ -1,7 +1,7 @@
 import {useRef, useState} from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
 
-function ItemForm ( { setFormShown, currConfig } ) {
+function ItemForm ( { formIsShown, currConfig } ) {
   const nameRef = useRef(null);
   const [priceState, setPrice] = useState("")
   const currencyRef = useRef(null);
@@ -14,13 +14,12 @@ function ItemForm ( { setFormShown, currConfig } ) {
     appendItem(currConfig, name, price, currency)
       .then((data) => {
         currConfig.setConfig({ ...currConfig, userData: data });
-        console.log({ ...currConfig, userData: data });
 
         // Clear the ItemForm
         nameRef.current.value = "";
 
         // Close the ItemForm
-        setFormShown(false);
+        formIsShown.set(false);
         // TODO: Give a message that the value has been added
       })
   }
@@ -51,7 +50,7 @@ function ItemForm ( { setFormShown, currConfig } ) {
 
       <div className="button-area">
         <button onClick={() => handleSubmit()}> Submit </button>
-        <button onClick={() => setFormShown(false)}> Cancel </button>
+        <button onClick={() => formIsShown.set(false)}> Cancel </button>
       </div>
     </form>
   )

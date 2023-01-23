@@ -1,7 +1,7 @@
 import {useRef} from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
 
-function CategoryForm ( { setFormShown, currConfig } ) {
+function CategoryForm ( { formIsShown, currConfig } ) {
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
 
@@ -28,7 +28,7 @@ function CategoryForm ( { setFormShown, currConfig } ) {
         descriptionRef.current.value = "";
 
         // Close the CategoryForm
-        setFormShown(false);
+        formIsShown.set(false);
         // TODO: Give a message that the value has been added
       })
   }
@@ -56,7 +56,7 @@ function CategoryForm ( { setFormShown, currConfig } ) {
 
       <div className="button-area">
         <button onClick={() => handleSubmit()}> Submit </button>
-        <button onClick={() => setFormShown(false)}> Cancel </button>
+        <button onClick={() => formIsShown.set(false)}> Cancel </button>
       </div>
     </form>
   )

@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-function DateTimeLabel( { dateRef } ) {
+function DateTimeLabel() {
   const [dayVal, setDayVal] = useState("")
   const [monthVal, setMonthVal] = useState("")
   const [yearVal, setYearVal] = useState("")
@@ -10,35 +10,34 @@ function DateTimeLabel( { dateRef } ) {
   return (
       <label className='widespread'>
         <span>Date</span>
-        <div className='price-label'>
+        <div className='datetime-label'>
           <input
             type="text"
             id="date-day"
             value={dayVal}
             placeholder='DD'
-            ref={dateRef}
-            onChange={(e) => setValid(setDayVal, e.target.value, 1, 31, 2)}/>
+            onChange={(e) => setValid(setDayVal, e.target.value, 1, 31, 2, ".datetime-label #date-month")}/>
           <input
             type="text"
             id="date-month"
             value={monthVal}
             placeholder='MM'
-            onChange={(e) => setValid(setMonthVal, e.target.value, 1, 12, 2)} />
+            onChange={(e) => setValid(setMonthVal, e.target.value, 1, 12, 2, ".datetime-label #date-year")} />
           <input
             type="text"
             id="date-year"
             value={yearVal}
             placeholder='YY'
-            onChange={(e) => setValid(setYearVal, e.target.value, 0, 99, 2)} />
+            onChange={(e) => setValid(setYearVal, e.target.value, 0, 99, 2, ".datetime-label #time-hour")} />
         </div>
         <span>Time</span>
-        <div className='price-label'>
+        <div className='datetime-label'>
           <input
             type="text"
             id="time-hour"
             value={hourVal}
             placeholder='HH'
-            onChange={(e) => setValid(setHourVal, e.target.value, 0, 23, 2)}
+            onChange={(e) => setValid(setHourVal, e.target.value, 0, 23, 2, ".datetime-label #time-minute")}
           />
           <input
             type="text"
@@ -52,7 +51,7 @@ function DateTimeLabel( { dateRef } ) {
   )
 }
 
-function setValid(setter, value, minimum, maximum, length) {
+function setValid(setter, value, minimum, maximum, length, nextSelector) {
   if (value === "") {
     setter(value)
   }
@@ -64,11 +63,14 @@ function setValid(setter, value, minimum, maximum, length) {
       value.length <= length;
   if (isValid) {
     setter(value);
+    if (value.length === length) {
+      document.querySelector(nextSelector)?.focus();
+    }
   }
 }
 
 function isInt(string) {
-  return Array.from(string).every((value) => value >= '0' && value <= '9')
+  return Array.from(string).every((value) => value >= '0' && value <= '9');
 }
 
 export default DateTimeLabel;
