@@ -1,6 +1,6 @@
 //! Implements a unified `Key` trait which can be used to store generic keys
 //! through hashmaps
-use crate::receipt::{BoughtItems, Category, Item, Store, Receipt};
+use crate::receipt::{Category, Item, Store, Receipt};
 
 // Key Implementations
 pub trait Key<T> {
@@ -31,16 +31,6 @@ impl Key<String> for Store {
             Some(place) => format!("{} | {}", self.name, place),
             None => format!("{} | {}", self.name, "$Unknown"),
         }
-    }
-}
-
-impl Key<String> for BoughtItems {
-    fn get_key(&self) -> String {
-        format!(
-            "{}@{}",
-            self.receipt_id,
-            self.store_id,
-        )
     }
 }
 

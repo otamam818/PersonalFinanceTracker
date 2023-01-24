@@ -1,6 +1,6 @@
 use std::{fs, fmt::Debug};
 use serde_derive::{Deserialize, Serialize};
-use crate::receipt::{Receipt, Item, Store, Category, BoughtItems};
+use crate::receipt::{Receipt, Item, Store, Category};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct DataFile {
@@ -8,7 +8,6 @@ pub struct DataFile {
     pub items: Option<Vec<Item>>,
     pub stores: Option<Vec<Store>>,
     pub category: Option<Vec<Category>>,
-    pub bought_items: Option<Vec<BoughtItems>>
 }
 
 impl DataFile {
@@ -18,7 +17,6 @@ impl DataFile {
             items: None,
             stores: None,
             category: None,
-            bought_items: None,
         };
         fs::write(file_path, toml::to_string(&data).unwrap())?;
         Ok(())
@@ -101,14 +99,6 @@ mod tests {
                     description: "sca".to_string(),
                     sub_category: vec![],
                 },
-            ],
-            bought_items: vec![
-                BoughtItems {
-                    item_id: 12,
-                    quantity: 1,
-                    store_id: 1,
-                    receipt_id: "Bark".to_string()
-                }
             ],
         };
 

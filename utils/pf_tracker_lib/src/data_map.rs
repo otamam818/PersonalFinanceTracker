@@ -1,6 +1,6 @@
 use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
-use crate::{receipt::{Receipt, Item, Store, Category, BoughtItems}, key::Key, Date, Time};
+use crate::{receipt::{Receipt, Item, Store, Category}, key::Key, Date, Time};
 use crate::data_file::DataFile;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -9,7 +9,6 @@ pub struct DataMap {
     pub items: Option<HashMap<u16, Item>>,
     pub stores: Option<HashMap<String, Store>>,
     pub category: Option<HashMap<u16, Category>>,
-    pub bought_items: Option<HashMap<String, BoughtItems>>
 }
 
 impl DataMap {
@@ -20,7 +19,6 @@ impl DataMap {
             items: get_hashmap(data.items),
             stores: get_hashmap(data.stores),
             category: get_hashmap(data.category),
-            bought_items: get_hashmap(data.bought_items),
         }
     }
 
@@ -31,7 +29,6 @@ impl DataMap {
             items: parse_option_arr(data.items),
             stores: parse_option_arr(data.stores),
             category: parse_option_arr(data.category),
-            bought_items: parse_option_arr(data.bought_items),
         }
     }
 
@@ -128,7 +125,7 @@ impl DataMap {
         items: Vec<Vec<u16>>
     ) -> DataMap {
         const VALIDATED_FRONT_END: &'static str
-            = "Date has been validated from the front-end";
+            = "Has been validated from the front-end";
 
         // Prepares the data for the receipt
         assert!(date.len() == 3);
@@ -138,12 +135,19 @@ impl DataMap {
         let time = Time::new(time[0], time[1])
             .expect(VALIDATED_FRONT_END);
 
+        let items: HashMap<u16, u16> = items
+            .iter()
+            .map(|arr| (arr[0], arr[1]))
+            .collect();
+
         // Appends a single receipt to the datamap
         let receipt = Receipt {
             date,
             time,
-            store_id: store_id.clone()
+            store_id: store_id.clone(),
+            items
         };
+
         // TODO: Make code DRY
         let key = receipt.get_key();
 
@@ -156,27 +160,6 @@ impl DataMap {
             }
         };
 
-        let products: HashMap<u16, u16> = items
-            .iter()
-            .map(|arr| (arr[0], arr[1]))
-            .collect();
-
-        let bought_items = BoughtItems {
-            items: products,
-            store_id,
-            receipt_id: key,
-        };
-
-        let key = bought_items.get_key();
-
-        match self.bought_items {
-            Some(ref mut hash_map) => { hash_map.insert(key, bought_items) ;},
-            None => {
-                let mut hash_map = HashMap::new();
-                hash_map.insert(key, bought_items);
-                self.bought_items = Some(hash_map);
-            }
-        }
         self
     }
 

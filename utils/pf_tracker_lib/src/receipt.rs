@@ -27,24 +27,18 @@ pub struct Item {
     pub category_ids: Vec<u16>
 }
 
+type Quantity = u16;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Receipt {
     pub date: Date,
     pub time: Time,
     pub store_id: String,
+    pub items: HashMap<ItemKey, Quantity>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Store {
     pub location: Option<String>,
     pub name: String
-}
-
-type Quantity = u16;
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct BoughtItems {
-    pub items: HashMap<ItemKey, Quantity>,
-    pub store_id: String,
-    pub receipt_id: String
 }
 
