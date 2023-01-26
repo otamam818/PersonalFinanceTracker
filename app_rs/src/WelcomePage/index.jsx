@@ -66,7 +66,6 @@ async function handleLoad (configs) {
 }
 
 async function handleSave(configs){
-  console.log(configs);
   let chosenName = await save({
     title: "Choose path and filename",
     filters: [{
@@ -87,7 +86,6 @@ async function handleSave(configs){
   );
   configs.currConfig.setComponent("loadFile");
   configs.currConfig.setConfig(configs.currConfig);
-  console.log(configs.currConfig);
 }
 
 export default WelcomePage;

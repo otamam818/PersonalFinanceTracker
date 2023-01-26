@@ -4,13 +4,13 @@ import Dashboard from "./Dashboard/index";
 import WelcomePage from "./WelcomePage/index";
 
 function App() {
+  // NOTE: This wouldn't be needed anymore once ReduxJS has been set up
   let [currConfig, setConfig] = useState({
     loadPath : "",
     name : "Oisho",
     userData : null,
   });
 
-  // TODO: Change this back to "welcome" when you are done with the component
   let [componentChoice, setComponent] = useState("welcome");
   currConfig = {...currConfig, setConfig, setComponent};
 
