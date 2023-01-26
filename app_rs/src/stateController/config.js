@@ -4,13 +4,14 @@ export const configSlice = createSlice({
   name: 'configuration',
   initialState: {
     filePath: "",
-    // TODO: Change this to be initially `null` and instead ask the user
-    // for their name
+
+    // TODO: Change this to be initially an empty string and instead ask the 
+    // user for their name
     name: "Oisho",
+
     // This decides which component gets rendered into the main body of the
     // app (essentially pretending to be a react-router)
     bodyComponent: "welcome",
-    userData: null,
   },
 
   reducers: {
@@ -33,7 +34,7 @@ export const configSlice = createSlice({
      *                  statement to decide which component gets rendered
      */
     setBodyComponent: (state, componentKey) => {
-      state.bodyComponent = componentKey;
+      state.bodyComponent = componentKey.payload;
     },
   },
 });

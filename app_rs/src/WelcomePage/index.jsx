@@ -1,24 +1,16 @@
 import { open, save } from '@tauri-apps/api/dialog';
 import { invoke } from '@tauri-apps/api/tauri';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilePath, setBodyComponent } from '../stateController/config';
+import { setUserData } from '../stateController/userData';
 
-function WelcomePage(configs) {
-  let nameExists = configs.currConfig.name.length > 0;
+function WelcomePage() {
+  const userName = useSelector(state => state.configuration.name);
+  const [name, greeting] = getGreeting(userName);
 
-  let name = "Hello ", greeting = "Welcome ";
-  if (nameExists) {
-    name += configs.currConfig.name
-    greeting += "back!"
-  } else {
-    name += "there";
-    greeting += "to the personal finance tracker app!"
-  }
-
-  let feedback;
-  if (configs.currConfig.loadPath.length > 0) {
-    let fileName = configs.currConfig.loadPath.split('/');
-    fileName = fileName[fileName.length - 1];
-    feedback = (<p> Loading file <strong>{fileName}</strong></p>)
-  }
+  const filePath = useSelector(state => state.configuration.filePath);
+  const feedback = getFeedback(filePath);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -31,11 +23,11 @@ function WelcomePage(configs) {
       <p>{greeting} What would you like to do?</p>
 
       <div className="options">
-        <button className="create" onClick={() => handleSave(configs)}>
+        <button className="create" onClick={() => handleSave(dispatch)}>
           Create a new finance-tracker file
         </button>
 
-        <button className="load" onClick={() => handleLoad(configs)}>
+        <button className="load" onClick={() => handleLoad(dispatch)}>
           Load an existing finance-tracker file
         </button>
       </div>
@@ -47,26 +39,20 @@ function WelcomePage(configs) {
   );
 }
 
-async function handleLoad (configs) {
-  configs.currConfig.loadPath = await open({
+async function handleLoad (dispatch) {
+  let filePath = await open({
     multiple: false,
     filters: [{
       name: 'TOML File',
       extensions: ['toml']
     }]
   });
-
-  configs.currConfig.userData = await invoke(
-    "load_file",
-    { path: configs.currConfig.loadPath }
-  );
-
-  configs.currConfig.setComponent("loadFile");
-  configs.currConfig.setConfig(configs.currConfig);
+  let userData = await invoke("load_file", { path: filePath });
+  goToDashboard(userData, filePath, dispatch);
 }
 
-async function handleSave(configs){
-  let chosenName = await save({
+async function handleSave(dispatch){
+  let filePath = await save({
     title: "Choose path and filename",
     filters: [{
       name: "TOML file",
@@ -74,18 +60,46 @@ async function handleSave(configs){
     }]
   });
 
-  if (!chosenName.endsWith(".toml")) {
-    chosenName += ".toml";
+  if (!filePath.endsWith(".toml")) {
+    filePath += ".toml";
   }
 
-  configs.currConfig.loadPath = chosenName;
-  await invoke("make_file", {location: chosenName});
-  configs.currConfig.userData = await invoke(
-    "load_file",
-    { path: configs.currConfig.loadPath }
-  );
-  configs.currConfig.setComponent("loadFile");
-  configs.currConfig.setConfig(configs.currConfig);
+  await invoke("make_file", {location: filePath});
+  let userData = await invoke("load_file", { path: filePath });
+
+  goToDashboard(userData, filePath, dispatch)
+}
+
+function goToDashboard(userData, filePath, dispatch) {
+  dispatch(setFilePath(filePath));
+  dispatch(setUserData(userData));
+  dispatch(setBodyComponent("loadFile"));
+}
+
+
+function getGreeting(userName) {
+  let nameExists = userName?.length > 0;
+  let name = "Hello ", greeting = "Welcome ";
+  if (nameExists) {
+    name += userName
+    greeting += "back!"
+  } else {
+    name += "there";
+    greeting += "to the personal finance tracker app!"
+  }
+
+  return [name, greeting];
+}
+
+function getFeedback(filePath) {
+  let feedback;
+  if (filePath.length > 0) {
+    let fileName = filePath.split('/');
+    // TODO: Add support for non-unix
+    fileName = fileName[fileName.length - 1];
+    feedback = (<p> Loading file <strong>{fileName}</strong></p>)
+  }
+  return feedback;
 }
 
 export default WelcomePage;

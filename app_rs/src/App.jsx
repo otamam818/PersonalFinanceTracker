@@ -2,6 +2,7 @@ import {useState} from "react";
 import "./App.scss";
 import Dashboard from "./Dashboard/index";
 import WelcomePage from "./WelcomePage/index";
+import { useSelector } from 'react-redux';
 
 function App() {
   // NOTE: This wouldn't be needed anymore once ReduxJS has been set up
@@ -11,8 +12,9 @@ function App() {
     userData : null,
   });
 
-  let [componentChoice, setComponent] = useState("welcome");
-  currConfig = {...currConfig, setConfig, setComponent};
+  const componentChoice = useSelector(state => state.configuration.bodyComponent);
+  console.log({componentChoice});
+  currConfig = {...currConfig, setConfig};
 
   return (
     <div className="main-body">
@@ -23,7 +25,7 @@ function App() {
 
 function chooseCurrComponent(componentChoice, currConfig) {
   switch (componentChoice) {
-    case "welcome" : return <WelcomePage currConfig={currConfig} />;
+    case "welcome" : return <WelcomePage/>;
     case "loadFile" : return <Dashboard currConfig={currConfig} />;
     default: return (<div>404, not found</div>)
   }
