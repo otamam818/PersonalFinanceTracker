@@ -1,8 +1,5 @@
-import { open, save } from '@tauri-apps/api/dialog';
-import { invoke } from '@tauri-apps/api/tauri';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilePath, setBodyComponent } from '../stateController/config';
-import { setUserData } from '../stateController/userData';
+import { handleSave, handleLoad } from './handlers';
 
 function WelcomePage() {
   const userName = useSelector(state => state.configuration.name);
@@ -38,44 +35,6 @@ function WelcomePage() {
     </>
   );
 }
-
-async function handleLoad (dispatch) {
-  let filePath = await open({
-    multiple: false,
-    filters: [{
-      name: 'TOML File',
-      extensions: ['toml']
-    }]
-  });
-  let userData = await invoke("load_file", { path: filePath });
-  goToDashboard(userData, filePath, dispatch);
-}
-
-async function handleSave(dispatch){
-  let filePath = await save({
-    title: "Choose path and filename",
-    filters: [{
-      name: "TOML file",
-      extensions: ['toml']
-    }]
-  });
-
-  if (!filePath.endsWith(".toml")) {
-    filePath += ".toml";
-  }
-
-  await invoke("make_file", {location: filePath});
-  let userData = await invoke("load_file", { path: filePath });
-
-  goToDashboard(userData, filePath, dispatch)
-}
-
-function goToDashboard(userData, filePath, dispatch) {
-  dispatch(setFilePath(filePath));
-  dispatch(setUserData(userData));
-  dispatch(setBodyComponent("loadFile"));
-}
-
 
 function getGreeting(userName) {
   let nameExists = userName?.length > 0;

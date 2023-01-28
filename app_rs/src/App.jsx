@@ -1,8 +1,9 @@
 import {useState} from "react";
-import "./App.scss";
+import { useSelector } from 'react-redux';
+
 import Dashboard from "./Dashboard/index";
 import WelcomePage from "./WelcomePage/index";
-import { useSelector } from 'react-redux';
+import "./App.scss";
 
 function App() {
   // NOTE: This wouldn't be needed anymore once ReduxJS has been set up
@@ -13,7 +14,6 @@ function App() {
   });
 
   const componentChoice = useSelector(state => state.configuration.bodyComponent);
-  console.log({componentChoice});
   currConfig = {...currConfig, setConfig};
 
   return (
