@@ -2,31 +2,30 @@ import {useEffect, useState} from "react";
 import AddingArea from "./AddingArea";
 import "./style.scss";
 // TODO: Migrate this into a function called in the back-end
-import { allEmpty } from "./dataHandler";
 import { invoke } from '@tauri-apps/api/tauri';
 import { makeState } from "../utils";
 import { Save } from 'react-feather';
+import { useSelector } from 'react-redux';
+import {loadStates} from "../stateController/userData";
 
 function Dashboard ( configs ) {
-  // let currConfig = configs.currConfig;
-  let [currData, setCurrData] = useState("loading");
   let [chosenForm, setChosenForm] = useState(null);
   let formIsShown = makeState(false);
+  const loadState = useSelector(state => state.userData.loadState);
 
   let currConfig = configs.currConfig;
+  const userData = useSelector(state => state.userData);
+  console.log({userData, loadState});
 
-  if (currConfig.userData && currData !== "loading") {
-    let userData = currConfig.userData;
-    if (allEmpty(userData)) {
-      currData = "empty";
-    }
-  }
-
+  // NOTE: `renderedContent` shouldn't actually exist like this. Instead it
+  //       should be its own component
+  // TODO: Make a separate component for `renderedContent`
   // Handle what rendered content to put at the center of the Dashboard
   let renderedContent = [];
-  if (currData === "loading") {
+  if (loadState === loadStates.isLoading) {
     renderedContent.push(<LoadingAnimation key={"LA"} />);
-  } else if (currData === "empty") {
+  } else if (loadState === loadStates.isEmpty) {
+    // TODO: This never renders - consider removing?
     renderedContent.push(<EmptyContent key={"EC"} />);
   } else {
     // TODO: Handle case where data is rendered
@@ -38,24 +37,6 @@ function Dashboard ( configs ) {
     formIsShown={formIsShown}
     currConfig={currConfig}
   />);
-
-  useEffect(() => {
-    async function newData () {
-      return await invoke("get_mappable", { dataFile: currConfig.userData})
-    }
-
-    if (currData === "loading") {
-      newData()
-        .then((data) => {
-          currConfig.userData = data;
-          currConfig.setConfig(currConfig);
-          setCurrData(data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, [configs, currData, setCurrData]);
 
   return (
     <>

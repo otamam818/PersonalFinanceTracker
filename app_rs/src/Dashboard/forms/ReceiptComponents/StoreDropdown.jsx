@@ -5,6 +5,7 @@
  */
 import {invoke} from "@tauri-apps/api";
 import {useState} from "react";
+import { useSelector } from 'react-redux';
 import AddStore from "./AddStore";
 import "./style.scss";
 
@@ -17,6 +18,7 @@ const INITIAL = -1;
 function StoreDropDown ( { currConfig, data } ) {
   // An array that gets modified differently based on what kind of data
   // it contains
+  const userData = useSelector(state => state.userData.data);
   let [renderedButtons, setRenderedButtons] = useState([INITIAL]);
 
   let finButtons;
@@ -64,7 +66,7 @@ function StoreDropDown ( { currConfig, data } ) {
       )
     }
   } else {
-    updateButtons(currConfig.userData)
+    updateButtons(userData)
       .then((list) => {
         setRenderedButtons(list);
       })

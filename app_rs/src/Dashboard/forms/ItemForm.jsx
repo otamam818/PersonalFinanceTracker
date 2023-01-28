@@ -1,7 +1,11 @@
 import {useRef, useState} from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
+import { setUserData } from '../../stateController/userData';
+import { useSelector, useDispatch } from 'react-redux';
 
-function ItemForm ( { formIsShown, currConfig } ) {
+function ItemForm ( { formIsShown } ) {
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.userData.data);
   const nameRef = useRef(null);
   const [priceState, setPrice] = useState("")
   const currencyRef = useRef(null);
@@ -11,9 +15,9 @@ function ItemForm ( { formIsShown, currConfig } ) {
     let price = priceState;
     let currency = currencyRef.current.value;
 
-    appendItem(currConfig, name, price, currency)
+    appendItem(userData, name, price, currency)
       .then((data) => {
-        currConfig.setConfig({ ...currConfig, userData: data });
+        dispatch(setUserData(data));
 
         // Clear the ItemForm
         nameRef.current.value = "";
@@ -66,11 +70,11 @@ function handlePriceRef(setter, newValue) {
   setter(newValue);
 }
 
-export async function appendItem(currConfig, name, price, currency) {
+export async function appendItem(userData, name, price, currency) {
   return await invoke(
     "append_item",
     {
-      dataMap: currConfig.userData,
+      dataMap: userData,
       name,
       price,
       currency

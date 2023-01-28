@@ -10,12 +10,10 @@ function chooseForm(dataInput, formIsShown, currConfig) {
       currConfig={currConfig}/>
     case "Item":
       return <ItemForm
-      formIsShown={formIsShown}
-      currConfig={currConfig}/>
+      formIsShown={formIsShown} />
     case "Category":
       return <CategoryForm
-      formIsShown={formIsShown}
-      currConfig={currConfig}/>
+      formIsShown={formIsShown} />
     default:
       return <div>404 Not found</div>
   }

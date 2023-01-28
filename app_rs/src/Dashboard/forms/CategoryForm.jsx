@@ -1,7 +1,11 @@
 import {useRef} from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
+import { setUserData } from '../../stateController/userData';
+import { useSelector, useDispatch } from 'react-redux';
 
-function CategoryForm ( { formIsShown, currConfig } ) {
+function CategoryForm ( { formIsShown } ) {
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.userData.data);
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
 
@@ -12,7 +16,7 @@ function CategoryForm ( { formIsShown, currConfig } ) {
       return await invoke(
         "append_category",
         {
-          dataMap: currConfig.userData,
+          dataMap: userData,
           name,
           description
         }
@@ -21,7 +25,7 @@ function CategoryForm ( { formIsShown, currConfig } ) {
 
     updateConfig()
       .then((data) => {
-        currConfig.setConfig({ ...currConfig, userData: data });
+        dispatch(setUserData(data));
 
         // Clear the CategoryForm
         nameRef.current.value = "";
