@@ -7,18 +7,22 @@ import {useEffect, useState} from "react";
 import {CheckSquare, Square} from "react-feather";
 import {appendItem} from "../ItemForm";
 import ItemInputs from "./ItemInputs";
+import { setUserData } from '../../../stateController/userData';
+import { useSelector, useDispatch } from 'react-redux';
 
-function ItemLabel( { currConfig } ) {
+function ItemLabel() {
   const [optionData, setOptions] = useState([]);
   const [feedbackMessage, setFeedbackMessage] = useState(null);
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.userData.data);
 
   useEffect(() => {
-    getArrItems(setOptions, currConfig.userData);
-  }, [setOptions, currConfig]);
+    getArrItems(setOptions, userData);
+  }, [setOptions]);
 
   const [height, setHeight]
     = useState(120);
-  getItemHeight(currConfig).then((value) => {
+  getItemHeight(userData).then((value) => {
     setHeight(value);
   })
 
@@ -26,7 +30,7 @@ function ItemLabel( { currConfig } ) {
     <label className="items">
       <span> Items </span>
       <div className="form--box" style={{height: `${height}px`}}>
-        <ItemInputs currConfig={currConfig} />
+        <ItemInputs />
         <button className="form-button"
           onClick={() => {
             let nameVal = document
@@ -44,11 +48,10 @@ function ItemLabel( { currConfig } ) {
             }
             setFeedbackMessage(null);
 
-            appendItem(currConfig, nameVal, priceVal, currencyVal)
+            appendItem(userData, nameVal, priceVal, currencyVal)
               .then((value) => {
-                currConfig.userData = value;
+                dispatch(setUserData(value));
                 getArrItems(setOptions, value);
-                currConfig.setConfig(currConfig);
               });
           }}
         > Add </button>
@@ -109,8 +112,8 @@ async function getArrItems(setter, dataMap) {
   setter(await invoke("get_arr_items", { dataMap }));
 }
 
-async function getItemHeight(currConfig) {
-  return await invoke("get_item_height", { dataMap: currConfig.userData });
+async function getItemHeight(userData) {
+  return await invoke("get_item_height", { dataMap: userData });
 }
 
 export default ItemLabel;

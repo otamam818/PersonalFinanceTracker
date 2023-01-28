@@ -6,8 +6,12 @@ import StoreLabel from './ReceiptComponents/StoreLabel';
 import DateTimeLabel from './ReceiptComponents/DateTimeLabel';
 import ItemLabel from './ReceiptComponents/ItemLabel';
 import {invoke} from '@tauri-apps/api';
+import { setUserData } from '../../stateController/userData';
+import { useSelector, useDispatch } from 'react-redux';
 
-function ReceiptForm ( { formIsShown, currConfig } ) {
+function ReceiptForm ( { formIsShown } ) {
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.userData.data);
   return (
     <form
       className="form-general form-category"
@@ -15,28 +19,27 @@ function ReceiptForm ( { formIsShown, currConfig } ) {
       onSubmit={(e) => e.preventDefault()}
     >
       <h1> Receipt </h1>
-      <StoreLabel
-        currConfig={currConfig} />
+      <StoreLabel />
       <DateTimeLabel />
 
-      <ItemLabel currConfig={currConfig} />
+      <ItemLabel />
 
       <div className="button-area">
-        <button onClick={() => handleSubmit(currConfig, formIsShown)}> Submit </button>
+        <button onClick={() => handleSubmit(userData, formIsShown, dispatch)}> Submit </button>
         <button onClick={() => formIsShown.set(false)}> Cancel </button>
       </div>
     </form>
   )
 }
 
-async function handleSubmit(currConfig, formIsShown) {
+async function handleSubmit(userData, formIsShown, dispatch) {
   let storeId = document.querySelector("input[for='store-name']").value;
   let date = getFromInputIDs(['date-day', 'date-month', 'date-year']);
   let time = getFromInputIDs(['time-hour', 'time-minute']);
 
   let items = getCheckedItems();
   let newUserData = await invoke("append_receipt", {
-    dataMap: currConfig.userData,
+    dataMap: userData,
     storeId,
     date,
     time,
@@ -48,8 +51,7 @@ async function handleSubmit(currConfig, formIsShown) {
   .forEach((element) => element.innerHTML = 0);
 
   formIsShown.set(false);
-
-  currConfig.setComponent("loadFile");
+  // dispatch(setUserData(newUserData));
 }
 
 function getFromInputIDs(array) {

@@ -4,10 +4,15 @@
 import {invoke} from "@tauri-apps/api";
 import {useRef} from "react";
 import {updateButtons} from "./StoreDropdown";
+import { setUserData } from '../../../stateController/userData';
+import { useSelector, useDispatch } from 'react-redux';
 
-function AddStore( { currConfig, setters, dateRef } ) {
+function AddStore( { setters, dateRef } ) {
   const nameRef = useRef(null)
   const locationRef = useRef(null)
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.userData.data);
+
   return (
     <div className="add-store"> 
       <div>
@@ -22,10 +27,11 @@ function AddStore( { currConfig, setters, dateRef } ) {
         className="form-button"
         onClick={() =>{
           handleSubmit(
-            currConfig,
+            userData,
             nameRef.current.value,
             locationRef.current.value,
-            setters
+            setters,
+            dispatch
           );
           dateRef.current.focus();
           nameRef.current.value = "";
@@ -35,21 +41,21 @@ function AddStore( { currConfig, setters, dateRef } ) {
   )
 }
 
-async function handleSubmit(currConfig, name, location, setters) {
+async function handleSubmit(userData, name, location, setters, dispatch) {
   if (name.length === 0) {
     return;
   }
 
-  currConfig.userData
+  userData
     = await invoke(
       "append_store",
       {
-        dataMap: currConfig.userData,
+        dataMap: userData,
         name,
         location
       });
-  currConfig.setConfig(currConfig)
-  updateButtons(currConfig.userData).then((list) => {
+  dispatch(setUserData(userData));
+  updateButtons(userData).then((list) => {
     setters.setRenderedButtons(list);
     setters.setStoreValue(name);
   });

@@ -15,7 +15,7 @@ import "./style.scss";
  */
 const INITIAL = -1;
 
-function StoreDropDown ( { currConfig, data } ) {
+function StoreDropDown ( { data } ) {
   // An array that gets modified differently based on what kind of data
   // it contains
   const userData = useSelector(state => state.userData.data);
@@ -29,7 +29,6 @@ function StoreDropDown ( { currConfig, data } ) {
       <h3 key="heading-1">Add your own</h3>,
       <AddStore
         key="Adder"
-        currConfig={currConfig}
         setters={{setRenderedButtons, setStoreValue: data.setStoreValue}}
       />,
     ]

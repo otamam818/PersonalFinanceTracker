@@ -1,21 +1,20 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import AddingArea from "./AddingArea";
 import "./style.scss";
 // TODO: Migrate this into a function called in the back-end
 import { invoke } from '@tauri-apps/api/tauri';
 import { makeState } from "../utils";
 import { Save } from 'react-feather';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {loadStates} from "../stateController/userData";
 
-function Dashboard ( configs ) {
+function Dashboard () {
   let [chosenForm, setChosenForm] = useState(null);
   let formIsShown = makeState(false);
   const loadState = useSelector(state => state.userData.loadState);
 
-  let currConfig = configs.currConfig;
-  const userData = useSelector(state => state.userData);
-  console.log({userData, loadState});
+  const userData = useSelector(state => state.userData.data);
+  const filePath = useSelector(state => state.configuration.filePath);
 
   // NOTE: `renderedContent` shouldn't actually exist like this. Instead it
   //       should be its own component
@@ -35,7 +34,6 @@ function Dashboard ( configs ) {
     key={"AA"}
     setChosenForm={setChosenForm}
     formIsShown={formIsShown}
-    currConfig={currConfig}
   />);
 
   return (
@@ -47,7 +45,7 @@ function Dashboard ( configs ) {
           <span>Tracker App</span>
         </div>
         <div className="right">
-          <button onClick={() => handleSave(currConfig)}>
+          <button onClick={() => handleSave(userData, filePath)}>
             <Save color="white" />
           </button>
         </div>
@@ -87,10 +85,10 @@ function LoadingAnimation() {
   )
 }
 
-async function handleSave(currConfig) {
+async function handleSave(dataMap, filePath) {
   await invoke("save_file", {
-    dataMap: currConfig.userData,
-    filePath: currConfig.loadPath
+    dataMap,
+    filePath
   });
 }
 

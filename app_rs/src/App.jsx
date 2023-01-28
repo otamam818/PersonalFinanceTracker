@@ -1,32 +1,24 @@
-import {useState} from "react";
 import { useSelector } from 'react-redux';
 
-import Dashboard from "./Dashboard/index";
 import WelcomePage from "./WelcomePage/index";
+import Dashboard from "./Dashboard/index";
 import "./App.scss";
 
 function App() {
-  // NOTE: This wouldn't be needed anymore once ReduxJS has been set up
-  let [currConfig, setConfig] = useState({
-    loadPath : "",
-    name : "Oisho",
-    userData : null,
-  });
-
-  const componentChoice = useSelector(state => state.configuration.bodyComponent);
-  currConfig = {...currConfig, setConfig};
+  const componentChoice
+    = useSelector(state => state.configuration.bodyComponent);
 
   return (
     <div className="main-body">
-      {chooseCurrComponent(componentChoice, currConfig)}
+      {chooseCurrComponent(componentChoice)}
     </div>
   );
 }
 
-function chooseCurrComponent(componentChoice, currConfig) {
+function chooseCurrComponent(componentChoice) {
   switch (componentChoice) {
     case "welcome" : return <WelcomePage/>;
-    case "loadFile" : return <Dashboard currConfig={currConfig} />;
+    case "loadFile" : return <Dashboard />;
     default: return (<div>404, not found</div>)
   }
 }
