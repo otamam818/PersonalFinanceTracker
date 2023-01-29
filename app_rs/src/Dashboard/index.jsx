@@ -1,17 +1,18 @@
-import {useState} from "react";
 import AddingArea from "./AddingArea";
-import "./style.scss";
-// TODO: Migrate this into a function called in the back-end
 import { invoke } from '@tauri-apps/api/tauri';
-import { makeState } from "../utils";
 import { Save } from 'react-feather';
 import { useSelector, useDispatch } from 'react-redux';
 import {loadStates} from "../stateController/userData";
+import OverlayComponent from "./OverlayComponent";
+import { setOverlayComponent } from '../stateController/dashboard';
+
+import "./style.scss";
 
 function Dashboard () {
-  let [chosenForm, setChosenForm] = useState(null);
-  let formIsShown = makeState(false);
+  const dispatch = useDispatch();
   const loadState = useSelector(state => state.userData.loadState);
+  const overlayChoice
+    = useSelector(state => state.dashboard.overlayComponent);
 
   const userData = useSelector(state => state.userData.data);
   const filePath = useSelector(state => state.configuration.filePath);
@@ -32,8 +33,6 @@ function Dashboard () {
 
   renderedContent.push(<AddingArea
     key={"AA"}
-    setChosenForm={setChosenForm}
-    formIsShown={formIsShown}
   />);
 
   return (
@@ -58,13 +57,10 @@ function Dashboard () {
       </main>
     </div>
     <div
-      className={"pop-up " + (formIsShown.get ? "shown" : "hidden")}
-      onClick={() => {
-        formIsShown.set(false);
-        setChosenForm(null);
-      }}
+      className={"pop-up " + ((overlayChoice !== null) ? "shown" : "hidden")}
+      onClick={() => dispatch(setOverlayComponent(null))}
     >
-      {chosenForm}
+      <OverlayComponent dataInput={overlayChoice} />
     </div>
     </>
   );
