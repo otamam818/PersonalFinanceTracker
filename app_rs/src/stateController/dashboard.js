@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const selectedSections = {
+  history: "history",
+  graphicalData: "graphs",
+}
+
 export const configSlice = createSlice({
   name: 'dashboard',
   initialState: {
     overlayComponent: null,
+    currSelectedSection: selectedSections.history
   },
 
   reducers: {
