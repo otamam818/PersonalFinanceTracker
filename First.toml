@@ -1,16 +1,20 @@
 [[items]]
+id = 0
+name = "Mojo"
+prices = ["21.5"]
+currency = "AUD"
+category_ids = []
+
+[[items]]
 id = 1
 name = "JojoMojo"
 prices = ["21.5"]
 currency = "AUD"
 category_ids = []
 
-[[items]]
-id = 0
-name = "Mojo"
-prices = ["21.5"]
-currency = "AUD"
-category_ids = []
+[[stores]]
+location = "MC"
+name = "Coles"
 
 [[category]]
 id = 0
