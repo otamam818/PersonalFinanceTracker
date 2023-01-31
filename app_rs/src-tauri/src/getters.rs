@@ -1,4 +1,4 @@
-use pf_tracker_lib::{DataMap, DataFile, receipt::{Store, Item}};
+use pf_tracker_lib::{DataMap, DataFile, receipt::{Store, Item}, displayable::ReceiptHistory};
 
 #[tauri::command]
 pub fn get_mappable(data_file: DataFile) -> DataMap {
@@ -30,5 +30,14 @@ pub fn get_item_height (
         Some(_) => 180,
         None => 120
     }
+}
+
+#[tauri::command]
+pub fn get_receipt_history (
+    key: &str,
+    data_map: DataMap,
+    ) -> ReceiptHistory
+{
+    ReceiptHistory::from_DataMap(key, data_map)
 }
 
