@@ -1,9 +1,12 @@
 .dashboard {
   height: 100vh;
-  width: 90vw;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-sizing: border-box;
+  padding-left: 3vw;
+  padding-right: 1vw;
 
   nav {
     display: flex;
