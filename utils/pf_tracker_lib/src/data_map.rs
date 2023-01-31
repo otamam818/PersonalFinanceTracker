@@ -170,6 +170,10 @@ impl DataMap {
     pub fn get_arr_items(data: DataMap) -> Vec<Item> {
         get_arr(data.items)
     }
+
+    pub fn get_arr_receipts(data: DataMap) -> Vec<Receipt> {
+        get_arr(data.receipts)
+    }
 }
 
 fn get_hashmap<T, U>(potential_list: Option<Vec<U>>) -> Option<HashMap<T, U>>

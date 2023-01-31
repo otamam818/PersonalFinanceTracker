@@ -1,13 +1,13 @@
 use serde_derive::{Deserialize, Serialize};
-use std::{fmt::Display, collections::HashSet};
+use std::{fmt::Display, collections::{HashSet, HashMap}};
 use chrono::{self, Datelike};
 
 // In the format DD/MM/YYYY
 #[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Date (u8, u8, u32);
 
+
 impl Date {
-    #[allow(dead_code)]
     pub fn new(day: u8, month: u8, year: u32) -> Result<Date, &'static str> {
         const INVALID_MESSAGE: &'static str
             = "Invalid date, please enter a date in a valid range";
@@ -41,6 +41,27 @@ impl Date {
     }
     pub fn day(&self) -> u8 {
         self.0
+    }
+
+    pub fn in_minimonth_format(&self) -> String {
+        let month_vals: HashMap<u8, &str> = HashMap::from([
+            (1, "Jan"),
+            (2, "Feb"),
+            (3, "Mar"),
+            (4, "Apr"),
+            (5, "May"),
+            (6, "Jun"),
+            (7, "Jul"),
+            (8, "Aug"),
+            (9, "Sep"),
+            (10, "Oct"),
+            (11, "Nov"),
+            (12, "Dec"),
+        ]);
+        let month = month_vals
+            .get(&self.month())
+            .expect("Month should have already been validated");
+        format!("{} {} {}", self.day(), month, self.year())
     }
 }
 

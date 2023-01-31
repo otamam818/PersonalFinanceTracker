@@ -27,10 +27,11 @@ impl Key<String> for Receipt {
 
 impl Key<String> for Store {
     fn get_key(&self) -> String {
-        match &self.location {
-            Some(place) => format!("{} | {}", self.name, place),
-            None => format!("{} | {}", self.name, "$Unknown"),
-        }
+        let location = match &self.location {
+            Some(place) => place,
+            None => "$Unknown",
+        };
+        format!("{} | {}", self.name, location)
     }
 }
 

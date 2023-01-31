@@ -4,6 +4,7 @@ pub mod time;
 pub mod data_file;
 pub mod data_map;
 mod key;
+pub mod displayable;
 
 pub use crate::receipt::Receipt;
 pub use crate::date::Date;

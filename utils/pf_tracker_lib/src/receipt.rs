@@ -20,7 +20,7 @@ pub struct Item {
     pub id: ItemKey,
     pub name: String,
 
-    /// prices.last() would be the latest price, whereas prices.first
+    /// prices.last() would be the latest price, whereas prices.first()
     /// would be the first-noted price
     pub prices: Vec<String>,
     pub currency: String,
