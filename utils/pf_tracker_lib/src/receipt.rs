@@ -28,12 +28,13 @@ pub struct Item {
 }
 
 type Quantity = u16;
+type ReceiptItemKey = String;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Receipt {
     pub date: Date,
     pub time: Time,
     pub store_id: String,
-    pub items: HashMap<ItemKey, Quantity>,
+    pub items: HashMap<ReceiptItemKey, Quantity>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

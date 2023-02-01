@@ -135,9 +135,9 @@ impl DataMap {
         let time = Time::new(time[0], time[1])
             .expect(VALIDATED_FRONT_END);
 
-        let items: HashMap<u16, u16> = items
+        let items: HashMap<String, u16> = items
             .iter()
-            .map(|arr| (arr[0], arr[1]))
+            .map(|arr| (arr[0].to_string(), arr[1]))
             .collect();
 
         // Appends a single receipt to the datamap

@@ -32,7 +32,6 @@ impl DataFile {
     
     pub fn update_file(&self, file_path: &str) -> std::io::Result<()> {
         let data = toml::to_string(&self);
-        dbg!(&data, &self);
         fs::write(file_path, data.unwrap())?;
         Ok(())
     }

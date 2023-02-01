@@ -33,7 +33,10 @@ impl ReceiptHistory {
                 .items
                 .as_ref()
                 .unwrap()
-                .get(key)
+                .get(&key
+                    .parse::<u16>()
+                    .expect("It is always stored as an unsigned integer")
+                )
                 .unwrap();
                 format!("{} | {} | {}",
                     item.name,
