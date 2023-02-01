@@ -19,14 +19,14 @@ export const configSlice = createSlice({
      *  @param {string} path
      */
     setFilePath: (state, path) => {
-      state.filePath = path;
+      state.filePath = path.payload;
     },
 
     /** @function changes the filepath to a new one
      *  @param {string} path
      */
     setUserName: (state, name) => {
-      state.name = name;
+      state.name = name.payload;
     },
 
     /** @function changes what component gets rendered

@@ -1,6 +1,10 @@
+import ReceiptContent from "./ReceiptContent";
+import GreenCard from "./../common/GreenCard";
+import EmptyContent from "../common/EmptyContent";
+import LoadingAnimation from "../common/LoadingAnimation";
+
 import { makeState } from "../../../utils";
 import { useSelector, useDispatch } from 'react-redux';
-import ReceiptContent from "./ReceiptContent";
 
 import "./style.scss";
 import {invoke} from "@tauri-apps/api";
@@ -11,42 +15,51 @@ function History() {
   const categoryContent = makeState([]);
 
   // Determines whether the contents should keep refreshing or not
-  const shouldRefresh = makeState(true);
   const contents = {
     receiptContent,
     itemContent,
     categoryContent,
-    shouldRefresh
   };
 
   return (
     <div className="dashboard-history">
-      <HistoryContent
-        shouldRefresh={shouldRefresh}
-        contents={contents}
-      />
+      <div className="header">
+        <span className="primary"> History </span>
+        <span className="secondary"> Receipts </span>
+      </div>
+      <GreenCard >
+        <HistoryContent
+          contents={contents}
+        />
+      </GreenCard>
     </div>
   )
 }
 
 function HistoryContent ( { contents } ) {
   let dataMap = useSelector(state => state.userData.data);
-  let shouldRefresh = contents.shouldRefresh.get;
-  if (shouldRefresh) {
-    updateContents(contents, dataMap);
-    return <span className="loading">Loading...</span>
+  const dispatch = useDispatch();
+  if (dataMap.receipts === null) {
+    return <EmptyContent />
   }
+  let shouldRefresh
+    = contents.receiptContent.get.length !==
+      Object.keys(dataMap.receipts).length;
+  if (shouldRefresh) {
+    updateContents(contents, dataMap, dispatch);
+    return <LoadingAnimation />
+  }
+  console.info("Loading ReceiptContent history");
   return <ReceiptContent data={contents.receiptContent} />
 }
 
 function updateContents(contents, dataMap) {
   if (dataMap.receipts === null) {
-    console.log("Reached here");
+    console.info("Empty dataMap receipt");
     return;
   }
   let receiptKeys = Object.keys(dataMap.receipts);
-  console.log({receiptKeys, contents});
-  let newKeys = receiptKeys.map(async key => {
+  receiptKeys.map(async key => {
     let newReceiptContent
       = await invoke("get_receipt_history", {key, dataMap});
     contents
@@ -56,12 +69,7 @@ function updateContents(contents, dataMap) {
         .get
         .concat(newReceiptContent)
       );
-    return newReceiptContent;
   });
-  console.log({newKeys});
-  contents.shouldRefresh.set(false);
-  
-  // contents.receiptContent.set(receiptContents);
 }
 
 export default History;

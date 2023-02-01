@@ -1,4 +1,50 @@
 .dashboard-history {
   height: 100%;
+
+  .header, .store-name, .datetime {
+    text-transform: uppercase;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: 0.05rem;
+    margin-bottom: 10px;
+
+    .primary {
+      font-weight: bold;
+    }
+
+    .secondary {
+      color: #bbb;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .store-name {
+    font-weight: bold;
+    font-size: 17px;
+    margin: 0 10px;
+  }
+
+  .datetime {
+    color: #aaa;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .item-atom {
+    width: max-content;
+    padding: 10px;
+    background-color: var(--brunswick-green);
+    border-radius: 8px;
+    margin: 10px;
+    box-shadow: 0 4px 20px -2px #00000060;
+  }
+}
+
+.spread {
+  display: flex;
 }
 
