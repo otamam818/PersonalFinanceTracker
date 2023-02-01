@@ -46,21 +46,6 @@ function Dashboard () {
   );
 }
 
-function EmptyContent() {
-  return (
-    <div className="empty-content">
-      <span className="main-message">Nothing to show here</span>
-      <span className="comment">Add an item from the options below</span>
-    </div>
-  );
-}
-
-function LoadingAnimation() {
-  return (
-    <div className="loading">Loading data...</div>
-  )
-}
-
 async function handleSave(dataMap, filePath) {
   await invoke("save_file", {
     dataMap,
