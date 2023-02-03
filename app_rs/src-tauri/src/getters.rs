@@ -1,4 +1,16 @@
-use pf_tracker_lib::{DataMap, DataFile, receipt::{Store, Item}, displayable::ReceiptHistory};
+//! Acts as an interface that gets various sub-sections from the main storage
+//! structure: the DataMap
+use pf_tracker_lib::{
+    DataMap,
+    DataFile,
+
+    receipt::{
+        Store,
+        Item
+    },
+
+    displayable::ReceiptHistory
+};
 
 #[tauri::command]
 pub fn get_mappable(data_file: DataFile) -> DataMap {

@@ -1,3 +1,4 @@
+//! Acts as the interface between the tauri front-end and the library back-end
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"

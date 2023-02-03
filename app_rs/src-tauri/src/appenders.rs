@@ -1,3 +1,5 @@
+//! Adds extra pieces of data to the DataMap and returns the modified
+//! DataMap struct
 use pf_tracker_lib::DataMap;
 
 #[tauri::command]

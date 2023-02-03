@@ -1,3 +1,5 @@
+//! Handles the various file IO operations, acting as an
+//! interface between the local storage and application
 use pf_tracker_lib::{DataMap, DataFile};
 
 #[tauri::command]
