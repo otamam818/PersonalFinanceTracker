@@ -21,15 +21,14 @@ function WelcomePage() {
 
       <div className="options">
         <button className="create" onClick={() => handleSave(dispatch)}>
-          Create a new finance-tracker file
+          New file
         </button>
 
         <button className="load" onClick={() => handleLoad(dispatch)}>
-          Load an existing finance-tracker file
+          Load file
         </button>
       </div>
 
-      <p><strong>Note</strong> A finance-tracker file is the file that will keep track of all your finances</p>
       {feedback}
     </div>
     </>
