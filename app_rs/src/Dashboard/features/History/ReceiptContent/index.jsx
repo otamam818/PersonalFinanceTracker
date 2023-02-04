@@ -9,7 +9,7 @@ function ReceiptContent({ data }) {
           <br/>
           <span> {price}{currency} x {quantity} </span>
           <hr/>
-          <strong>
+          <strong id="receipt-individual-price">
             {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{currency}
           </strong>
         </div>
