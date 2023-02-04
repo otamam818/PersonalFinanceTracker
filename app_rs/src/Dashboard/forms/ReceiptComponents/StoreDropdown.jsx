@@ -76,7 +76,9 @@ function StoreDropDown ( { data } ) {
       className={"store-dropdown" + ((data.isVisible)
         ? " shown"
         : " hidden"
-    )}>
+      )}
+      onBlur={() => data.setVisibility(false)}
+    >
       {finButtons}
     </div>
   )
