@@ -1,9 +1,10 @@
 import {useRef, useState} from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
 import { setUserData } from '../../stateController/userData';
+import { setOverlayComponent } from '../../stateController/dashboard';
 import { useSelector, useDispatch } from 'react-redux';
 
-function ItemForm ( { formIsShown } ) {
+function ItemForm () {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.userData.data);
   const nameRef = useRef(null);
@@ -54,7 +55,9 @@ function ItemForm ( { formIsShown } ) {
 
       <div className="button-area">
         <button onClick={() => handleSubmit()}> Submit </button>
-        <button onClick={() => formIsShown.set(false)}> Cancel </button>
+        <button onClick={() => dispatch(setOverlayComponent(null))}>
+          Cancel
+        </button>
       </div>
     </form>
   )
