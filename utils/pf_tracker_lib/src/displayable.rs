@@ -12,6 +12,7 @@ pub struct ReceiptHistory {
     pub date: String,
     pub time: String,
     pub store: String,
+    pub currency: String,
     pub items: Vec<String>,
 }
 
@@ -26,6 +27,8 @@ impl ReceiptHistory {
             .expect("It would not be possible to call this function with an empty dataset");
         let date = receipt.date.in_minimonth_format();
         let time = format!("{}", receipt.time);
+
+        let mut currency = None;
         let items = receipt.items
             .iter()
             .map(|(key, quantity)| {
@@ -38,6 +41,11 @@ impl ReceiptHistory {
                     .expect("It is always stored as an unsigned integer")
                 )
                 .unwrap();
+
+                if currency.is_none() {
+                    currency = Some(item.currency.clone());
+                }
+
                 format!("{} | {} | {}",
                     item.name,
                     item.prices.last().unwrap(),
@@ -46,11 +54,15 @@ impl ReceiptHistory {
             })
             .collect::<Vec<String>>();
 
+        let currency = currency
+            .expect("If there is one item, a currency is guaranteed");
+
         ReceiptHistory {
             date,
             time,
             store: receipt.store_id.clone(),
-            items
+            items,
+            currency
         }
     }
 }
