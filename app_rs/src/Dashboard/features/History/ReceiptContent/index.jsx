@@ -1,3 +1,5 @@
+import {useEffect, useState} from "react";
+
 function ReceiptContent({ data }) {
   return data.get.map((atom, index) => {
     const {date, currency, items, store, time} = atom;
@@ -13,12 +15,15 @@ function ReceiptContent({ data }) {
     });
 
     return (
-      <div key={index}>
+      <div key={index} data-index={index} className="receipt-atom">
         <span className="store-name"> {store} </span>
         <span className="datetime"> {date} at {time} </span>
         <br/>
         <div className="spread">
-          {itemArray}
+          <div className="item-contents">
+            {itemArray}
+          </div>
+          <Totals index={index} currency={currency} />
         </div>
       </div>
     )
@@ -36,6 +41,29 @@ function ItemAtom( {name, price, quantity, currency } ) {
         {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{currency}
       </strong>
     </div>
+  );
+}
+
+function Totals( { index, currency } ) {
+  let [totalPrice, setTotalPrice] = useState(undefined);
+  useEffect(() => {
+    setTotalPrice(
+      // Adds all numbers from the specific array
+      Array.from(document.querySelectorAll(
+        `.receipt-atom[data-index="${index}"] .item-atom #receipt-individual-price`))
+      .map((element) => parseFloat(element.innerHTML))
+      .reduce((a, b) => a + b, 0).toFixed(2)
+    );
+  });
+
+  return (
+          <div className="totals">
+            Total
+            <hr />
+            {currency}
+            <br />
+            {totalPrice}
+          </div>
   );
 }
 

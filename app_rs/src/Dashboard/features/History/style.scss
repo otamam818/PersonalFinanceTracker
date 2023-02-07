@@ -42,6 +42,25 @@
     margin: 10px;
     box-shadow: 0 4px 20px -2px #00000060;
   }
+
+  .receipt-atom .spread {
+    justify-content:  space-between;
+    align-items: center;
+
+    .item-contents {
+      display: flex;
+      overflow-x: scroll;
+    }
+
+    .totals {
+      margin-right: 15px;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.2;
+      border-left: 2px solid white;
+      padding-left: 10px;
+    }
+  }
 }
 
 .spread {
