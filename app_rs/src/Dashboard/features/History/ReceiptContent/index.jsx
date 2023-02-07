@@ -3,17 +3,13 @@ function ReceiptContent({ data }) {
     const {date, currency, items, store, time} = atom;
     let itemArray = items.map((value, index) => {
       const [name, price, quantity] = value.split(" | ");
-      return (
-        <div className="item-atom" key={index}>
-          <span className="name"> {name} </span>
-          <br/>
-          <span> {price}{currency} x {quantity} </span>
-          <hr/>
-          <strong id="receipt-individual-price">
-            {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{currency}
-          </strong>
-        </div>
-      )
+      return <ItemAtom
+        key={index}
+        name={name}
+        price={price}
+        quantity={quantity}
+        currency={currency}
+      />
     });
 
     return (
@@ -27,6 +23,20 @@ function ReceiptContent({ data }) {
       </div>
     )
   });
+}
+
+function ItemAtom( {name, price, quantity, currency } ) {
+  return (
+    <div className="item-atom">
+      <span className="name"> {name} </span>
+      <br/>
+      <span> {price}{currency} x {quantity} </span>
+      <hr/>
+      <strong id="receipt-individual-price">
+        {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{currency}
+      </strong>
+    </div>
+  );
 }
 
 export default ReceiptContent;
