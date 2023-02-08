@@ -54,22 +54,13 @@ function HistoryContent ( { contents } ) {
 }
 
 function updateContents(contents, dataMap) {
-  if (dataMap.receipts === null) {
-    console.info("Empty dataMap receipt");
-    return;
-  }
   let receiptKeys = Object.keys(dataMap.receipts);
-  receiptKeys.map(async key => {
-    let newReceiptContent
-      = await invoke("get_receipt_history", {key, dataMap});
-    contents
-      .receiptContent
-      .set(contents
-        .receiptContent
-        .get
-        .concat(newReceiptContent)
-      );
+  let receiptPromises = receiptKeys.map(async key => {
+    return await invoke("get_receipt_history", {key, dataMap});
   });
+
+  Promise.all(receiptPromises)
+    .then(arr => contents.receiptContent.set(arr));
 }
 
 export default History;
