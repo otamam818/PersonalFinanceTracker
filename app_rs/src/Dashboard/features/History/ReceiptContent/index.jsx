@@ -16,9 +16,16 @@ function ReceiptContent({ data }) {
 
     return (
       <div key={index} data-index={index} className="receipt-atom">
-        <span className="store-name"> {store} </span>
-        <span className="datetime"> {date} at {time} </span>
-        <br/>
+        <div className="spread">
+          <div className="info-content">
+            <span className="store-name"> {store} </span>
+            <span className="datetime"> {date} at {time} </span>
+          </div>
+          <div className="actions">
+            <button> X </button>
+            <button> Y </button>
+          </div>
+        </div>
         <div className="spread">
           <div className="item-contents">
             {itemArray}
