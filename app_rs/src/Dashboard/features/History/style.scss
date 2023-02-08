@@ -1,5 +1,5 @@
 .dashboard-history {
-  height: 100%;
+  height: 80%;
 
   .header, .store-name, .datetime {
     text-transform: uppercase;
@@ -25,7 +25,7 @@
   .store-name {
     font-weight: bold;
     font-size: 17px;
-    margin: 0 10px;
+    margin-right: 10px;
   }
 
   .datetime {
@@ -43,27 +43,44 @@
     box-shadow: 0 4px 20px -2px #00000060;
   }
 
-  .receipt-atom .spread {
-    justify-content:  space-between;
-    align-items: center;
+  .receipt-atom {
+    width: 97%;
+    margin: 7px auto;
+    padding: 10px 5px;
+    border-radius: 5px;
 
-    .item-contents {
-      display: flex;
-      overflow-x: scroll;
+    &:hover {
+      background-color: hsla(150, 20%, 13%, 1);
+      box-shadow: 0 4px 6px hsla(0deg, 0%, 0%, 30%);
+      border: 1px solid var(--hover-green);
     }
 
-    .totals {
-      margin-right: 15px;
-      text-align: center;
-      font-weight: bold;
-      line-height: 1.2;
-      border-left: 2px solid white;
-      padding-left: 10px;
+    .spread {
+      justify-content:  space-between;
+      align-items: center;
+
+      .item-contents {
+        display: flex;
+        overflow-x: scroll;
+      }
+
+      .totals {
+        margin-right: 15px;
+        text-align: center;
+        font-weight: bold;
+        line-height: 1.2;
+        border-left: 2px solid white;
+        padding-left: 10px;
+      }
     }
   }
 }
 
 .spread {
   display: flex;
+}
+
+.adding-area {
+  height: 20%;
 }
 
