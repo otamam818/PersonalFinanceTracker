@@ -39,9 +39,13 @@ function History() {
 function HistoryContent ( { contents } ) {
   let dataMap = useSelector(state => state.userData.data);
   const dispatch = useDispatch();
+
   if (dataMap.receipts === null) {
     return <EmptyContent />
   }
+
+  // The number of receipts always equal the number of keys in
+  // `dataMap.receipts`
   let shouldRefresh
     = contents.receiptContent.get.length !==
       Object.keys(dataMap.receipts).length;
@@ -49,6 +53,8 @@ function HistoryContent ( { contents } ) {
     updateContents(contents, dataMap, dispatch);
     return <LoadingAnimation />
   }
+
+  // If a refresh isn't required, then it is safe to load the content
   console.info("Loading ReceiptContent history");
   return <ReceiptContent data={contents.receiptContent} />
 }
