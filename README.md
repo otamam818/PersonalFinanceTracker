@@ -72,6 +72,7 @@ without giving anyone access to their expenditure.
 - ReactJS
 - ReduxJS
 - Sass
+- React Feather
 
 ## Getting Started
 This project is still in development and has not reached its
@@ -81,18 +82,19 @@ trying out the unfinished version:
 1. Git clone this into your preferred directory:
 ```
 git clone https://github.com/otamam818/PersonalFinanceTracker.git
-```
-2. Open the directory - `PersonalFinanceTracker/app_rs`
-3. Run:
-```
+cd PersonalFinanceTracker/app_rs
+npm install
 npm run tauri dev
 ```
 
+After that, you can just `cd` to `app_rs` and run `npm run tauri dev` 
+to get the app running
+
 ### Prerequisites
-**Rust**: Can be installed from
+**Rust**: 
 [[installation](https://www.rust-lang.org/tools/install)]
 
-**NodeJS**:
+**NodeJS**: 
 [[installation](https://nodejs.org/en/download/)]
 
 ## Usage
