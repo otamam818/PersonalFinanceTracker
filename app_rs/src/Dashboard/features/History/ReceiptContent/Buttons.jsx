@@ -1,9 +1,19 @@
+import {invoke} from "@tauri-apps/api";
 import {Delete, Edit2} from "react-feather";
+import {useSelector, useDispatch} from "react-redux";
+import {setOverlayComponent, setOverlayData} from "../../../../stateController/dashboard";
 
 function Buttons( { receiptKey } ) {
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.userData.data);
   function handleEdit() {
     // Should create a pop-up with a filled-up ReceiptForm, in a way that
     // implies the user can change it, and it will update the current data
+    invoke("get_receipt_of", { data, key: receiptKey })
+      .then(innerData => {
+        dispatch(setOverlayComponent("Receipt"));
+        dispatch(setOverlayData(innerData));
+      })
   }
 
   function handleDelete() {
@@ -13,7 +23,7 @@ function Buttons( { receiptKey } ) {
 
   return (
     <div className="actions">
-      <button className="action-button">
+      <button onClick={() => handleEdit()} className="action-button">
         <Edit2 color="white" />
       </button>
       <button className="action-button">
