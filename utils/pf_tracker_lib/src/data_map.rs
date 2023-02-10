@@ -174,6 +174,17 @@ impl DataMap {
     pub fn get_arr_receipts(data: DataMap) -> Vec<Receipt> {
         get_arr(data.receipts)
     }
+
+    pub fn get_receipt_of(self, key: String) -> Option<Receipt> {
+        match self.receipts {
+            Some(hashmap) =>
+                Some(hashmap
+                .get(&key)
+                .expect("key should be valid")
+                .clone()),
+            None => None
+        }
+    }
 }
 
 fn get_hashmap<T, U>(potential_list: Option<Vec<U>>) -> Option<HashMap<T, U>>

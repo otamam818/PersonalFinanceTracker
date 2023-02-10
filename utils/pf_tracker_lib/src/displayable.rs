@@ -9,6 +9,9 @@ use serde_derive::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ReceiptHistory {
+    // The key that it was referenced from
+    // Used for editing the given receipt
+    pub receipt_key: String,
     pub date: String,
     pub time: String,
     pub store: String,
@@ -25,8 +28,10 @@ impl ReceiptHistory {
         let receipt = binding
             .get(receipt_key)
             .expect("It would not be possible to call this function with an empty dataset");
+        let receipt_key = receipt_key.to_string();
         let date = receipt.date.in_minimonth_format();
         let time = format!("{}", receipt.time);
+        let store = receipt.store_id.clone();
 
         let mut currency = None;
         let items = receipt.items
@@ -57,13 +62,7 @@ impl ReceiptHistory {
         let currency = currency
             .expect("If there is one item, a currency is guaranteed");
 
-        ReceiptHistory {
-            date,
-            time,
-            store: receipt.store_id.clone(),
-            items,
-            currency
-        }
+        ReceiptHistory { receipt_key, date, time, store, items, currency}
     }
 }
 

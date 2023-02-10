@@ -28,6 +28,7 @@ pub struct Item {
 }
 
 type Quantity = u16;
+// `ReceiptItemKey` is just a String-cast to the u16 of ItemKey
 type ReceiptItemKey = String;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Receipt {
