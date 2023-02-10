@@ -9,6 +9,7 @@ export const configSlice = createSlice({
   name: 'dashboard',
   initialState: {
     overlayComponent: null,
+    overlayData: null,
     currSelectedSection: selectedSections.history
   },
 
@@ -20,9 +21,17 @@ export const configSlice = createSlice({
     setOverlayComponent: (state, component) => {
       state.overlayComponent = component.payload;
     },
+
+    /** @function changes the string that indicates which component
+     *            to show on top of the FormOverlay
+     *  @param {string} component
+     */
+    setOverlayData: (state, data) => {
+      state.overlayData = data.payload;
+    },
   },
 });
 
-export const { setOverlayComponent } = configSlice.actions;
+export const { setOverlayComponent, setOverlayData } = configSlice.actions;
 export default configSlice.reducer;
 

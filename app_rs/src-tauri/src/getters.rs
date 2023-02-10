@@ -6,7 +6,8 @@ use pf_tracker_lib::{
 
     receipt::{
         Store,
-        Item
+        Item,
+        Receipt
     },
 
     displayable::ReceiptHistory
@@ -51,5 +52,10 @@ pub fn get_receipt_history (
     ) -> ReceiptHistory
 {
     ReceiptHistory::from_DataMap(key, data_map)
+}
+
+#[tauri::command]
+pub fn get_receipt_of(data: DataMap, key: String) -> Option<Receipt> {
+    data.get_receipt_of(key)
 }
 

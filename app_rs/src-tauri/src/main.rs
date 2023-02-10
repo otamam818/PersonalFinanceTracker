@@ -11,7 +11,14 @@ mod data_insight;
 
 use file_handler::{make_file, load_file, save_file};
 use appenders::{append_item, append_category, append_store, append_receipt};
-use getters::{get_mappable, get_arr_items, get_arr_stores, get_item_height, get_receipt_history};
+use getters::{
+    get_mappable,
+    get_arr_items,
+    get_arr_stores,
+    get_item_height,
+    get_receipt_history,
+    get_receipt_of,
+};
 use data_insight::all_empty;
 
 fn main() {
@@ -40,6 +47,7 @@ fn main() {
             get_arr_items,
             get_item_height,
             get_receipt_history,
+            get_receipt_of,
 
             /* --------------*
              * DATA HANDLERS *

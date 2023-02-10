@@ -3,7 +3,8 @@
  *               whether it is a store, restaurant or something else is for
  *               the user to decide
  */
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import {useSelector} from 'react-redux';
 import StoreDropDown from './StoreDropdown';
 
 function StoreLabel() {
@@ -13,6 +14,15 @@ function StoreLabel() {
   // The user has the ability to choose from a dropdown of choices.
   // This state manages when it is visible
   const [dropDownVisible, setDropdownVisible] = useState(false);
+  const overlayData = useSelector(state => state.dashboard.overlayData);
+
+  useEffect(() => {
+    if (overlayData !== null) {
+      // Set the storeValue to the current data
+      console.log({overlayData});
+      setStoreValue(overlayData.store_id);
+    }
+  });
 
   return (
     <label
