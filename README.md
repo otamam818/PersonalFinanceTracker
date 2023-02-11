@@ -32,10 +32,8 @@
 
 ---
 
-## About
-
-**[?]** Tracks personal finances of the user. Lets people store their data locally
-without giving anyone access to their expenditure. 
+Tracks personal finances of the user. Lets people store their data locally
+without giving any organisation the access to their expenditure. 
 
 > **Purpose**: I wanted every individual to have complete privacy and control over their
 > spending habits through this app.
@@ -46,7 +44,7 @@ without giving anyone access to their expenditure.
 > data within the device and attempting to provide the same set of features.
 
 > On another note, if the consensus of the community is around the anonymous storage of
-> data, I am happy to parttake in implementing that too.
+> data into a server, I am happy to parttake in implementing that too.
 
 <details>
 <summary>Screenshots</summary>
@@ -64,22 +62,28 @@ without giving anyone access to their expenditure.
 ### Built With
 
 ![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
-- Tauri
-- Serde TOML
-- Chrono
+
+<p>
+<img src="https://img.shields.io/badge/Desktop_GUI_Library-Tauri-54c7ec" />
+<img src="https://img.shields.io/badge/Data_Parser-Serde_TOML-a72145" />
+<img src="https://img.shields.io/badge/Time_Calculation-Chrono-yellow" />
+</p>
+
+and
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-- ReactJS
-- ReduxJS
-- Sass
-- React Feather
+<p>
+<img src="https://img.shields.io/badge/Web_GUI_Library-React-54c7ec" />
+<img src="https://img.shields.io/badge/State_Controller-ReduxJS-purple" />
+<img src="https://img.shields.io/badge/CSS_Library-Sass-bf4080" />
+<img src="https://img.shields.io/badge/Icon_Library-React_Feather-0066ff" />
+</p>
 
 ## Getting Started
 This project is still in development and has not reached its
 minimum viable product (MVP) version yet. As such, the following steps are for
 trying out the unfinished version:
 
-1. Git clone this into your preferred directory:
 ```
 git clone https://github.com/otamam818/PersonalFinanceTracker.git
 cd PersonalFinanceTracker/app_rs
