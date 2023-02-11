@@ -82,7 +82,17 @@ and
 ## Getting Started
 This project is still in development and has not reached its
 minimum viable product (MVP) version yet. As such, the following steps are for
-trying out the unfinished version:
+trying out the unfinished version.
+
+After that, you can just `cd` to `app_rs` and run `npm run tauri dev` 
+to get the app running
+
+### Prerequisites
+| ![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white) | ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) |
+| :----------------------------------------------------------------------------------------------------: | :------------------------------------------------------: |
+| [[installation](https://www.rust-lang.org/tools/install)] | [[installation](https://nodejs.org/en/download/)] |
+
+## Usage
 
 ```
 git clone https://github.com/otamam818/PersonalFinanceTracker.git
@@ -90,22 +100,6 @@ cd PersonalFinanceTracker/app_rs
 npm install
 npm run tauri dev
 ```
-
-After that, you can just `cd` to `app_rs` and run `npm run tauri dev` 
-to get the app running
-
-### Prerequisites
-**Rust**: 
-[[installation](https://www.rust-lang.org/tools/install)]
-
-**NodeJS**: 
-[[installation](https://nodejs.org/en/download/)]
-
-## Usage
-
-> **[?]**
-> How does one go about using it?
-> Provide various use cases and code examples here.
 
 ## Roadmap
 
