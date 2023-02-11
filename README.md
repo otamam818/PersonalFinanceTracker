@@ -63,12 +63,12 @@ without giving anyone access to their expenditure.
 
 ### Built With
 
-#### Rust
+![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
 - Tauri
 - Serde TOML
 - Chrono
 
-#### JavaScript
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 - ReactJS
 - ReduxJS
 - Sass
