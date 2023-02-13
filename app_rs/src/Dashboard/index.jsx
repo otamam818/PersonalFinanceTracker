@@ -2,7 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri';
 import { Save } from 'react-feather';
 import { useSelector, useDispatch } from 'react-redux';
 import OverlayComponent from "./OverlayComponent";
-import { setOverlayComponent } from '../stateController/dashboard';
+import { clearOverlay } from '../stateController/dashboard';
 
 import "./style.scss";
 import FeatureContent from "./features/FeatureContent";
@@ -38,7 +38,7 @@ function Dashboard () {
     </div>
     <div
       className={"pop-up " + ((overlayChoice !== null) ? "shown" : "hidden")}
-      onClick={() => dispatch(setOverlayComponent(null))}
+      onClick={() => dispatch(clearOverlay())}
     >
       <OverlayComponent dataInput={overlayChoice} />
     </div>

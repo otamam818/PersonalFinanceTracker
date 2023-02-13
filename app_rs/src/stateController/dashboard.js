@@ -29,9 +29,14 @@ export const configSlice = createSlice({
     setOverlayData: (state, data) => {
       state.overlayData = data.payload;
     },
+
+    clearOverlay: (state) => {
+      state.overlayData = null;
+      state.overlayComponent = null;
+    }
   },
 });
 
-export const { setOverlayComponent, setOverlayData } = configSlice.actions;
+export const { clearOverlay, setOverlayComponent, setOverlayData } = configSlice.actions;
 export default configSlice.reducer;
 
