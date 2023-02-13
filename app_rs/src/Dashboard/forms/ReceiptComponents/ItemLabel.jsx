@@ -71,7 +71,9 @@ function Options ( { optionData }) {
 }
 
 function TickBox( { value } ) {
-  let [quantity, setQuantity] = useState(0);
+  const overlayData = useSelector(state => state.dashboard.overlayData);
+  let [quantity, setQuantity]
+    = useState(overlayData?.items[value.id] ? overlayData.items[value.id] : 0);
 
   let newestPrice = value.prices[value.prices.length - 1];
   let hasNoQuantity = quantity === 0;

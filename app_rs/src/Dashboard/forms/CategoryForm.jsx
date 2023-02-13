@@ -2,7 +2,7 @@ import {useRef} from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
 import { setUserData } from '../../stateController/userData';
 import { useSelector, useDispatch } from 'react-redux';
-import { setOverlayComponent } from '../../stateController/dashboard';
+import { clearOverlay } from '../../stateController/dashboard';
 
 function CategoryForm ( { formIsShown } ) {
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ function CategoryForm ( { formIsShown } ) {
 
       <div className="button-area">
         <button onClick={() => handleSubmit()}> Submit </button>
-        <button onClick={() => dispatch(setOverlayComponent(null))}>
+        <button onClick={() => dispatch(clearOverlay())}>
           Cancel
         </button>
       </div>

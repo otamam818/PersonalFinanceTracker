@@ -1,12 +1,19 @@
 import {useState} from "react";
+import {useSelector} from 'react-redux';
 
 function DateTimeLabel() {
-  const [dayVal, setDayVal] = useState("")
-  const [monthVal, setMonthVal] = useState("")
-  const [yearVal, setYearVal] = useState("")
+  const overlayData = useSelector(state => state.dashboard.overlayData);
+  const [dayVal, setDayVal]
+    = useState(overlayData ? overlayData.date[0] : "");
+  const [monthVal, setMonthVal]
+    = useState(overlayData ? overlayData.date[1] : "");
+  const [yearVal, setYearVal]
+    = useState(overlayData ? overlayData.date[2] : "");
 
-  const [hourVal, setHourVal] = useState("")
-  const [minuteVal, setMinuteVal] = useState("")
+  const [hourVal, setHourVal]
+    = useState(overlayData ? overlayData.time[0] : "");
+  const [minuteVal, setMinuteVal]
+    = useState(overlayData ? overlayData.time[1] : "");
   return (
       <label className='widespread'>
         <span>Date</span>

@@ -8,7 +8,7 @@ import ItemLabel from './ReceiptComponents/ItemLabel';
 import {invoke} from '@tauri-apps/api';
 import { setUserData } from '../../stateController/userData';
 import { useSelector, useDispatch } from 'react-redux';
-import { setOverlayComponent } from '../../stateController/dashboard';
+import { clearOverlay } from '../../stateController/dashboard';
 
 function ReceiptForm () {
   const dispatch = useDispatch();
@@ -26,14 +26,14 @@ function ReceiptForm () {
       <ItemLabel />
 
       <div className="button-area">
-        <button onClick={() => handleSubmit(userData, setOverlayComponent, dispatch)}> Submit </button>
-        <button onClick={() => dispatch(setOverlayComponent(null))}> Cancel </button>
+        <button onClick={() => handleSubmit(userData, clearOverlay, dispatch)}> Submit </button>
+        <button onClick={() => dispatch(clearOverlay())}> Cancel </button>
       </div>
     </form>
   )
 }
 
-async function handleSubmit(userData, setOverlayComponent, dispatch) {
+async function handleSubmit(userData, clearOverlay, dispatch) {
   let storeId = document.querySelector("input[for='store-name']").value;
   let date = getFromInputIDs(['date-day', 'date-month', 'date-year']);
   let time = getFromInputIDs(['time-hour', 'time-minute']);
@@ -46,12 +46,8 @@ async function handleSubmit(userData, setOverlayComponent, dispatch) {
     time,
     items
   });
-  console.log({newUserData});
 
-  document.querySelectorAll("#check-box--quantity[data-chosen=true]")
-  .forEach((element) => element.innerHTML = 0);
-
-  dispatch(setOverlayComponent(null));
+  dispatch(clearOverlay());
   dispatch(setUserData(newUserData));
 }
 
