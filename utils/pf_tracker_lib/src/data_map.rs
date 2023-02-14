@@ -177,13 +177,53 @@ impl DataMap {
 
     pub fn get_receipt_of(self, key: String) -> Option<Receipt> {
         match self.receipts {
-            Some(hashmap) =>
-                Some(hashmap
+            Some(hashmap) => Some(hashmap
                 .get(&key)
                 .expect("key should be valid")
                 .clone()),
             None => None
         }
+    }
+
+    pub fn update_receipt(
+        mut self,
+        store_id: String,
+        date: Vec<u8>,
+        time: Vec<u8>,
+        items: Vec<Vec<u16>>,
+        receipt_key: String
+    ) -> Self {
+        const VALIDATED_FRONT_END: &'static str
+            = "Has been validated from the front-end";
+
+        // Prepares the data for the receipt
+        assert!(date.len() == 3);
+        let date = Date::new(date[0], date[1], date[2] as u32)
+            .expect(VALIDATED_FRONT_END);
+        assert!(time.len() == 2);
+        let time = Time::new(time[0], time[1])
+            .expect(VALIDATED_FRONT_END);
+
+        let items: HashMap<String, u16> = items
+            .iter()
+            .map(|arr| (arr[0].to_string(), arr[1]))
+            .collect();
+
+        // Appends a single receipt to the datamap
+        let receipt = Receipt {
+            date,
+            time,
+            store_id: store_id.clone(),
+            items
+        };
+
+        self
+            .receipts
+            .as_mut()
+            .expect("At this point a HashMap should exist,\
+                else there is a logic error in the front-end")
+            .insert(receipt_key, receipt);
+        self
     }
 }
 
@@ -193,29 +233,24 @@ where
     U: Key<T> + Clone
 {
     match potential_list {
-        Some(list) => {
-            Some(list
-                .iter()
-                .map(|atom| {
-                    let key = atom.get_key();
-                    let value = atom.to_owned();
-                    (key, value)
-                })
-                .collect::<HashMap<T, U>>()
-            )
-        },
-
+        Some(list) => Some(list
+            .iter()
+            .map(|atom| {
+                let key = atom.get_key();
+                let value = atom.to_owned();
+                (key, value)
+            })
+            .collect::<HashMap<T, U>>()),
         None => None
     }
 }
 
 fn get_arr<T, U: Clone>(map: Option<HashMap<T, U>>) -> Vec<U> {
     match map {
-        Some(hashmap) => {
-            hashmap
-                .iter()
-                .map(|(_, atom)| atom.clone())
-                .collect::<Vec<U>>()
+        Some(hashmap) => { hashmap
+            .iter()
+            .map(|(_, atom)| atom.clone())
+            .collect::<Vec<U>>()
         }
         None => vec![]
     }
@@ -224,13 +259,13 @@ fn get_arr<T, U: Clone>(map: Option<HashMap<T, U>>) -> Vec<U> {
 fn parse_option_arr<T: Clone, U>(arr: Option<HashMap<U, T>>) -> Option<Vec<T>> {
     match arr {
         Some(map) => {match map.len() {
-                0 => None,
-                _ => Some(
-                    map
-                    .iter()
-                    .map(|(_, u)| u.clone())
-                    .collect::<Vec<T>>()
-            )}},
+            0 => None,
+            _ => Some(
+                map
+                .iter()
+                .map(|(_, u)| u.clone())
+                .collect::<Vec<T>>()
+        )}},
         None => None
     }
 }
