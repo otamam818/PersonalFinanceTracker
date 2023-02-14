@@ -10,7 +10,7 @@ mod getters;
 mod data_insight;
 
 use file_handler::{make_file, load_file, save_file};
-use appenders::{append_item, append_category, append_store, append_receipt};
+use appenders::{append_item, append_category, append_store, append_receipt, update_receipt};
 use getters::{
     get_mappable,
     get_arr_items,
@@ -38,6 +38,7 @@ fn main() {
             append_item,
             append_store,
             append_receipt,
+            update_receipt,
 
             /* --------------*
              * GETTERS       *

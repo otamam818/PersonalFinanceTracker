@@ -45,3 +45,16 @@ pub fn append_receipt (
     data_map.append_receipt(store_id, date, time, items)
 }
 
+#[tauri::command]
+pub fn update_receipt (
+    data_map: DataMap,
+    store_id: String,
+    date: Vec<u8>,
+    time: Vec<u8>,
+    items: Vec<Vec<u16>>,
+    receipt_key: String
+    ) -> DataMap
+{
+    data_map.update_receipt(store_id, date, time, items, receipt_key)
+}
+
