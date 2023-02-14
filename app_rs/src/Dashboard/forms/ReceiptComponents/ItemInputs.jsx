@@ -36,7 +36,6 @@ function setValidFloat(setter, value) {
     return;
   }
 
-  console.log(value);
   let isValid = true;
   const validInputs = "1234567890.";
   Array.from(value).forEach((atom) => {

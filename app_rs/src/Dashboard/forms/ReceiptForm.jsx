@@ -8,11 +8,12 @@ import ItemLabel from './ReceiptComponents/ItemLabel';
 import {invoke} from '@tauri-apps/api';
 import { setUserData } from '../../stateController/userData';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearOverlay } from '../../stateController/dashboard';
+import { clearOverlay, setShouldRefresh } from '../../stateController/dashboard';
 
 function ReceiptForm () {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.userData.data);
+  const overlayData = useSelector(state => state.dashboard.overlayData);
   return (
     <form
       className="form-general form-category"
@@ -26,29 +27,40 @@ function ReceiptForm () {
       <ItemLabel />
 
       <div className="button-area">
-        <button onClick={() => handleSubmit(userData, clearOverlay, dispatch)}> Submit </button>
+        <button onClick={() => handleSubmit(
+          userData,
+          clearOverlay,
+          dispatch,
+          overlayData
+        )}>
+          Submit
+        </button>
         <button onClick={() => dispatch(clearOverlay())}> Cancel </button>
       </div>
     </form>
   )
 }
 
-async function handleSubmit(userData, clearOverlay, dispatch) {
+async function handleSubmit(userData, clearOverlay, dispatch, overlayData) {
   let storeId = document.querySelector("input[for='store-name']").value;
   let date = getFromInputIDs(['date-day', 'date-month', 'date-year']);
   let time = getFromInputIDs(['time-hour', 'time-minute']);
 
   let items = getCheckedItems();
-  let newUserData = await invoke("append_receipt", {
-    dataMap: userData,
-    storeId,
-    date,
-    time,
-    items
-  });
+  let params, rust_func;
+  if (overlayData) {
+    let { receiptKey } = overlayData;
+    rust_func = "update_receipt";
+    params = { dataMap: userData, storeId, date, time, items, receiptKey }
+  } else {
+    rust_func = "append_receipt";
+    params = { dataMap: userData, storeId, date, time, items }
+  }
+  let newUserData = await invoke(rust_func, params);
 
-  dispatch(clearOverlay());
   dispatch(setUserData(newUserData));
+  dispatch(setShouldRefresh(true));
+  dispatch(clearOverlay());
 }
 
 function getFromInputIDs(array) {

@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import "./style.scss";
 import {invoke} from "@tauri-apps/api";
+import {setShouldRefresh} from "../../../stateController/dashboard";
 
 function History() {
   const receiptContent = makeState([])
@@ -27,28 +28,22 @@ function History() {
         <span className="primary"> History </span>
         <span className="secondary"> Receipts </span>
       </div>
-      <GreenCard >
-        <HistoryContent
-          contents={contents}
-        />
+      <GreenCard>
+        <HistoryContent contents={contents}/>
       </GreenCard>
     </div>
   )
 }
 
 function HistoryContent ( { contents } ) {
-  let dataMap = useSelector(state => state.userData.data);
+  const dataMap = useSelector(state => state.userData.data);
+  const shouldRefresh = useSelector(state => state.dashboard.shouldRefresh);
   const dispatch = useDispatch();
 
   if (dataMap.receipts === null) {
     return <EmptyContent />
   }
 
-  // The number of receipts always equal the number of keys in
-  // `dataMap.receipts`
-  let shouldRefresh
-    = contents.receiptContent.get.length !==
-      Object.keys(dataMap.receipts).length;
   if (shouldRefresh) {
     updateContents(contents, dataMap, dispatch);
     return <LoadingAnimation />
@@ -59,14 +54,18 @@ function HistoryContent ( { contents } ) {
   return <ReceiptContent data={contents.receiptContent} />
 }
 
-function updateContents(contents, dataMap) {
+function updateContents(contents, dataMap, dispatch) {
   let receiptKeys = Object.keys(dataMap.receipts);
   let receiptPromises = receiptKeys.map(async key => {
     return await invoke("get_receipt_history", {key, dataMap});
   });
 
   Promise.all(receiptPromises)
-    .then(arr => contents.receiptContent.set(arr));
+    .then(arr => {
+      contents.receiptContent.set(arr);
+      console.info("dashboard.setShouldRefresh(false)");
+      dispatch(setShouldRefresh(false));
+    });
 }
 
 export default History;

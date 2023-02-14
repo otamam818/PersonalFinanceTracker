@@ -12,7 +12,7 @@ function Buttons( { receiptKey } ) {
     invoke("get_receipt_of", { data, key: receiptKey })
       .then(innerData => {
         dispatch(setOverlayComponent("Receipt"));
-        dispatch(setOverlayData(innerData));
+        dispatch(setOverlayData({...innerData, receiptKey}));
       })
   }
 
