@@ -10,6 +10,7 @@ export const configSlice = createSlice({
   initialState: {
     overlayComponent: null,
     overlayData: null,
+    shouldRefresh: true,
     currSelectedSection: selectedSections.history
   },
 
@@ -33,10 +34,19 @@ export const configSlice = createSlice({
     clearOverlay: (state) => {
       state.overlayData = null;
       state.overlayComponent = null;
+    },
+
+    setShouldRefresh: (state, choice) => {
+      state.shouldRefresh = choice.payload;
     }
   },
 });
 
-export const { clearOverlay, setOverlayComponent, setOverlayData } = configSlice.actions;
+export const {
+  clearOverlay,
+  setOverlayComponent,
+  setOverlayData,
+  setShouldRefresh
+} = configSlice.actions;
 export default configSlice.reducer;
 
