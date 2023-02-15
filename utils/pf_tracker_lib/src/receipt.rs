@@ -27,6 +27,12 @@ pub struct Item {
     pub category_ids: Vec<u16>
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Store {
+    pub location: Option<String>,
+    pub name: String
+}
+
 type Quantity = u16;
 // `ReceiptItemKey` is just a String-cast to the u16 of ItemKey
 type ReceiptItemKey = String;
@@ -36,11 +42,5 @@ pub struct Receipt {
     pub time: Time,
     pub store_id: String,
     pub items: HashMap<ReceiptItemKey, Quantity>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Store {
-    pub location: Option<String>,
-    pub name: String
 }
 

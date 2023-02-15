@@ -225,6 +225,17 @@ impl DataMap {
             .insert(receipt_key, receipt);
         self
     }
+
+    pub fn delete_receipt_by_key(mut self, receipt_key: String) -> Self {
+        match self.receipts {
+            Some(mut hash_map) => {
+                hash_map.remove(&receipt_key);
+                self.receipts = Some(hash_map);
+            },
+            None => {}
+        };
+        self
+    }
 }
 
 fn get_hashmap<T, U>(potential_list: Option<Vec<U>>) -> Option<HashMap<T, U>>

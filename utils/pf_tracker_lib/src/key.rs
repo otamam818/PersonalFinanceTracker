@@ -19,12 +19,6 @@ impl Key<u16> for Item {
     }
 }
 
-impl Key<String> for Receipt {
-    fn get_key(&self) -> String {
-        format!("{}|{}|{}", self.date, self.time, self.store_id)
-    }
-}
-
 impl Key<String> for Store {
     fn get_key(&self) -> String {
         let location = match &self.location {
@@ -32,6 +26,12 @@ impl Key<String> for Store {
             None => "$Unknown",
         };
         format!("{} | {}", self.name, location)
+    }
+}
+
+impl Key<String> for Receipt {
+    fn get_key(&self) -> String {
+        format!("{}|{}|{}", self.date, self.time, self.store_id)
     }
 }
 
