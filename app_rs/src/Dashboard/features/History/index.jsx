@@ -50,7 +50,7 @@ function HistoryContent ( { contents } ) {
   }
 
   // If a refresh isn't required, then it is safe to load the content
-  console.info("Loading ReceiptContent history");
+  console.debug("[Loading]    ReceiptContent history");
   return <ReceiptContent data={contents.receiptContent} />
 }
 
@@ -63,7 +63,7 @@ function updateContents(contents, dataMap, dispatch) {
   Promise.all(receiptPromises)
     .then(arr => {
       contents.receiptContent.set(arr);
-      console.info("dashboard.setShouldRefresh(false)");
+      console.debug("[state.dashboard] - setShouldRefresh = false");
       dispatch(setShouldRefresh(false));
     });
 }
