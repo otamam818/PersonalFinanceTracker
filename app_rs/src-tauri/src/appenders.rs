@@ -58,3 +58,11 @@ pub fn update_receipt (
     data_map.update_receipt(store_id, date, time, items, receipt_key)
 }
 
+#[tauri::command]
+pub fn delete_receipt_by_key (
+    data_map: DataMap,
+    receipt_key: String
+    ) -> DataMap
+{
+    data_map.delete_receipt_by_key(receipt_key)
+}
