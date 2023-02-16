@@ -54,31 +54,31 @@ body {
       display: flex;
       justify-content: space-evenly;
 
-      button {
-        border: 1px solid transparent;
-        border-radius: 4px;
-        padding: 6px 10px;
-        background-color: hsl(120, 19.6%, 37.1%);
-        color: white;
-        cursor: pointer;
-        box-shadow: 0px 4px 5px #0000005A;
-
-        width: 10ch;
-
-        &:hover {
-          box-shadow: 0 3px 8px rgba(0, 49, 10, 0.51), 0 5px 9px rgba(0, 0, 0, 0.40);
-          font-weight: bold;
-          background-color: hsl(120, 19.6%, 40.1%);
-          text-decoration: underline;
-        }
-
-        &:active {
-          background-color: hsl(120deg, 19.6%, 20.1%);
-          border: hsl(120deg, 19.6%, 30.1%);
-          box-shadow: inset 0px 4px 5px #0000005A;
-        }
-      }
     }
   }
 }
 
+.options--button {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 6px 10px;
+  background-color: hsl(120, 19.6%, 37.1%);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0px 4px 5px #0000005A;
+
+  width: 10ch;
+
+  &:hover {
+    box-shadow: 0 3px 8px rgba(0, 49, 10, 0.51), 0 5px 9px rgba(0, 0, 0, 0.40);
+    font-weight: bold;
+    background-color: hsl(120, 19.6%, 40.1%);
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: hsl(120deg, 19.6%, 20.1%);
+    border: hsl(120deg, 19.6%, 30.1%);
+    box-shadow: inset 0px 4px 5px #0000005A;
+  }
+}

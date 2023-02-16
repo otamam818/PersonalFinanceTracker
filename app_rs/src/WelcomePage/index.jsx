@@ -20,11 +20,11 @@ function WelcomePage() {
       <p>{greeting} What would you like to do?</p>
 
       <div className="options">
-        <button className="create" onClick={() => handleSave(dispatch)}>
+        <button className="options--button" onClick={() => handleSave(dispatch)}>
           New file
         </button>
 
-        <button className="load" onClick={() => handleLoad(dispatch)}>
+        <button className="options--button" onClick={() => handleLoad(dispatch)}>
           Load file
         </button>
       </div>

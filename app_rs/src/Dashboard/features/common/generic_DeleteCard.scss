@@ -1,0 +1,23 @@
+.delete-card {
+  background-color: var(--form-inner-green);
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 12px 21px #000000C0;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  .spread {
+    justify-content: space-evenly;
+    
+    .delete {
+      background-color: rgb(108, 37, 37);
+
+      &:active {
+        background-color: rgb(75, 26, 26);
+      }
+    }
+  }
+}
+
