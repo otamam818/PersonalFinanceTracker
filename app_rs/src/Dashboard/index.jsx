@@ -1,11 +1,13 @@
+import OverlayComponent from "./OverlayComponent";
+import LeftBar from './LeftBar';
+import FeatureContent from "./features/FeatureContent";
+
 import { invoke } from '@tauri-apps/api/tauri';
 import { Save } from 'react-feather';
 import { useSelector, useDispatch } from 'react-redux';
-import OverlayComponent from "./OverlayComponent";
 import { clearOverlay } from '../stateController/dashboard';
 
 import "./style.scss";
-import FeatureContent from "./features/FeatureContent";
 
 function Dashboard () {
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ function Dashboard () {
         </div>
       </nav>
       <main>
-        <div className="left-bar"></div>
+        <LeftBar />
         <div className="content">
           <FeatureContent />
         </div>
