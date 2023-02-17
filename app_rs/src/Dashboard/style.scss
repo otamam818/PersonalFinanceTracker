@@ -72,6 +72,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      align-items: center;
     }
 
     .content {
@@ -105,47 +106,43 @@
   }
 }
 
-.adding-area {
-  .separator {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin: 10px;
+.separator {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 10px;
 
-    .down-arrow {
-      rotate: 90deg;
-      color: #aaa;
-    }
-
-    .line {
-      width: 30%;
-      background-color: #333;
-      height: 3px;
-      border-radius: 3px;
-    }
+  .down-arrow {
+    rotate: 90deg;
+    color: #aaa;
   }
 
-  .card-section {
-    display: flex;
-    justify-content: space-around;
+  .line {
+    width: 30%;
+    background-color: #333;
+    height: 3px;
+    border-radius: 3px;
+  }
+}
 
-    .adder-card {
+.card-section {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 35px;
+  height: 40px;
+
+  .options--button {
+    background-color: var(--item-button);
+    text-align: center;
+
+    &:hover {
       background-color: var(--brunswick-green);
-      padding: 12px 8%;
-      margin: 8px 15px;
-      border-radius: 8px;
-      box-shadow: 0 11px 9px #00000069;
-      cursor: pointer;
-      font-size: 16px;
-      border: 1px solid transparent;
-      transition: 1s;
+      font-weight: unset;
+    }
 
-      &:hover {
-        text-decoration: underline;
-        border: 1px solid #ffffff47;
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        box-shadow: 0 11px 9px rgba(0, 0, 0, 0.77), inset 3px 3px 3px #53736321;
-      }
+    &:active {
+      background-color: hsl(151.2, 28.1%, 15.5%);
     }
   }
 }

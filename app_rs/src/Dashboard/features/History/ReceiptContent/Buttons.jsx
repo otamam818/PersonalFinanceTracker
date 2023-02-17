@@ -20,10 +20,9 @@ function Buttons( { receiptKey } ) {
   }
 
   function handleDelete() {
-    // Should create a pop-up confirming whether the user actually wants to
+    // Creates a pop-up confirming whether the user actually wants to
     // delete the receipt or not
     dispatch(setOverlayComponent("Delete"));
-    //  message, callbackYes, callbackNo 
     dispatch(setOverlayData({
       message: "Are you sure you want to delete this data?",
       callbackYes: () => {

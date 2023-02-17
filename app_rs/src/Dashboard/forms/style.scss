@@ -22,14 +22,15 @@
 
 .form-general {
   padding: 20px 0;
-  background: hsla(131.3, 21.6%, 29%);
+  // background: hsla(131.3, 21.6%, 29%);
   width: 50vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(25px);
+  backdrop-filter: blur(25px);
   z-index: 2;
   box-shadow: 0 21px 19px #00000061;
 

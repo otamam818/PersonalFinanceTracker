@@ -1,5 +1,5 @@
 .dashboard-history {
-  height: 80%;
+  height: calc(100% - 40px);
 
   .header, .store-name, .datetime {
     text-transform: uppercase;
