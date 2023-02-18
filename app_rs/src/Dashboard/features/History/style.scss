@@ -47,11 +47,11 @@
     width: 97%;
     margin: 7px auto;
     padding: 10px 5px;
-    border-radius: 5px;
+    border-radius: 15px;
 
     &:hover {
       background-color: hsla(150, 20%, 13%, 1);
-      box-shadow: 0 4px 6px hsla(0deg, 0%, 0%, 30%);
+      box-shadow: 0 4px 20px hsla(0deg, 0%, 0%, 0.4);
       border: 1px solid var(--hover-green);
     }
 
