@@ -60,8 +60,8 @@ function CategoryForm ( { formIsShown } ) {
       </label>
 
       <div className="button-area">
-        <button onClick={() => handleSubmit()}> Submit </button>
-        <button onClick={() => dispatch(clearOverlay())}>
+        <button className="options--button" onClick={() => handleSubmit()}> Submit </button>
+        <button className="options--button" onClick={() => dispatch(clearOverlay())}>
           Cancel
         </button>
       </div>

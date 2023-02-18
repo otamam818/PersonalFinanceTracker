@@ -1,5 +1,5 @@
 :root {
-  --item-button: hsl(151.2, 28.1%, 21.5%);
+  --item-button: hsla(151.2, 28.1%, 21.5%, 40%);
   --hover-green: hsl(130, 17.6%, 20%);
 }
 
@@ -142,10 +142,17 @@
     display: flex;
     width: max-content;
     justify-content: space-between;
+    gap: 5px;
 
     .append, .prepend {
-      background-color: hsl(131deg, 22%, 12%);
+      background-color: hsl(131deg, 22%, 20%);
       padding: 0 15px;
+      border: 1px solid transparent;
+      cursor: pointer;
+
+      &:hover {
+        border: 1px solid #ffffff67;
+      }
     }
 
     .append {

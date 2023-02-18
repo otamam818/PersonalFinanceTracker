@@ -27,15 +27,20 @@ function ReceiptForm () {
       <ItemLabel />
 
       <div className="button-area">
-        <button onClick={() => handleSubmit(
-          userData,
-          clearOverlay,
-          dispatch,
-          overlayData
+        <button className="options--button"
+          onClick={() => handleSubmit(
+            userData,
+            clearOverlay,
+            dispatch,
+            overlayData
         )}>
           Submit
         </button>
-        <button onClick={() => dispatch(clearOverlay())}> Cancel </button>
+        <button className="options--button"
+          onClick={() => dispatch(clearOverlay())}
+        >
+          Cancel
+        </button>
       </div>
     </form>
   )
