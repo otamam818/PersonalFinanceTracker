@@ -145,13 +145,20 @@
     gap: 5px;
 
     .append, .prepend {
+      border-radius: unset;
+      width: unset;
       background-color: hsl(131deg, 22%, 20%);
       padding: 0 15px;
       border: 1px solid transparent;
       cursor: pointer;
+      text-decoration: none;
 
       &:hover {
         border: 1px solid #ffffff67;
+      }
+
+      &:active {
+        background-color: var(--form-inner-green);
       }
     }
 
@@ -167,4 +174,37 @@
       margin-right: 3px;
     }
   }
+  
+  .more-button {
+    cursor: pointer;
+  }
 }
+
+.form-receipt .items .spread {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-right: 5px;
+
+  .options--button {
+    width:  2ch;
+    height: 2ch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--hover-green);
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      background-color: var(--fern-green);
+    }
+
+    &:active {
+      background-color: var(--form-inner-green);
+    }
+  }
+}
+

@@ -16,7 +16,7 @@ function ReceiptForm () {
   const overlayData = useSelector(state => state.dashboard.overlayData);
   return (
     <form
-      className="form-general form-category"
+      className="form-general form-receipt"
       onClick={(e) => e.stopPropagation()}
       onSubmit={(e) => e.preventDefault()}
     >
