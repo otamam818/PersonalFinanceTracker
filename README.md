@@ -102,6 +102,10 @@ npm run tauri dev
 ```
 
 ## Roadmap
+- [X] Make the basic layout of the application
+- [X] Design the software system to be extensible for different sections
+- [ ] Add ability to have multiple pop-ups
+- [ ] Implement CRUD operations for Receipts
 
 See the [open issues](https://github.com/otamam818/personalfinancetracker/issues) for a list of proposed features (and known issues).
 
