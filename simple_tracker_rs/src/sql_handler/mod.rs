@@ -1,26 +1,26 @@
+// CRUD modules
+pub mod read_data;
+pub mod create_data;
+
+// Private modules
 mod create_tables;
 
-use sqlx::{ConnectOptions, sqlite::SqliteConnectOptions, SqliteConnection, Acquire};
-use std::str::FromStr;
+use sqlx::{SqliteConnection, Acquire};
+use crate::shared::{DATABASE_NAME, connect_prod, DynamicError};
 
-use crate::shared::DATABASE_NAME;
-
-pub async fn initialize() -> Result<(), Box<dyn std::error::Error>> {
+pub async fn initialize() -> Result<(), DynamicError> {
     let file_exists = std::fs::metadata(DATABASE_NAME).is_ok();
-    let mut conn = SqliteConnectOptions::from_str(&format!("sqlite://{DATABASE_NAME}"))?
-        .create_if_missing(true)
-        .connect().await?;
+    let mut conn = connect_prod().await;
 
     if !file_exists {
         create_tables::execute(&mut conn).await?;
+        create_default_values(&mut conn).await?;
     }
-
-    create_default_values(&mut conn).await?;
 
     Ok(())
 }
 
-pub async fn create_default_values(pool: &mut SqliteConnection) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn create_default_values(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
     const ALL_UNITS: [&str; 5] = [
         "kg",
         "g",
@@ -39,7 +39,7 @@ pub async fn create_default_values(pool: &mut SqliteConnection) -> Result<(), Bo
         ", id, unit.1).execute(conn).await?;
     }
 
-    // TODO: Insert default unit-conversions (kg, etc)
+    // Insert default unit-conversions (kg, etc)
     let conn = pool.acquire().await?;
     sqlx::query!("
         INSERT INTO unit_converter (from_id, to_id, multiplier)

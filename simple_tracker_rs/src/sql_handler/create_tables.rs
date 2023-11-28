@@ -12,7 +12,7 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), Box<dyn std::err
     sqlx::query!("CREATE TABLE IF NOT EXISTS item (
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
-        category_id INTEGER NOT NULL,
+        category_id INTEGER,
         current_price REAL NOT NULL
     );").execute(conn).await?;
 

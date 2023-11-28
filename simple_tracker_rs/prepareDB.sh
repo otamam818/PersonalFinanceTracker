@@ -1,0 +1,1 @@
+cargo sqlx prepare --database-url sqlite:data.db
