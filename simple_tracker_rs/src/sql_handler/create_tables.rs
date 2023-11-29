@@ -16,6 +16,12 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), Box<dyn std::err
         current_price REAL NOT NULL
     );").execute(conn).await?;
 
+    let conn = pool.acquire().await?;
+    sqlx::query!("CREATE TABLE IF NOT EXISTS category (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL
+    );").execute(conn).await?;
+
     // Represents an item unit, such as kg, ml, L, per-each, etc.
     let conn = pool.acquire().await?;
     sqlx::query!("CREATE TABLE IF NOT EXISTS unit (

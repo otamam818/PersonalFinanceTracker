@@ -10,11 +10,11 @@ use crate::shared::{DATABASE_NAME, connect_prod, DynamicError};
 
 pub async fn initialize() -> Result<(), DynamicError> {
     let file_exists = std::fs::metadata(DATABASE_NAME).is_ok();
-    let mut conn = connect_prod().await;
+    let mut pool = connect_prod().await;
 
     if !file_exists {
-        create_tables::execute(&mut conn).await?;
-        create_default_values(&mut conn).await?;
+        create_tables::execute(&mut pool).await?;
+        create_default_values(&mut pool).await?;
     }
 
     Ok(())
