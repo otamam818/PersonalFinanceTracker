@@ -1,6 +1,7 @@
 // CRUD modules
 pub mod read_data;
 pub mod create_data;
+pub mod models;
 
 // Private modules
 mod create_tables;

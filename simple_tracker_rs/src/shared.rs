@@ -4,13 +4,15 @@ use std::{str::FromStr, collections::HashMap};
 pub const DATABASE_NAME: &str = "data.db";
 pub type DynamicError = Box<dyn std::error::Error>;
 pub type ItemMap = HashMap<String, usize>;
+pub type DbIdNumber = i64;
 
 pub enum TransactionEntity {
     Item,
     Venue,
-    Category,
+    /* TODO
     Unit,
     Receipt
+     */
 }
 
 pub async fn connect_prod() -> SqliteConnection {
