@@ -1,9 +1,14 @@
 use sqlx::{sqlite::SqliteConnectOptions, ConnectOptions, SqliteConnection};
-use std::{str::FromStr, collections::HashMap};
+use std::str::FromStr;
+
+use crate::sql_handler::models::item::ItemBuilder;
 
 pub const DATABASE_NAME: &str = "data.db";
 pub type DynamicError = Box<dyn std::error::Error>;
-pub type ItemMap = HashMap<String, usize>;
+
+// Denoting the item details and how many were bought
+pub type ItemList = Vec<(ItemBuilder, i64)>;
+#[allow(unused)]
 pub type DbIdNumber = i64;
 
 pub enum TransactionEntity {

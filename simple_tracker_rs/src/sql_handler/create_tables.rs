@@ -1,6 +1,8 @@
 use sqlx::{Acquire, SqliteConnection};
 
-pub async fn execute(pool: &mut SqliteConnection) -> Result<(), Box<dyn std::error::Error>> {
+use crate::shared::DynamicError;
+
+pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
     let conn = pool.acquire().await?;
     sqlx::query!("CREATE TABLE IF NOT EXISTS venue (
         id INTEGER PRIMARY KEY,
@@ -46,6 +48,8 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), Box<dyn std::err
     )").execute(conn).await?;
 
     let conn = pool.acquire().await?;
+    // TODO: Make location become a separate table called `branches` since a
+    // venue can have multiple branches
     sqlx::query!("CREATE TABLE IF NOT EXISTS venue (
         id INTEGER PRIMARY KEY,
         name TEXT,
@@ -63,7 +67,9 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), Box<dyn std::err
     sqlx::query!("CREATE TABLE IF NOT EXISTS receipt_items (
         id INTEGER PRIMARY KEY,
         receipt_id INTEGER,
-        item_id INTEGER
+        item_id INTEGER,
+        -- how many did the user buy at this time
+        quantity INTEGER NOT NULL
     )").execute(conn).await?;
 
     let conn = pool.acquire().await?;
