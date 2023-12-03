@@ -26,13 +26,6 @@ impl ItemInserter {
             return true;
         }
 
-        let item_id: DbIdNumber = sqlx::query!("SELECT id FROM item WHERE name == ? AND category_id == ? AND current_price == ?",
-            self.name,
-            self.category_id,
-            self.current_price
-        ).fetch_one(&mut **transaction).await.unwrap().id;
-        
-        self.id = Some(item_id);
         false
     }
 
@@ -68,8 +61,8 @@ impl ItemBuilder {
         self
     }
 
-    pub fn with_category_id(mut self, category_id: DbIdNumber) -> Self {
-        self.category_id = Some(category_id);
+    pub fn with_category_id(mut self, category_id: Option<DbIdNumber>) -> Self {
+        self.category_id = category_id;
         self
     }
 
@@ -95,12 +88,24 @@ impl ItemBuilder {
         let mut pool = connect_prod().await;
         let mut conn = pool.begin().await.unwrap();
         let transaction = &mut conn;
-        if !inserter.is_unique(transaction).await {
-            return Ok(inserter);
+
+        // We don't want to add duplicate items to the database
+        if inserter.is_unique(transaction).await {
+            inserter.insert_to_database(transaction).await;
         }
 
-        inserter.insert_to_database(transaction).await;
+        conn.commit().await.unwrap();
+        let mut conn = pool.begin().await.unwrap();
+        let transaction = &mut conn;
 
+        // Now we're sure that it exists, thus has an id
+        let item_id: DbIdNumber = sqlx::query!("SELECT id FROM item WHERE name == ? AND category_id == ? AND current_price == ?",
+            inserter.name,
+            inserter.category_id,
+            inserter.current_price
+        ).fetch_one(&mut **transaction).await.unwrap().id;
+
+        inserter.id = Some(item_id);
         Ok(inserter)
     }
 }

@@ -14,9 +14,10 @@ pub type DbIdNumber = i64;
 pub enum TransactionEntity {
     Item,
     Venue,
+    Category,
     /* TODO
-    Unit,
     Receipt
+    Unit,
      */
 }
 

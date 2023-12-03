@@ -133,6 +133,10 @@ impl ReceiptBuilder {
             ).execute(&mut **transaction).await.unwrap();
         }
 
-        todo!()
+        // Everything has finally been wrapped up
+        conn.commit().await.unwrap();
+
+        println!("Done!");
+        Ok(())
     }
 }

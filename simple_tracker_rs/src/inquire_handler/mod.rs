@@ -1,5 +1,8 @@
-mod receipt;
-mod venue;
+pub mod item;
+pub mod venue;
+pub mod category;
+pub mod unit;
+pub mod receipt;
 
 use inquire::*;
 
