@@ -4,7 +4,6 @@ use crate::shared::{connect_prod, DbIdNumber};
 
 use super::ErrorMessage;
 
-#[allow(unused)]
 pub struct ItemInserter {
     pub id: Option<DbIdNumber>,
     pub name: String,

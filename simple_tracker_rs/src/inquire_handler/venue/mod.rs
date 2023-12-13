@@ -29,7 +29,6 @@ async fn add_from_previous_locations() -> String {
 
     let message = "Select a location";
     let ans: Result<&str, InquireError> = Select::new(message, options).prompt();
-    dbg!(&ans);
 
     match ans {
         Ok(chosen_location) => chosen_location.to_string(),

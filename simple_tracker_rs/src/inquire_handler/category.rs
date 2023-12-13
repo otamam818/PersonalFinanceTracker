@@ -5,6 +5,11 @@ use crate::{
 use inquire::*;
 use sqlx::Acquire;
 
+/// - Adds an item from any previous category within the database if it exists
+/// - allows users to add a new category from here too
+/// - users can also skip adding a category if "None" is chosen
+/// 
+/// `@returns` None if None was chosen, the categoryId if a category was chosen or made
 pub async fn add_from_previous_categories() -> Option<DbIdNumber> {
     let binding: Vec<String> = get_name_list(TransactionEntity::Category).await;
     let mut pool = connect_prod().await;

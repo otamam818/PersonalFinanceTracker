@@ -4,14 +4,14 @@ use crate::shared::DynamicError;
 
 pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS venue (
+    sqlx::query("CREATE TABLE IF NOT EXISTS venue (
         id INTEGER PRIMARY KEY,
         name TEXT,
         location TEXT
     )").execute(conn).await?;
 
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS item (
+    sqlx::query("CREATE TABLE IF NOT EXISTS item (
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         category_id INTEGER,
@@ -19,21 +19,21 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
     );").execute(conn).await?;
 
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS category (
+    sqlx::query("CREATE TABLE IF NOT EXISTS category (
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL
     );").execute(conn).await?;
 
     // Represents an item unit, such as kg, ml, L, per-each, etc.
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS unit (
+    sqlx::query("CREATE TABLE IF NOT EXISTS unit (
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL
     );").execute(conn).await?;
 
     // to_unit = from_unit * multiplier
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS unit_converter (
+    sqlx::query("CREATE TABLE IF NOT EXISTS unit_converter (
         id INTEGER PRIMARY KEY,
         from_id INTEGER,
         to_id INTEGER,
@@ -41,7 +41,7 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
     )").execute(conn).await?;
 
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS past_prices (
+    sqlx::query("CREATE TABLE IF NOT EXISTS past_prices (
         id INTEGER PRIMARY KEY,
         item_id INTEGER,
         price REAL NOT NULL
@@ -50,21 +50,21 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
     let conn = pool.acquire().await?;
     // TODO: Make location become a separate table called `branches` since a
     // venue can have multiple branches
-    sqlx::query!("CREATE TABLE IF NOT EXISTS venue (
+    sqlx::query("CREATE TABLE IF NOT EXISTS venue (
         id INTEGER PRIMARY KEY,
         name TEXT,
         location TEXT
     )").execute(conn).await?;
 
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS receipt (
+    sqlx::query("CREATE TABLE IF NOT EXISTS receipt (
         id INTEGER PRIMARY KEY,
         venue_id INTEGER,
         date TEXT
     )").execute(conn).await?;
 
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS receipt_items (
+    sqlx::query("CREATE TABLE IF NOT EXISTS receipt_items (
         id INTEGER PRIMARY KEY,
         receipt_id INTEGER,
         item_id INTEGER,
@@ -73,7 +73,7 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
     )").execute(conn).await?;
 
     let conn = pool.acquire().await?;
-    sqlx::query!("CREATE TABLE IF NOT EXISTS receipt_items_quantities (
+    sqlx::query("CREATE TABLE IF NOT EXISTS receipt_items_quantities (
         id INTEGER PRIMARY KEY,
         receipt_items_id INTEGER,
         item_id INTEGER NOT NULL,

@@ -4,11 +4,11 @@ use crate::shared::{connect_prod, DbIdNumber, ItemList};
 
 use super::ErrorMessage;
 
-#[allow(unused)]
-struct ReceiptInserter {
-    id: Option<DbIdNumber>,
-    venue_id: DbIdNumber,
-    date: String,
+#[derive(sqlx::FromRow)]
+pub struct ReceiptInserter {
+    pub id: Option<DbIdNumber>,
+    pub venue_id: DbIdNumber,
+    pub date: String,
 }
 
 impl ReceiptInserter {
@@ -93,9 +93,6 @@ impl ReceiptBuilder {
     }
 
     pub async fn insert_to_database(self) -> Result<(), ErrorMessage> {
-        // TODO: Check if it already exists in the database
-        // TODO: Regardless of it already existing in the database,
-        //       check if all the items exist in the database
         let (Some(date), Some(venue_id), items) = (self.date, self.venue_id, self.items) else {
             return Err(ErrorMessage::NonExhaustiveFields);
         };

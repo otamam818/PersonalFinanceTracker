@@ -8,19 +8,19 @@ pub async fn get_name_list(origin: TransactionEntity) -> Vec<String> {
     let conn = pool.acquire().await.unwrap();
     use TransactionEntity as TE;
     match origin {
-        TE::Item => query_name(conn, "item").await,
-        TE::Venue => query_name(conn, "venue").await,
-        TE::Category => query_name(conn, "category").await,
+        TE::Item => query_name(conn, "name", "item").await,
+        TE::Venue => query_name(conn, "name", "venue").await,
+        TE::Category => query_name(conn, "name", "category").await,
+        TE::Receipt => query_name(conn, "date", "receipt").await
         /* TODO
-        TE::Receipt => todo!(),
         TE::Unit => todo!(),
          */
     }
 }
 
 /// Queries the name column from a given table
-async fn query_name(conn: &mut sqlx::SqliteConnection, table: &str) -> Vec<String> {
-    let query = format!("SELECT name FROM {}", table);
+async fn query_name(conn: &mut sqlx::SqliteConnection, name_key: &str, table: &str) -> Vec<String> {
+    let query = format!("SELECT {} FROM {}", name_key, table);
     sqlx::query_as::<_, (String,)>(&query)
         .fetch_all(conn)
         .await
@@ -77,3 +77,4 @@ pub async fn get_venue_id_from_name(name: &str) -> DbIdNumber {
 
     found_id
 }
+

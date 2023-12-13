@@ -15,8 +15,8 @@ pub enum TransactionEntity {
     Item,
     Venue,
     Category,
+    Receipt,
     /* TODO
-    Receipt
     Unit,
      */
 }

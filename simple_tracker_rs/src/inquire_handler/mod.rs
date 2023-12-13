@@ -38,10 +38,10 @@ pub async fn ask_main() -> bool {
 async fn handle_management(choice: &str) {
     match choice {
         "Receipts" => receipt::ask_crud().await,
-        "Items" => {},
-        "Restaurants/Stores" => {},
-        "Categories" => {},
-        "Units" => {},
+        "Items" => item::ask_crud().await,
+        "Restaurants/Stores" => todo!(),
+        "Categories" => todo!(),
+        "Units" => todo!(),
         _ => panic!("An invalid choice was made!")
     }
 }
