@@ -22,7 +22,7 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
         name TEXT NOT NULL,
         category_id INTEGER,
         current_price REAL NOT NULL,
-        FOREIGN KEY category_id
+        FOREIGN KEY (category_id)
             REFERENCES category(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE
@@ -42,11 +42,11 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
         from_id INTEGER,
         to_id INTEGER,
         multiplier REAL NOT NULL,
-        FOREIGN KEY from_id
+        FOREIGN KEY (from_id)
             REFERENCES unit(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE,
-        FOREIGN KEY to_id
+        FOREIGN KEY (to_id)
             REFERENCES unit(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE
@@ -57,7 +57,7 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
         id INTEGER PRIMARY KEY,
         item_id INTEGER,
         price REAL NOT NULL,
-        FOREIGN KEY item_id
+        FOREIGN KEY (item_id)
             REFERENCES item(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE
@@ -71,7 +71,7 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
         id INTEGER PRIMARY KEY,
         venue_id INTEGER,
         date TEXT,
-        FOREIGN KEY venue_id
+        FOREIGN KEY (venue_id)
             REFERENCES venue(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE
@@ -86,17 +86,17 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
         -- how many did the user buy at this time
         quantity INTEGER NOT NULL,
 
-        FOREIGN KEY receipt_id
+        FOREIGN KEY (receipt_id)
             REFERENCES receipt(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE,
  
-        FOREIGN KEY item_id
+        FOREIGN KEY (item_id)
             REFERENCES item(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE,
 
-        FOREIGN KEY unit_id
+        FOREIGN KEY (unit_id)
             REFERENCES unit(id)
                 ON UPDATE CASCADE
                 ON DELETE CASCADE
@@ -113,5 +113,6 @@ pub async fn execute(pool: &mut SqliteConnection) -> Result<(), DynamicError> {
         unit_quantity REAL NOT NULL
     )").execute(conn).await?;
 
+    println!("Works here!");
     Ok(())
 }
